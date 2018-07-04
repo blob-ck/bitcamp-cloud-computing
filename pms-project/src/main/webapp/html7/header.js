@@ -10,16 +10,12 @@ function loadLoginUser() {
 		$("#username").text(data.id);
 		$("#logoutBtn").click((e) => {
 			e.preventDefault(); // 클릭했을 때 원래 하던 일이 있는데 그것을 하지 말라!
-			$.get("/java106-java-project/json/auth/logout", () => {
+			$.get("/pms-project/json/auth/logout", () => {
 				location.href = "/pms-project/html7/auth/login.html";
 			});
 		});
 	}).fail(() => {
-		location.href = "/pms-project/html7/auth/login.html";
+		location.href = "/pms-project/html7/auth/login.html"; 
 	});
 	
 }
-
-
-
-
