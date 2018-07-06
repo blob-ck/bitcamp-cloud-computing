@@ -43,11 +43,6 @@ public class TeamViewServlet extends HttpServlet {
                         "study", "1111");
                 PreparedStatement stmt = con.prepareStatement(
                     "select dscrt, sdt, edt, max_qty from pms2_team where name=?");
-        		
-        		PreparedStatement stmt1 = con.prepareStatement(
-        				"select tm.mid, m.email" + 
-        				"    from pms2_team_member tm inner join pms2_member m on tm.mid=m.mid" + 
-        				"    where tm.tnm=?");
             		) {
                 
                 stmt.setString(1, name);
@@ -88,8 +83,17 @@ public class TeamViewServlet extends HttpServlet {
                     out.println("</p>");
                     out.println("</form>");
                 }
-                
-                
+            }
+            
+            try (
+                Connection con = DriverManager.getConnection(
+                		"jdbc:mysql://13.209.48.23:3306/studydb",
+                        "study", "1111");
+        		PreparedStatement stmt1 = con.prepareStatement(
+        				"select tm.mid, m.email" + 
+        				"    from pms2_team_member tm inner join pms2_member m on tm.mid=m.mid" + 
+        				"    where tm.tnm=?");
+        		){
                 stmt1.setString(1, name);
                 
                 out.println("<h2>회원 목록</h2>");

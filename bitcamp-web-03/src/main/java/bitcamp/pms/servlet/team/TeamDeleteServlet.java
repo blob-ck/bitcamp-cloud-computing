@@ -52,15 +52,20 @@ public class TeamDeleteServlet extends HttpServlet{
         			
             //int count = teamDao.delete(name);
                 PreparedStatement stmt3 = con.prepareStatement(
-                		"delete from pms2_team where name=?");) {
+                		"delete from pm2s_team where name=?");) {
                 
         		stmt1.setString(1, name);
+        		//if 처리?
         		stmt1.executeUpdate();
         		
+        		
         		stmt2.setString(1, name);
+        		//if 처리?
         		stmt2.executeUpdate();
 
+        		
         		stmt3.setString(1, name);
+
         		if (stmt3.executeUpdate() == 0) {
 	                out.println("<p>해당 팀이 없습니다.</p>");
 	            } else {
@@ -73,5 +78,7 @@ public class TeamDeleteServlet extends HttpServlet{
         }
         out.println("</body>");
         out.println("</html>");
+	
+	
 	}
 }

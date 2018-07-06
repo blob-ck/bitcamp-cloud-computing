@@ -45,8 +45,8 @@ public class TeamViewServlet extends HttpServlet {
                     "select dscrt, sdt, edt, max_qty from pms2_team where name=?");
         		
         		PreparedStatement stmt1 = con.prepareStatement(
-        				"select tm.mid, m.email" + 
-        				"    from pms2_team_member tm inner join pms2_member m on tm.mid=m.mid" + 
+        				"select tm.mid, m.email \r\n" + 
+        				"    from pms2_team_member tm inner join pms2_member m on tm.mid=m.mid\r\n" + 
         				"    where tm.tnm=?");
             		) {
                 
