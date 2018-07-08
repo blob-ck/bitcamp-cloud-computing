@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.pms.domain.Board;
+
 @SuppressWarnings("serial")
 @WebServlet("/board/view")
 public class BoardViewServlet extends HttpServlet {
@@ -36,38 +38,26 @@ public class BoardViewServlet extends HttpServlet {
         out.println("<form action='update' method='post'>");
         try {
         	
-        	Class.forName("com.mysql.jdbc.Driver");
-            try (
-                Connection con = DriverManager.getConnection(
-                		 "jdbc:mysql://13.209.48.23:3306/studydb",
-                         "study", "1111");
-                PreparedStatement stmt = con.prepareStatement(
-                    "select bno,titl,cont,cdt from pms2_board where bno=?");) {
-                
-                stmt.setInt(1, no);
-                
-                try (ResultSet rs = stmt.executeQuery();) {
-                    if (!rs.next()) {
-                    	out.println("유효하지 않은 게시물 번호입니다.");
-                    }else {
-                    	
-                    out.println("<table border='1'>");
-                    out.println("<tr><th>번호</th><td>");
-                    out.printf("    <input type='text' name='no' value='%d' readonly></td></tr>\n", 
-                    		rs.getInt("bno"));
-                    out.println("<tr><th>제목</th>");
-                    out.printf("    <td><input type='text' name='title' value='%s'></td></tr>\n",
-                    		rs.getString("titl"));
-                    out.println("<tr><th>내용</th>");
-                    out.printf("    <td><textarea name='content' rows='10' cols='60'>%s</textarea></td></tr>\n",
-                    		rs.getString("cont"));
-                    out.printf("<tr><th>등록일</th><td>%s</td></tr>\n", 
-                    		rs.getDate("cdt"));
-                    out.println("</table>");
-                    
-                    }
-                }
-            }  
+        	Board board = selectOne(no);
+        	
+            if (board == null) {
+            	out.println("유효하지 않은 게시물 번호입니다.");
+            	return;
+            }else {
+	            out.println("<table border='1'>");
+	            out.println("<tr><th>번호</th><td>");
+	            out.printf("    <input type='text' name='no' value='%d' readonly></td></tr>\n", 
+	            		board.getNo());
+	            out.println("<tr><th>제목</th>");
+	            out.printf("    <td><input type='text' name='title' value='%s'></td></tr>\n",
+	            		board.getTitle());
+	            out.println("<tr><th>내용</th>");
+	            out.printf("    <td><textarea name='content' rows='10' cols='60'>%s</textarea></td></tr>\n",
+	            		board.getContent());
+	            out.printf("<tr><th>등록일</th><td>%s</td></tr>\n", 
+	            		board.getCreatedDate());
+	            out.println("</table>");
+            }
         } catch (Exception e) {
             out.printf("<p>%s</p>\n", e.getMessage());
             e.printStackTrace(out);
@@ -80,7 +70,38 @@ public class BoardViewServlet extends HttpServlet {
         out.println("</form>");
         out.println("</body>");
         out.println("</html>");
+	}
+	
+
 	
 	
+	
+	private Board selectOne(int no) throws Exception {
+		
+		Class.forName("com.mysql.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+            		 "jdbc:mysql://13.209.48.23:3306/studydb",
+                     "study", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "select bno,titl,cont,cdt from pms2_board where bno=?");) {
+            
+            stmt.setInt(1, no);
+            
+            try (ResultSet rs = stmt.executeQuery();) {
+                if (!rs.next()) {
+                	return null;
+                }else {
+                	
+                	Board board = new Board();
+                	board.setNo(rs.getInt("bno"));
+                	board.setTitle(rs.getString("titl"));
+                	board.setContent(rs.getString("cont"));
+                	board.setCreatedDate(rs.getDate("cdt"));
+                
+                	return board;
+                }
+            }
+        }
 	}
 }
