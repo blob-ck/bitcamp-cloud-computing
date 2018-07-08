@@ -37,22 +37,10 @@ public class TeamMemberDeleteServlet extends HttpServlet {
         out.println("<body>");
         out.println("<h1>팀 회원 삭제 결과</h1>");
         try {
-        	Class.forName("com.mysql.jdbc.Driver");
-        	try (
-        			Connection con = DriverManager.getConnection(
-        					"jdbc:mysql://13.209.48.23:3306/studydb",
-        					"study", "1111");
-        			PreparedStatement stmt = con.prepareStatement(
-        					"delete from pms2_team_member where tnm=? and mid=?");) {
-        		
-        		stmt.setString(1, teamName);
-        		stmt.setString(2, memberId);
-        		
-        		if (stmt.executeUpdate() == 0) {
-        			out.println("<p>해당 팀원이 존재하지 않습니다.</p>");
-        		} else {
-        			out.println("<p>팀에서 회원을 삭제하였습니다.</p>");
-        		}
+        	if(delete(teamName, memberId) == 0) {
+        		out.println("<p>해당 팀원이 존재하지 않습니다.</p>");
+        	}else {
+        		out.println("<p>팀에서 회원을 삭제하였습니다.</p>");
         	}
         } catch (Exception e) {
             out.println("<p>팀 회원 삭제 실패!</p>");
@@ -60,5 +48,25 @@ public class TeamMemberDeleteServlet extends HttpServlet {
         }
         out.println("</body>");
         out.println("</html>");
+	}
+	
+	
+	
+	
+	private int delete(String teamName, String memberId) throws Exception {
+		
+		Class.forName("com.mysql.jdbc.Driver");
+    	try (
+    			Connection con = DriverManager.getConnection(
+    					"jdbc:mysql://13.209.48.23:3306/studydb",
+    					"study", "1111");
+    			PreparedStatement stmt = con.prepareStatement(
+    					"delete from pms2_team_member where tnm=? and mid=?");) {
+    		
+    		stmt.setString(1, teamName);
+    		stmt.setString(2, memberId);
+    		
+    		return stmt.executeUpdate();
+    	}
 	}
 }

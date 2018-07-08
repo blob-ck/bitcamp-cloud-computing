@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.pms.domain.Team;
+
 @SuppressWarnings("serial")
 @WebServlet("/team/add")
 public class TeamAddServlet extends HttpServlet {
@@ -23,6 +25,13 @@ public class TeamAddServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
+		
+		Team team = new Team();
+		team.setName(request.getParameter("name"));
+		team.setDescription(request.getParameter("description"));
+		team.setMaxQty(Integer.parseInt(request.getParameter("maxQty")));
+		team.setStartDate(Date.valueOf(request.getParameter("startDate")));
+		team.setEndDate(Date.valueOf(request.getParameter("endDate")));
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -39,21 +48,7 @@ public class TeamAddServlet extends HttpServlet {
         out.println("<h1>팀 등록 결과</h1>");
         
         try {
-        	Class.forName("com.mysql.jdbc.Driver");
-            try (
-                Connection con = DriverManager.getConnection(
-            		"jdbc:mysql://13.209.48.23:3306/studydb",
-                    "study", "1111");
-                PreparedStatement stmt = con.prepareStatement(
-                    "insert into pms2_team(name,dscrt,max_qty,sdt,edt) values(?,?,?,?,?)");) {
-                
-                stmt.setString(1, request.getParameter("name"));
-                stmt.setString(2, request.getParameter("description"));
-                stmt.setInt(3, Integer.parseInt(request.getParameter("maxQty")));
-                stmt.setDate(4, Date.valueOf(request.getParameter("startDate")), Calendar.getInstance(Locale.KOREAN));
-                stmt.setDate(5, Date.valueOf(request.getParameter("endDate")), Calendar.getInstance(Locale.KOREAN));
-                stmt.executeUpdate();
-            }
+        	insert(team);
             out.println("<p>등록 성공!</p>");
         } catch (Exception e) {
             out.println("<p>등록 실패!</p>");
@@ -61,5 +56,27 @@ public class TeamAddServlet extends HttpServlet {
         }
         out.println("</body>");
         out.println("</html>");
+	}
+	
+	
+	
+	private int insert(Team team) throws Exception {
+		
+		Class.forName("com.mysql.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+        		"jdbc:mysql://13.209.48.23:3306/studydb",
+                "study", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "insert into pms2_team(name,dscrt,max_qty,sdt,edt) values(?,?,?,?,?)");) {
+            
+            stmt.setString(1, team.getName());
+            stmt.setString(2, team.getDescription());
+            stmt.setInt(3, team.getMaxQty());
+            stmt.setDate(4, team.getStartDate());
+            stmt.setDate(5, team.getEndDate());
+
+            return stmt.executeUpdate();
+        }
 	}
 }

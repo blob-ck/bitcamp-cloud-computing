@@ -6,14 +6,16 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.util.Calendar;
-import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import bitcamp.pms.domain.Member;
+import bitcamp.pms.domain.Task;
+import bitcamp.pms.domain.Team;
 
 @SuppressWarnings("serial")
 @WebServlet("/task/update")
@@ -40,23 +42,22 @@ public class TaskUpdateServlet extends HttpServlet {
 		out.printf("<h1>'%s' 팀의 작업 변경</h1>\n", teamName);
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			try (Connection con = DriverManager.getConnection("jdbc:mysql://13.209.48.23:3306/studydb", "study",
-					"1111");
-					PreparedStatement stmt = con
-							.prepareStatement("update pms2_task set titl=?,sdt=?,edt=?,mid=?,tnm=? where tano=?");) {
-
-				stmt.setString(1, request.getParameter("title"));
-				stmt.setDate(2, Date.valueOf(request.getParameter("startDate")), Calendar.getInstance(Locale.KOREAN));
-				stmt.setDate(3, Date.valueOf(request.getParameter("endDate")), Calendar.getInstance(Locale.KOREAN));
-				stmt.setString(4, request.getParameter("memberId"));
-				stmt.setString(5, request.getParameter("teamName"));
-				stmt.setInt(6, Integer.parseInt(request.getParameter("no")));
-				if (stmt.executeUpdate() == 0) {
-					out.println("<p>해당 작업이 없습니다.</p>");
-				} else {
-					out.println("<p>변경하였습니다.</p>");
-				}
+			
+			//setter의 return type을 task로 해서 .set("뭐뭐") 해도 task 이므로 계속해서 .set()을 할 수 있다. 첨봄
+			Task task = new Task()
+	                .setNo(Integer.parseInt(request.getParameter("no")))
+	                .setTitle(request.getParameter("title"))
+	                .setStartDate(Date.valueOf(request.getParameter("startDate")))
+	                .setEndDate(Date.valueOf(request.getParameter("endDate")))
+	                .setState(Integer.parseInt(request.getParameter("state")))
+	                .setTeam(new Team().setName(request.getParameter("teamName")))
+	                .setWorker(new Member().setId(request.getParameter("memberId")));
+			System.out.println(task.getState());
+			int count = update(task);
+			if (count == 0) {
+				out.println("<p>해당 작업이 없습니다.</p>");
+			} else {
+				out.println("<p>변경하였습니다.</p>");
 			}
 		} catch (Exception e) {
 			out.println("<p>변경 실패!</p>");
@@ -64,5 +65,27 @@ public class TaskUpdateServlet extends HttpServlet {
 		}
 		out.println("</body>");
 		out.println("</html>");
+	}
+	
+	
+	
+	private int update(Task task) throws Exception {
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://13.209.48.23:3306/studydb", "study",
+				"1111");
+				PreparedStatement stmt = con
+						.prepareStatement("update pms2_task set titl=?,sdt=?,edt=?,stat=?,mid=?,tnm=? where tano=?");) {
+
+			stmt.setString(1, task.getTitle());
+			stmt.setDate(2, task.getStartDate());
+			stmt.setDate(3, task.getEndDate());
+			stmt.setInt(4, task.getState());
+			stmt.setString(5, task.getWorker().getId());
+			stmt.setString(6, task.getTeam().getName());
+			stmt.setInt(7, task.getNo());
+
+			return stmt.executeUpdate();
+		}
 	}
 }
