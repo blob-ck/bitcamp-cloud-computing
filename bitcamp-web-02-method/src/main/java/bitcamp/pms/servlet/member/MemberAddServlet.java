@@ -23,6 +23,11 @@ public class MemberAddServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         
     	request.setCharacterEncoding("UTF-8");
+    	
+    	Member member = new Member();
+    	member.setId(request.getParameter("id"));
+    	member.setEmail(request.getParameter("email"));
+    	member.setPassword(request.getParameter("password"));
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -39,16 +44,8 @@ public class MemberAddServlet extends HttpServlet {
         out.println("<h1>회원 등록 결과</h1>");
         
         try {
-           
-        	Member member = new Member();
-        	member.setId(request.getParameter("id"));
-        	member.setEmail(request.getParameter("email"));
-        	member.setPassword(request.getParameter("password"));
-        	
         	insert(member);	
-                
         	out.println("<p>등록 성공!</p>");
-            
         } catch (Exception e) {
             out.println("<p>등록 실패!</p>");
             e.printStackTrace(out);
@@ -61,7 +58,7 @@ public class MemberAddServlet extends HttpServlet {
 
 
 
-    private void insert(Member member) throws Exception {
+    protected void insert(Member member) throws Exception {
     	
     	Class.forName("com.mysql.jdbc.Driver");
         try (

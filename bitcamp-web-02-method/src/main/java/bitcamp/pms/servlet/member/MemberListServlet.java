@@ -62,7 +62,7 @@ public class MemberListServlet extends HttpServlet {
     }
     
     
-    private ArrayList<Member> selectList() throws Exception {
+    protected ArrayList<Member> selectList() throws Exception {
     	
     	ArrayList<Member> list = new ArrayList<>();
     	

@@ -60,12 +60,3 @@ public class MemberAddServlet extends HttpServlet {
         out.println("</html>");
     }
 }
-
-
-
-
-
-
-
-
-

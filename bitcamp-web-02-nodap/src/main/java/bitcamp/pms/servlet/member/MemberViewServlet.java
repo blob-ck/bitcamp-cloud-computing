@@ -36,28 +36,30 @@ public class MemberViewServlet extends HttpServlet {
         out.println("<h1>멤버 보기</h1>");
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+        	Class.forName("com.mysql.jdbc.Driver");
             try (
                 Connection con = DriverManager.getConnection(
             		"jdbc:mysql://13.209.48.23:3306/studydb",
-					"study", "1111");
+    				"study", "1111");
                 PreparedStatement stmt = con.prepareStatement(
-                    "select mid,email from pms2_member where mid=?");) {
+                    "select mid,email from pms2_member where mid=?");){
                 
                 stmt.setString(1, id);
                 
                 try (ResultSet rs = stmt.executeQuery();) {
                     if (!rs.next()) {
-                        out.println("<p>유효하지 않은 멤버 아이디입니다.</p>");
+                    	out.println("<p>유효하지 않은 멤버 아이디입니다.</p>");
+                    	return;
                     }
+                   
                     out.println("<form action='update' method='post'>");
                     out.println("<table border='1'>");
                     out.println("<tr><th>아이디</th><td>");
                     out.printf("    <input type='text' name='id' value='%s' readonly></td></tr>\n", 
-                            rs.getString("mid"));
+                    		rs.getString("mid"));
                     out.println("<tr><th>이메일</th>");
                     out.printf("    <td><input type='email' name='email' value='%s'></td></tr>\n",
-                            rs.getString("email"));
+                    		rs.getString("email"));
                     out.println("<tr><th>암호</th>");
                     out.println("    <td><input type='password' name='password'></td></tr>\n");
                     out.println("</table>");
@@ -69,8 +71,6 @@ public class MemberViewServlet extends HttpServlet {
                     out.println("</form>");
                 }
             }  
-    
-               
         } catch (Exception e) {
             out.printf("<p>%s</p>\n", e.getMessage());
             e.printStackTrace(out);
@@ -79,11 +79,3 @@ public class MemberViewServlet extends HttpServlet {
         out.println("</html>");
     }
 }
-
-
-
-
-
-
-
-

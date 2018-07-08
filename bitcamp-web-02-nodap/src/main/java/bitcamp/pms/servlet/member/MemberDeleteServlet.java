@@ -60,9 +60,3 @@ public class MemberDeleteServlet extends HttpServlet {
     }
 }
 
-
-
-
-
-
-

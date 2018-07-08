@@ -72,10 +72,6 @@ public class MemberViewServlet extends HttpServlet {
     
     
     
-    
-    
-    
-    
     private Member selectOne(String memberId) throws Exception {
     	
     	Class.forName("com.mysql.jdbc.Driver");
@@ -87,26 +83,17 @@ public class MemberViewServlet extends HttpServlet {
                 "select mid,email from pms2_member where mid=?");) {
             
             stmt.setString(1, memberId);
-            Member member = new Member();
             
             try (ResultSet rs = stmt.executeQuery();) {
                 if (!rs.next()) {
                     return null;
                 }
                 
+                Member member = new Member();
                 member.setId(rs.getString("mid"));
                 member.setEmail(rs.getString("email"));
+                return member;
             }
-            return member;
         }  
     }
 }
-
-
-
-
-
-
-
-
-
