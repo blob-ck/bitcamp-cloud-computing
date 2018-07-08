@@ -33,22 +33,10 @@ public class ClassroomDeleteServlet extends HttpServlet {
         out.println("<h1>강의 삭제 결과</h1>");
         
         try {
-        	
-        	Class.forName("com.mysql.jdbc.Driver");
-            try (
-                Connection con = DriverManager.getConnection(
-            		"jdbc:mysql://13.209.48.23:3306/studydb",
-                    "study", "1111");
-                PreparedStatement stmt = con.prepareStatement(
-                    "delete from pms2_classroom where crno=?");) {
-                
-                stmt.setInt(1, Integer.parseInt(request.getParameter("no")));
-            
-	            if (stmt.executeUpdate() == 0) {
-	                out.println("<p>해당 강의가 없습니다.</p>");
-	            } else {
-	                out.println("<p>삭제하였습니다.</p>");
-	            }
+            if (delete(Integer.parseInt(request.getParameter("no"))) == 0) {
+                out.println("<p>해당 강의가 없습니다.</p>");
+            } else {
+                out.println("<p>삭제하였습니다.</p>");
             }
         } catch (Exception e) {
             out.println("<p>삭제 실패!</p>");
@@ -56,5 +44,23 @@ public class ClassroomDeleteServlet extends HttpServlet {
         }
         out.println("</body>");
         out.println("</html>");
+	}
+	
+	
+	
+	private int delete(int no) throws Exception {
+		
+		Class.forName("com.mysql.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+        		"jdbc:mysql://13.209.48.23:3306/studydb",
+                "study", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "delete from pms2_classroom where crno=?");) {
+            
+            stmt.setInt(1, no);
+        
+            return stmt.executeUpdate();
+        }
 	}
 }
