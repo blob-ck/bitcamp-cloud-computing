@@ -1,7 +1,16 @@
-# bitcamp-web-02 method: 서블릿
+# bitcamp-web-02 - dao: 서블릿
 pms2_member 테이블에 대한 CRUD 서블릿을 만들기
 
-method를 전부 밑으로 분리했다. DAO적용 전
+classroom, board 는 안했음
+
+DAO로 method를 따로 분류했고, 
+JDBC드라이버는 static, 
+Connection 은 Listener를 사용했다.
+
+테이블간 제약조건으로 Member delete는 미구현됬다.
+어떤방향으로 할지는 나중에...
+처음부터 만든게 아니므로 분석 및 목표에 따라 훈련을 우선하기로 한다.
+
 
 ## 패키지 생성
 bitcamp.pms.servlet 패키지 생성한다.

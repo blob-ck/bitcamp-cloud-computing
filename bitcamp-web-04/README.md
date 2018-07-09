@@ -1,7 +1,5 @@
-# bitcamp-web-02 method: 서블릿
+# bitcamp-web-02 : 서블릿
 pms2_member 테이블에 대한 CRUD 서블릿을 만들기
-
-method를 전부 밑으로 분리했다. DAO적용 전
 
 ## 패키지 생성
 bitcamp.pms.servlet 패키지 생성한다.
