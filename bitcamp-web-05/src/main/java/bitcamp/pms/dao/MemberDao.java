@@ -10,18 +10,18 @@ import bitcamp.pms.domain.Member;
 public class MemberDao {
 	
 	SqlSessionFactory sqlSessionFactory;
-	
+
 	public MemberDao(SqlSessionFactory sqlSessionFactory) {
 
 		this.sqlSessionFactory = sqlSessionFactory;
 	}
-
+	
 
 
 	@SuppressWarnings("unused")
 	public List<Member> selectList() throws Exception {
 		
-        try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession() ) {
         	return sqlSession.selectList("member.selectList");
         }
     }
@@ -31,17 +31,18 @@ public class MemberDao {
 	@SuppressWarnings("unused")
 	public Member selectOne(String id) throws Exception {
 		
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 			return sqlSession.selectOne("member.selectOne", id);
 		}
 	}
 	
 	
+	
 	@SuppressWarnings("unused")
 	public int update(Member member) throws Exception {
 		
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
-			int count = sqlSession.update("member.update", member);
+		try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+			int count =  sqlSession.update("member.update", member);
 			sqlSession.commit(); //mybatis 는 AutoCommit 이 아니므로
 			return count;
 		}
@@ -49,13 +50,12 @@ public class MemberDao {
 	
 	
 	
-	
 	@SuppressWarnings("unused")
 	public int delete(String id) throws Exception {
 		
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
-			int count = sqlSession.delete("member.delete", id);
-			sqlSession.commit(); //mybatis 는 AutoCommit 이 아니므로
+		try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+			int count = sqlSession.delete("member.delete", id); 
+			sqlSession.commit();
 			return count;
 		}
 	}
@@ -65,9 +65,9 @@ public class MemberDao {
 	@SuppressWarnings("unused")
 	public int insert(Member member) throws Exception {
 		
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 			int count = sqlSession.insert("member.insert", member);
-			sqlSession.commit(); //mybatis 는 AutoCommit 이 아니므로
+			sqlSession.commit();
 			return count;
 		}
 	}

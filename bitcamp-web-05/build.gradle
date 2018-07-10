@@ -32,11 +32,12 @@ dependencies {
     //compile library는 웹 애플리케이션을 배포할 때 함께 배포된다
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.46'
     
-    // https://mvnrepository.com/artifact/javax.servlet/jstl 2011버전
+    // JSTL 2011버전
     compile group: 'javax.servlet', name: 'jstl', version: '1.2'
 
-    // Persistence FrameWork - mybatis
+    // Persistence Framework(mybatis) 라이브러리
     compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
+    
     
     
     // This dependency is found on compile classpath of this component and consumers.
