@@ -8,7 +8,7 @@
 <title>멤버 목록</title>
 </head>
 <body>
-<h1>멤버 목록 in jsp + jstl + EL</h1>
+<h1>멤버 목록 5-2</h1>
 <p><a href='form.html'>새회원</a></p>
 <table border='1'>
 <tr>

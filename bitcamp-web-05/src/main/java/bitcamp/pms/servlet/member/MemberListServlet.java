@@ -1,6 +1,7 @@
 package bitcamp.pms.servlet.member;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -22,10 +23,18 @@ public class MemberListServlet extends HttpServlet {
 		
 		response.setContentType("text/html;charset=UTF-8");
 		
+		HashMap<String, Object> params = new HashMap<>();
+		if(request.getParameter("page") != null && request.getParameter("size") != null) {
+			int page = Integer.parseInt(request.getParameter("page"));
+			int size = Integer.parseInt(request.getParameter("size"));
+			params.put("startIndex", (page -1 ) * size); //인덱스는 0부터 시작하므로/ 시작 인덱스를 구한다
+			params.put("pageSize", size); //페이지 당 보여줄 행의 갯수
+		}
+		
         try {
         	MemberDao memberDao = (MemberDao) getServletContext().getAttribute("memberDao");
         	
-    		List<Member> list = memberDao.selectList();
+    		List<Member> list = memberDao.selectList(params);
     		request.setAttribute("list", list);
     		
     		RequestDispatcher rd = request.getRequestDispatcher("/member/list.jsp");

@@ -1,7 +1,8 @@
 package bitcamp.pms.servlet.member;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,10 +24,18 @@ public class MemberListServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
     	
         response.setContentType("text/html;charset=UTF-8");
+        
+        HashMap<String, Object> params = new HashMap<>();
+        if (request.getParameter("page") != null && request.getParameter("size") != null) {
+        	int page = Integer.parseInt(request.getParameter("page"));
+        	int size = Integer.parseInt(request.getParameter("size"));
+        	params.put("startIndex", (page-1)*size);
+        	params.put("pageSize", size);
+        }
 
         try {
         	MemberDao memberDao = (MemberDao)getServletContext().getAttribute("memberDao");
-        	ArrayList<Member> list = memberDao.selectList();
+        	List<Member> list = memberDao.selectList(params);
         	request.setAttribute("list", list);
         	
         	RequestDispatcher rd = request.getRequestDispatcher("/member/list.jsp");
