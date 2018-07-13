@@ -23,6 +23,12 @@ public class ContextLoaderListener implements ServletContextListener {
 		try {
 			ClassPathXmlApplicationContext iocContainer = new ClassPathXmlApplicationContext("bitcamp/pms/config/application-context.xml"); 
 			
+			//자바쪽에서 sqlSessionFactory를 생성했는지 확인해보자
+			String[] names = iocContainer.getBeanDefinitionNames();
+			for (String name : names) {
+				System.out.printf("%s ==> %s\n", name, iocContainer.getBean(name).getClass().getName());
+			}
+			
 			/*String resource = "bitcamp/pms/config/mybatis-config.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			SqlSessionFactory sqlSessionFactory =
@@ -34,6 +40,9 @@ public class ContextLoaderListener implements ServletContextListener {
 			
 			//프론트 컨트롤러가 사용할 수 있도록 IoC 컨테이너를 
 			//컨텍스트에 저장한다.
+			
+			
+			
 			ServletContext sc = sce.getServletContext();
 			sc.setAttribute("iocContainer", iocContainer);
 			
