@@ -1,46 +1,35 @@
-# bitcamp-web-06 : 서블릿
-pms2_member 테이블에 대한 CRUD 서블릿을 만들기
+# bitcamp-web-10 : Spring IoC 컨테이너 도입
+- 기존에 작성한 IoC 컨테이너 대신에 Spring IoC 컨테이너를 사용한다.
 
+## 라이브러리 추가
+- mvnrepository.com 에서 spring-context 라이브러를 찾는다.
+- build.gradle에 의존 라이브러리 정보를 추가한다.
+- 'gradle cleanEclipse'를 실행하여 기존 이클립스 설정을 제거한다.
+- 'gradle eclipse'를 실행하여 이클립스 관련 설정 파일을 새로 만든다.
+- 이때 추가한 의존 라이브러리가 자동으로 다운로드 될 것이다.
+- 웹 프로젝트를 리프래시 하여 라이브러리 정보를 갱신한다. 
 
-#06
-Front Controller (Dispatcher Controller)
-Servlet -> POJO
+## ContextLoaderListener에서 Spring IoC 컨테이너 준비하기
+- 기존의 ApplicationContext 대신에 Spring IoC 컨테이너 객체를 생성한다.
+- bitcamp/pms/config/application-context.xml 파일을 생성한다.
 
+## DispatcherServlet에서 Spring IoC 컨테이너를 사용하기
+- 기존의 ApplicationContext 대신에 Spring IoC 컨테이너에 들어 있는 페이지 컨트롤러를 찾아 실행한다.
 
-#05
-Persistence FrameWork - Mybatis 적용
-SqlSessionFactory 사용
-설정파일 1개, SQL파일 1개, 도메인 매핑, 동적 쿼리 작성
+## ApplicationContext 클래스 제거한다.
 
-#04
-서블릿에서 뷰를 JSP로 분리
- - JSTL 을 mvnrepository.com 에서 가져와 build.gradle dependencies에 추가한다(gradle eclipse 는 당연히)
- - jsp에서 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 추가
+## 우리가 작성한 애노테이션 제거한다.
+- @Component 애노테이션 제거
+- @Controller 애노테이션 제거
+- @Repository 애노테이션 제거
+- @Autoworied 애노테이션 제거
 
-Filter에서 request의 encoding을 UTF-8으로 설정했다. - 매번 servlet에서 쓰인 중복소스 제거
- - request.setCharacterEncoding("UTF-8");
-
-
-#03
-DAO로 method를 따로 분류했고, 
-JDBC드라이버는 static, 
-DAO 생성은 Listener를 사용했다. (bitcamp.pms.listener.ContextLoaderListener)
-
-테이블간 제약조건으로 Member delete는 미구현됬다.
-어떤방향으로 할지는 나중에...
-처음부터 만든게 아니므로 분석 및 목표에 따라 훈련을 우선하기로 한다.
+## DAO와 페이지 컨트롤러에서 사용한 애노테이션 패키지를 변경한다.
+- 스프링 애노테이션으로 변경한다.
 
 
 
-## 패키지 생성
-bitcamp.pms.servlet 패키지 생성한다.
 
-## 회원 관리 서블릿 만들기
-- servlet-api 의존 라이브러리 추가하기
-  - mvnrepository.com에서 sevlet-api 라이브러리 검색
-  - build.gradle에 라이브러리 등록
-  - 'gradle eclipse' 실행하여 .classpath 파일 갱신
-  - 이클립스 프로젝트 refresh
-- mysql jdbc driver 의존 라이브러리 추가하기  
-- bitcamp.pms.servlet.member 패키지 생성
-- MemberListServlet, MemberViewServlet, MemberAddServlet, MemberUpdateServlet, MemberDeleteServlet 클래스 생성
+
+
+

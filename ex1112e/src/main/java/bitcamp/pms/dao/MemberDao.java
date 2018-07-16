@@ -6,7 +6,7 @@ import java.util.Map;
 import bitcamp.pms.domain.Member;
 
 public interface MemberDao {
-
+	
 	List<Member> selectList(Map<String, Object> params);
 	Member selectOne(String id);
 	int update(Member member);

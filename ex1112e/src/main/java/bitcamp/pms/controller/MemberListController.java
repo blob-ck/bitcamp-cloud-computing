@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import bitcamp.pms.annoation.RequestMapping;
 import bitcamp.pms.dao.MemberDao;
 import bitcamp.pms.domain.Member;
 
-@Controller("/member/list")
+@Controller
 public class MemberListController {
 	
 	MemberDao memberDao;
@@ -30,7 +30,7 @@ public class MemberListController {
 	public MemberListController() {
 	}
 
-	@RequestMapping
+	@RequestMapping("/member/list")
 	public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		response.setContentType("text/html;charset=UTF-8");
@@ -49,7 +49,7 @@ public class MemberListController {
     		request.setAttribute("list", list);
     		
     		//request.setAttribute("view", "/member/list.jsp");
-    		return "/member/list.jsp";
+    		return "member/list";
     		
         } catch (Exception e) {
         	request.setAttribute("error", e);
