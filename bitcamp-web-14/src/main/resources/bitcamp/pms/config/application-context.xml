@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<context:component-scan base-package="bitcamp.pms">
+	    <context:exclude-filter type="regex" expression="bitcamp.pms.test.*"/>
+	</context:component-scan>
+	
+	<mvc:annotation-driven/>
+	
+	<!-- Spring - Mybatis 연동 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	  <property name="dataSource" ref="dataSource"></property>
+	  <property name="mapperLocations" value="classpath*:bitcamp/pms/sql/**/*.xml" />
+	  <property name="typeAliasesPackage" value="bitcamp.pms.domain"/>
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	    <property name="driverClassName" value="${jdbc.driver}" />
+	    <property name="url" value="${jdbc.url}" />
+	    <property name="username" value="${jdbc.username}" />
+	    <property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!-- Spring 트랜젝션 매니저 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- DAO interface로부터 구현체를 자동생성하는 객체 등록 -->
+	<!-- DAO구현체가 사용할  SQL mapper.xml은 namespace값으로 찾는다.
+	따라서 DAO 인터페이스명과 SQL mapper의 name은 namespace값과 일치해야 한다.
+	SQL id와 인터페이스의 메서드명은 같아야 한다. -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	  <property name="basePackage" value="bitcamp/pms/dao" />
+	</bean>
+	
+	
+	<!-- .protperties 파일을 읽어와서 그 데이터를 보관할 객체를 등록한다 -->
+	<!-- contextLoaderListener를 사용할 때는 파일의 위치를 지정하는 방식을 적어줘야 한다. -->
+	<!-- 파일시스템 = file:
+	클래스패스 = classpath:
+	이런식으로 경로명 앞에 붙여줘야한다 -->
+	<context:property-placeholder location="classpath:bitcamp/pms/config/jdbc.properties"/>
+	
+	
+	<!-- JSP파일을 /WEB-INF/jsp 폴더에서 찾을수 있도록 viewResolver를 설정한다 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+	    <property name="prefix" value="/WEB-INF/jsp/"/>
+	    <property name="suffix" value=".jsp"/>
+	</bean>
+
+</beans>
