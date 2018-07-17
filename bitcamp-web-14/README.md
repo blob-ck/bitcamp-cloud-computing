@@ -1,46 +1,13 @@
-# bitcamp-web-06 : 서블릿
-pms2_member 테이블에 대한 CRUD 서블릿을 만들기
+## ## web-14 : JSP 경로를 /WEB-INF/ 폴더 아래로 옮긴다.
+- /WEB-INF 폴더 아래로 JSP를 옮기면 클라이언트에서 직접 요청할 수 없다. 
+- 이렇게 하면 JSP를 실행하기 위해 반드시 페이지 컨트롤러를 경유하도록 제한할 수 있다.
 
-
-#06
-Front Controller (Dispatcher Controller)
-Servlet -> POJO
-
-
-#05
-Persistence FrameWork - Mybatis 적용
-SqlSessionFactory 사용
-설정파일 1개, SQL파일 1개, 도메인 매핑, 동적 쿼리 작성
-
-#04
-서블릿에서 뷰를 JSP로 분리
- - JSTL 을 mvnrepository.com 에서 가져와 build.gradle dependencies에 추가한다(gradle eclipse 는 당연히)
- - jsp에서 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 추가
-
-Filter에서 request의 encoding을 UTF-8으로 설정했다. - 매번 servlet에서 쓰인 중복소스 제거
- - request.setCharacterEncoding("UTF-8");
-
-
-#03
-DAO로 method를 따로 분류했고, 
-JDBC드라이버는 static, 
-DAO 생성은 Listener를 사용했다. (bitcamp.pms.listener.ContextLoaderListener)
-
-테이블간 제약조건으로 Member delete는 미구현됬다.
-어떤방향으로 할지는 나중에...
-처음부터 만든게 아니므로 분석 및 목표에 따라 훈련을 우선하기로 한다.
-
-
-
-## 패키지 생성
-bitcamp.pms.servlet 패키지 생성한다.
-
-## 회원 관리 서블릿 만들기
-- servlet-api 의존 라이브러리 추가하기
-  - mvnrepository.com에서 sevlet-api 라이브러리 검색
-  - build.gradle에 라이브러리 등록
-  - 'gradle eclipse' 실행하여 .classpath 파일 갱신
-  - 이클립스 프로젝트 refresh
-- mysql jdbc driver 의존 라이브러리 추가하기  
-- bitcamp.pms.servlet.member 패키지 생성
-- MemberListServlet, MemberViewServlet, MemberAddServlet, MemberUpdateServlet, MemberDeleteServlet 클래스 생성
+## /webapp 에 존재하는 JSP 파일을 /WEB-INF 폴더로 옮긴다.
+- /member 폴더를 /WEB-INF/jsp 폴더로 옮기다.
+- 프론트 컨트롤러(DispatcherServlet)에 기본으로 설정되어 있는 ViewResolver를 
+   다른 뷰 리졸버(InternalResourceViewResolver)로 교체한다.
+   
+## 페이지 컨트롤러의 리턴 값을 변경한다.
+- 옮겨진 JSP 파일의 경로와 InternalResourceViewResolver에 설정된 접두사/접미사에 
+  맞춰 view 이름을 리턴한다.
+    

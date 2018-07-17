@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import bitcamp.pms.annoation.RequestMapping;
 import bitcamp.pms.dao.MemberDao;
 import bitcamp.pms.domain.Member;
 
-@Controller("/member/view")
+@Controller
 public class MemberViewController {
 	
 	MemberDao memberDao;
@@ -28,7 +28,7 @@ public class MemberViewController {
 	public MemberViewController() {
 	}
 
-	@RequestMapping
+	@RequestMapping("/member/view")
 	public String view(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String id = request.getParameter("id");
@@ -37,6 +37,6 @@ public class MemberViewController {
 		Member member = memberDao.selectOne(id);
 		request.setAttribute("member", member);
 		
-		return "/member/view.jsp";
+		return "member/view";
 	}
 }

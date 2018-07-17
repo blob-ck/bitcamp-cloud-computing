@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import bitcamp.pms.annoation.RequestMapping;
 import bitcamp.pms.dao.MemberDao;
 import bitcamp.pms.domain.Member;
 
-@Controller("/member/add")
+@Controller
 public class MemberAddController {
 	
 	MemberDao memberDao;
@@ -28,13 +28,13 @@ public class MemberAddController {
 		super();
 	}
 
-	@RequestMapping
+	@RequestMapping("/member/add")
 	public String service(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		//GET POST 구별을 하지 못하므로, 요청정보에서 GET인지 판별하고 맞다면 입력폼으로 리턴한다.
 		
 		if (request.getMethod().equals("GET")) {
-			return "/member/form.jsp";
+			return "member/form";
 		}
 		
 		Member member = new Member();

@@ -1,46 +1,40 @@
-# bitcamp-web-06 : 서블릿
-pms2_member 테이블에 대한 CRUD 서블릿을 만들기
+## bitcamp-web-11 : Spring + Mybatis 연동하기
+- 기존에 직접 만든 SqlSessionFactoryBean 대신에 Mybatis가 제공하는 SqlSessionFactoryBean을 사용한다.
+
+## 라이브러리 추가
+- mvnrepository.com 에서 "mybatis spring" 라이브러를 찾는다.
+- build.gradle에 의존 라이브러리 정보를 추가한다.
+- 'gradle cleanEclipse'를 실행하여 기존 이클립스 설정을 제거한다.
+- 'gradle eclipse'를 실행하여 이클립스 관련 설정 파일을 새로 만든다.
+- 이때 추가한 의존 라이브러리가 자동으로 다운로드 될 것이다.
+- 웹 프로젝트를 리프래시 하여 라이브러리 정보를 갱신한다. 
+
+## Mybatis에서 제공하는 SqlSessionFactoryBean 객체 사용하기
+- 기존의 SqlSessionFactoryBean 대신에 Mybatis-Spring에서 제공하는 클래스 사용.
+- Mybatis를 Spring과 연동하면 DataSource는 Spring 설정된 것을 사용해야 한다.
+- Mybatis 설정 파일에 등록된 DataSource는 사용하지 않는다.
+
+## Spring에 DataSource 등록하기
+- mvnrepository.com에서 "commons dbcp"를 검색하여 라이브러리를 찾는다.
+- 라이브러리를 build.gradle 파일에 등록하고, gradle을 이용해 가져온다.
+- 웹프로젝트를 리프래시 한다. 
+- application-context.xml 스프링 설정 파일에 DataSource를 설정한다.
+- Spring에서 DataSource를 설정할 때는 "spring-jdbc"라이브러리를 추가해야 한다.
+- 트랜잭션 관리자도  Spring에 등록한다.
+
+## DAO 구현체를 자동 생성하는 MapperScannerConfigurer 등록하기
+- Mybatis에서 제공하는 DAO 구현체 자동 생성기를 등록하면 개발자가 DAO 클래스를 직접 작성할 필요가 없다.
+- 대신 개발자는 DAO 인터페이스만 만들면 된다.
+
+## 기존의 DAO 클래스를 인터페이스로 변경하기
+- 기존에 작성된 DAO 클래스를 인터페이스로 변경한다.
+- 단 인터페이스명과 SQL 맵퍼의 namespace가 같게 해야 한다.
+- 인터페이스의 메서드명과 SQL의 id도 같아야 한다.
+- 인터페이스의 메서드 파라미터는 한 개여야 한다. 
+- 물론 메서드의 파라미터는 SQL의 parameterType가 같아야 한다.
 
 
-#06
-Front Controller (Dispatcher Controller)
-Servlet -> POJO
-
-
-#05
-Persistence FrameWork - Mybatis 적용
-SqlSessionFactory 사용
-설정파일 1개, SQL파일 1개, 도메인 매핑, 동적 쿼리 작성
-
-#04
-서블릿에서 뷰를 JSP로 분리
- - JSTL 을 mvnrepository.com 에서 가져와 build.gradle dependencies에 추가한다(gradle eclipse 는 당연히)
- - jsp에서 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 추가
-
-Filter에서 request의 encoding을 UTF-8으로 설정했다. - 매번 servlet에서 쓰인 중복소스 제거
- - request.setCharacterEncoding("UTF-8");
-
-
-#03
-DAO로 method를 따로 분류했고, 
-JDBC드라이버는 static, 
-DAO 생성은 Listener를 사용했다. (bitcamp.pms.listener.ContextLoaderListener)
-
-테이블간 제약조건으로 Member delete는 미구현됬다.
-어떤방향으로 할지는 나중에...
-처음부터 만든게 아니므로 분석 및 목표에 따라 훈련을 우선하기로 한다.
 
 
 
-## 패키지 생성
-bitcamp.pms.servlet 패키지 생성한다.
 
-## 회원 관리 서블릿 만들기
-- servlet-api 의존 라이브러리 추가하기
-  - mvnrepository.com에서 sevlet-api 라이브러리 검색
-  - build.gradle에 라이브러리 등록
-  - 'gradle eclipse' 실행하여 .classpath 파일 갱신
-  - 이클립스 프로젝트 refresh
-- mysql jdbc driver 의존 라이브러리 추가하기  
-- bitcamp.pms.servlet.member 패키지 생성
-- MemberListServlet, MemberViewServlet, MemberAddServlet, MemberUpdateServlet, MemberDeleteServlet 클래스 생성

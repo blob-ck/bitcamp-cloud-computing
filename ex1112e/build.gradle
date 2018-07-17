@@ -41,10 +41,10 @@ dependencies {
     // spring-context
     compile group: 'org.springframework', name: 'spring-context', version: '5.0.7.RELEASE'
 
-    // mybatis-spring 연동(SqlSessionFactoryBean 대체)
+    // mybatis-spring
     compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.2'
 
-    // commons-dbcp2
+    // apache commons-dbcp2
     compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.4.0'
 
     // spring-jdbc
@@ -52,9 +52,6 @@ dependencies {
 
     // spring-webmvc
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.7.RELEASE'
-
-
-    
     
     
     // This dependency is found on compile classpath of this component and consumers.

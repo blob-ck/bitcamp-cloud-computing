@@ -7,43 +7,33 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- XML태그가 정의된 문서를 XML schema 라 부른다. 이걸 먼저 beans 에 참조주소를 넣어줘야 context라는 xml문서를 불러와서 아래 context태그를 사용할 수 있게 된다 -->
-	<!-- 이렇게 직접 빈을 등록하지 말고, 관련 어노테이션을 붙이기만 하면 자동으로 생성하는 클래스들을 한 패키지(자바에서는 namespace)에 다 넣어놓은 거 -->
-	
-	<!-- <context:annotation-config/> -->
-	<!-- 위에 포함된거다 -->
-	<context:component-scan base-package="bitcamp.pms">
-	    <context:exclude-filter type="regex" expression="bitcamp.pms.test.*"/>
-	</context:component-scan>
-	
-	
-	<!-- Spring과 Mybatis 연동 -->
-	<!-- 1. 기존의 직접 만들었더 SqlSessionFactory를 Mybatis가 제공하는 것으로 대체한다 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"></property>
-        <property name="mapperLocations" value="classpath:bitcamp/pms/sql/**/*.xml" />
-        <property name="typeAliasesPackage" value="bitcamp.pms.domain" />
-	</bean>
-	
-	<!-- 2. dataSource에 필요한 값 - 프로퍼티 등록 -->
-    <context:property-placeholder location="bitcamp/pms/config/jdbc.properties"/>
+<context:component-scan base-package="bitcamp.pms">
+    <context:exclude-filter type="regex" expression="bitcamp.pms.test.*"/>
+</context:component-scan>
 
-	<!-- 3. 접속에 필요한 정보가 담긴 dataSource 객체 생성 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-	    <property name="driverClassName" value="${jdbc.driver}" />
-	    <property name="url" value="${jdbc.url}" />
-	    <property name="username" value="${jdbc.username}" />
-	    <property name="password" value="${jdbc.password}" />
-	</bean>
-	
-	<!-- 4. 트랜잭션을 관리할 객체 등록 -->
-	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-	    <property name="dataSource" ref="dataSource"/>
-	</bean>
-	
-	<!-- 5. DAO클래스를 인터페이스로 변환하고(직접 구체하지 않고), Spring과 연동하며 자동으로 생성할 Mapper 객체를 등록한다 --> 
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-	  <property name="basePackage" value="bitcamp/pms/dao" />
-	</bean>
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+  <property name="dataSource" ref="dataSource" />
+  <property name="mapperLocations" value="classpath*:bitcamp/pms/sql/**/*.xml"/>
+  <property name="typeAliasesPackage" value="bitcamp.pms.domain" />
+</bean>
+
+<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${jdbc.driver}" />
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+</bean>
+
+<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+
+<context:property-placeholder location="classpath:bitcamp/pms/config/jdbc.properties"/>
+
+
+
+<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+  <property name="basePackage" value="bitcamp/pms/dao" />
+</bean>
 
 </beans>

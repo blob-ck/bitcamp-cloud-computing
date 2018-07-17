@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import bitcamp.pms.annoation.RequestMapping;
 import bitcamp.pms.dao.MemberDao;
 import bitcamp.pms.domain.Member;
 
-@Controller("/member/update")
+@Controller
 public class MemberUpdateController {
 	
 	MemberDao memberDao;
@@ -27,7 +27,7 @@ public class MemberUpdateController {
 	public MemberUpdateController() {
 	}
 
-	@RequestMapping
+	@RequestMapping("/member/update")
 	public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		Member member = new Member();
@@ -36,7 +36,7 @@ public class MemberUpdateController {
 		member.setId(request.getParameter("id"));
 		
 		if (memberDao.update(member) == 0) {
-			return "/member/updatefail.jsp";
+			return "member/updatefail";
 		} else {
 			return "redirect:list";
 		}
