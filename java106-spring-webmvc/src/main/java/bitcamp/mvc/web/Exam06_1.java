@@ -1,6 +1,8 @@
 // 요청 핸들러의 리턴 값 - 콘텐트를 직접 리턴하기
 package bitcamp.mvc.web;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,7 @@ public class Exam06_1 {
     public String m1() {
         // 응답 콘텐트의 타입은 기본으로 
         // "text/html;charset=ISO-8859-1" 이다.
-        // 한글 ISO-8859-1에 정의되어 있지 않기 때문에
+        // 한글은 ISO-8859-1에 정의되어 있지 않기 때문에
         // 출력할 때 ? 문자로 바뀌어 출력된다.
         return "Exam06_1.m1() ==> 012ABCabc#!@가각간";
     }
@@ -35,7 +37,23 @@ public class Exam06_1 {
         // 
         return "Exam06_1.m2() ==> 012ABCabc#!@가각간";
     }
+
     
+    
+    
+    @GetMapping(value="m3")  
+    @ResponseBody  
+    public String m3(HttpServletResponse response) {
+    	
+    	//직접 데이터를 리턴할 때는 setContentType()이 적용되지 않는다.
+    	response.setContentType("text/plain;charset=UTF-8");
+    	
+    	// 응답 콘텐트의 타입은 기본으로 
+    	// "text/html;charset=ISO-8859-1" 이다.
+    	// 한글 ISO-8859-1에 정의되어 있지 않기 때문에
+    	// 출력할 때 ? 문자로 바뀌어 출력된다.
+    	return "Exam06_1.m3() ==> 012ABCabc#!@가각간";
+    }
 }
 
 

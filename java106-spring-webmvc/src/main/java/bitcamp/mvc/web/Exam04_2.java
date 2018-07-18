@@ -13,6 +13,7 @@ public class Exam04_2 {
     // HTTP 요청에서 특정 헤더의 존재 유무에 따라 호출될 메서드를 구분할 수 있다.
     // 테스트 방법: 
     // 예1) exam04_2.html 
+	//자바스크립트에서 요청헤더에 변수명을 맞춰 보내야한다.
     @GetMapping(value="get", headers="name")  
     @ResponseBody  
     public String m1() {

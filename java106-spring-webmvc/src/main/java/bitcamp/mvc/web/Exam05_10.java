@@ -33,7 +33,11 @@ public class Exam05_10 {
             MultipartFile photo // <input type="file" ...>
             ) throws Exception {
         
+    	
+    	//실무에 간다면 서버를 여러개 쓰므로, 한 서버에 파일을 저장하게 되면 접근하기가 힘들다.
+    	//파일을 저장할 클라우드 서버(외부 서비스 : 아마존s3, MS azure 등)를 따로 사용하여 관리한다.  
         String filePath = sc.getRealPath("/" + photo.getOriginalFilename());
+        System.out.println(sc.getRealPath("/"));
         photo.transferTo(new File(filePath));
         
         return String.format("m1(): name=%s, age=%d, photo=%s", 
@@ -43,10 +47,4 @@ public class Exam05_10 {
     }
     
 }
-
-
-
-
-
-
 

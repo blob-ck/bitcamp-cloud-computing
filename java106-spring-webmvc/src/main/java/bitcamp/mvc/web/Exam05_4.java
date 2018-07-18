@@ -39,6 +39,9 @@ public class Exam05_4 {
         // Member 파라미터 앞에 @RequestParam이 붙게 되면 
         // 반드시 파라미터명("member")으로 넘어온 값을 처리한다. 
         // 그냥 "id", "email", "password"로 넘어온 값은 처리하지 않는다.
+    	// 예) member=hong,hong@test.com,1111
+    	// 아래의 initBinder 에서 요청 파라미터가 @RequestParam Member member 인 경우 두번째 메소드(bitcamp.mvc.vo.Member.class이므로)를 실행하여 
+    	// 문자열을 , 로 구분하여 데이터 객체에 각각 입력한 후 Member객체를 파라미터로 m2메소드에 넘겨준다
         return String.format("m2(): id=%s,email=%s,password=%s", 
                 member.getId(), member.getEmail(), member.getPassword());
     }
@@ -49,7 +52,8 @@ public class Exam05_4 {
     // 그리고 요청이 들어올 때 마다 이 메서드를 먼저 실행하도록 설정해야 한다.
     //      @InitBinder 애노테이션을 붙여라
     //
-    @InitBinder // 이렇게 표시를 해야만 프론트 컨트롤러가 요청 핸들러를 호출하기 전에 먼저 이 메서드를 호출한다.
+    //initBinder 를 사용하지 않았을 때 어떤 예외가 발생하는지 알고 싶다면 Exam05_5_GlobalControllerAdvice 클래스도 @ControllerAdvice 를 주석처리해야 한다.
+    //@InitBinder // 이렇게 표시를 해야만 프론트 컨트롤러가 요청 핸들러를 호출하기 전에 먼저 이 메서드를 호출한다.
     public void initBinder(WebDataBinder binder) {
         
         // 이 메서드는 요청이 들어올 때 마다 파라미터 값을 준비하기 위해 
@@ -58,7 +62,10 @@ public class Exam05_4 {
         
         // java.lang.String ===> java.sql.Date 변환시켜주는 프로퍼티 에디터 등록
         binder.registerCustomEditor(
-                java.sql.Date.class, /* 요청 핸들러의 파라미터 타입 */ 
+                java.sql.Date.class, // 요청 핸들러의 파라미터 타입 
+                
+                //한번만 사용할 객체이므로 바깥에 클래스 선언하지 말고,
+                //PropertyEditorSupport를 상속받은 익명클래스로 작성하여 오버라이딩하여 쓰고 버린다
                 new PropertyEditorSupport() {
                     @Override
                     public void setAsText(String text) throws IllegalArgumentException {
@@ -69,8 +76,9 @@ public class Exam05_4 {
                 });
         
         // java.lang.String ===> bitcamp.mvc.vo.Member 객체로 변환시켜주는 프로퍼티 에디터 등록
+        //문자열을 객체로 변환
         binder.registerCustomEditor(
-                bitcamp.mvc.vo.Member.class, /* 요청 핸들러의 파라미터 타입 */ 
+                bitcamp.mvc.vo.Member.class, // 요청 핸들러의 파라미터 타입 
                 new PropertyEditorSupport() {
                     @Override
                     public void setAsText(String text) throws IllegalArgumentException {
@@ -88,10 +96,3 @@ public class Exam05_4 {
                 });
     }
 }
-
-
-
-
-
-
-

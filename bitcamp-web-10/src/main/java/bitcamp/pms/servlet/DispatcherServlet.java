@@ -33,7 +33,6 @@ public class DispatcherServlet extends HttpServlet {
 		//ServletContext 보관소에 저장된 IoC 컨트롤러를 찾는다.
 		ApplicationContext iocContainer = (ApplicationContext) getServletContext().getAttribute("iocContainer");
 		
-		System.out.println(iocContainer==null);
 		try {
 			
 			//iocContainer 보관소에 저장된 페이지 컨트롤러를 찾는다.

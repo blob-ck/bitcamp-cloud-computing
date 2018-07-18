@@ -23,13 +23,19 @@ public class Exam05_8 {
     @ResponseBody
     public String m1(HttpServletResponse response) {
         try {
+        	
+        	Cookie c0 = new Cookie("name", "홍길동");
+        	
+        	//톰캣서버 9이후는 한글도 자동으로 해주는데, 이전 버전은 지원하지 않으므로 인코딩 해줘야 한다
             Cookie c1 = new Cookie("name", 
-                URLEncoder.encode("홍길동", "UTF-8"));
+            		URLEncoder.encode("홍길동", "UTF-8"));
             
             Cookie c2 = new Cookie("age", "20"); 
-            
-            response.addCookie(c1);
-            response.addCookie(c2);
+           
+            						//Response Header
+            response.addCookie(c0); //Set-Cookie: name=홍길동
+            response.addCookie(c1); //Set-Cookie: name=%ED%99%8D%EA%B8%B8%EB%8F%99
+            response.addCookie(c2); //Set-Cookie: age=20
             
             return "쿠키 값을 보냈습니다";
         } catch (Exception e) {
@@ -54,6 +60,25 @@ public class Exam05_8 {
         }
     }
     
+    
+    
+    @GetMapping(value="m3", produces="text/plain;charset=UTF-8")
+    @ResponseBody
+    public String m3(
+    		// URL 인코딩된 쿠키 값을 받을 때는 Cookie 객체로 받아야 문자가 깨지지 않는다.
+    		// 최신 톰캣 9이상은 쿠키 객체로 안받아도 알아서 해주네???
+    		@CookieValue(value="name", defaultValue="") String name, 
+    		
+    		// URL 인코딩된 값이 아닌 경우에는 다음과 같이 특정 타입으로 바로 받아도 된다.
+    		@CookieValue(value="age", defaultValue="0") int age) {
+    	try {    
+    		System.out.println(name);
+    		return String.format("m2(): name=%s, age=%d", 
+    				URLDecoder.decode(name, "UTF-8"), age);
+    	} catch (Exception e) {
+    		throw new RuntimeException(e);
+    	}
+    }
 }
 
 

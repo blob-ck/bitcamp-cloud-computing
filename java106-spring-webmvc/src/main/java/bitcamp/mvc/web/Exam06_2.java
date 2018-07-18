@@ -15,6 +15,11 @@ public class Exam06_2 {
     
     // request handler에서 콘텐트를 직접 리턴할 때
     // HttpEntity에 담아서 리턴할 수 있다.
+	/*통신 메시지 관련 header와 body의 값들을 하나의 객체로 저장하는 것이 HttpEntity 클래스 객체
+	Request 부분일 경우 HttpEntity를 상속받은 RequestEntity가, Response 부분일 경우 HttpEntity를 상속받은 ResponseEntity가 있다.
+	@ResponseBody나 ResponseEntity를 return 하는거나 결과적으로는 같은 기능이지만
+	header 값을 변경시켜야 할 경우엔 @ResponseBody의 경우 파라미터로 Response 객체를 받아서 이 객체에서  header를 변경시켜야 하고,
+	ResponseEntity에서는 이 클래스 객체를 생성한뒤 객체에서 header 값을 변경해야 한다.*/
     @GetMapping(value="m1")  
     public HttpEntity<String> m1() {
         // 마찬가지로 응답 콘텐트의 기본 타입은 

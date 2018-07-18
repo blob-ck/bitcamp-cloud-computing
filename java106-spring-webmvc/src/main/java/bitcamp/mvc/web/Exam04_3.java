@@ -12,6 +12,7 @@ public class Exam04_3 {
     
     // HTTP 요청에서 "Accept" 헤더의 값에 따라 호출될 메서드를 구분하기
     // => 클라이언트가 리턴 받기를 원하는 타입이 무엇인지를 지정하는 헤더가 Accept 이다.
+	// => 자바스크립트로 지정해야 한다.
     // 테스트 방법: 
     // 예1) exam04_3.html 
     @GetMapping(value="get", produces="text/plain")  

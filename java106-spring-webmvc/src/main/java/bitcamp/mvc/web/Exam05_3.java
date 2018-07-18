@@ -12,6 +12,11 @@ import bitcamp.mvc.vo.Board;
 @RequestMapping("/exam05_3") 
 public class Exam05_3 {
     
+	
+	//객체(VO)의 프로퍼티 명과 파라미터명이 일치한다면 자동으로 초기화 해준다
+	//exam05_2 에서는 파라미터 타입이 primitive type면 값이 존재하지 않을때 null로 초기화를 시도하여 예외가 발생했으나,
+	//이런 사용자 데이터타입의 객체를 사용하면 파라미터 값이 존재하지 않을 때 int 는 0 이 입력된다.
+	
     // 프론트 컨트롤러로부터 클라이언트가 보낸 값들을 객체에 담아서 받을 수 있다.
     // 테스트:
     // http://localhost:8888/java106-spring-webmvc/mvc/exam05_3/m1?no=11&title=aaaa&content=bbbb
