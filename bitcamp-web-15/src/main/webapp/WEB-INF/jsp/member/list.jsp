@@ -8,8 +8,8 @@
 <title>멤버 목록</title>
 </head>
 <body>
-<h1>멤버 목록 Spring(DB ConnectionPool) + Mybatis(SqlSessionFactoryBean)</h1>
-<p><a href='add'>새회원</a></p>
+<h1>멤버 목록</h1>
+<p><a href='form'>새회원</a></p>
 <table border='1'>
 <tr>
     <th>아이디</th><th>이메일</th>
@@ -32,7 +32,7 @@ for(Member member : list){
 <c:forEach items="${list}" var="member">
 <tr>
 <%-- ${member.getId() EL의 간편 기능을 사용하면 이렇게도 된다 ${member.id} --%>
-    <td><a href='view?id=${member.getId()}'>${member.id}</a></td>
+    <td><a href='view/${member.getId()}'>${member.id}</a></td>
     <td>${member.email}</td>
 </tr>
 </c:forEach>

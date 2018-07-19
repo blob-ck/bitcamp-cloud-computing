@@ -28,6 +28,9 @@ public class Exam07_2 {
                 produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String m2( 
+    		// 세미콜론으로 변수를 구분하는 형식을 매트릭스 변수라 하는데, 
+    		// @PathVariable 만 쓰면 통으로 저장하므로
+    		// 이 매트릭스 변수에서 개별 변수값을 알고 싶다면 @MatrixVariable을 써야한다.
             @PathVariable String value,
             @MatrixVariable String name,
             @MatrixVariable int age,

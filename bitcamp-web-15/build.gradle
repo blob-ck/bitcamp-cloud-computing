@@ -53,6 +53,12 @@ dependencies {
 
     // spring-webmvc
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.7.RELEASE'
+    
+    
+    
+    // JSON 데이터를 다루는 라이브러리
+    // Date 형식을 변환할 때 milliSecond로 바꾼다. -> gson과는 다르게 특정 국가 언어에 종속되지 않는 장점이 있다
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
 
     
     

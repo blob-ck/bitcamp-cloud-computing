@@ -21,6 +21,7 @@ public class Exam07_1 {
     @GetMapping(value="m2/{name}/{age}", 
                 produces="text/plain;charset=UTF-8")
     @ResponseBody
+    // http://localhost:8080/java106-spring-webmvc/mvc/exam07_1/m2/aaa/20 <- 이렇게 / 로 파라미터를 구분한다
     public String m2(
             @PathVariable String name, 
             @PathVariable int age) {

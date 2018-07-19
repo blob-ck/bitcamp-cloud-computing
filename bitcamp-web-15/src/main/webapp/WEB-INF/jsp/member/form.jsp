@@ -27,8 +27,7 @@ form.jsp가 존재하는 현재 폴더 = app/member/form.jsp
 </tr>
 </table>
 <button>등록</button>
-
 </form>
-
+<a href='list'>목록</a>
 </body>
 </html>

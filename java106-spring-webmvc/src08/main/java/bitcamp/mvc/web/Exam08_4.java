@@ -2,6 +2,7 @@
 package bitcamp.mvc.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class Exam08_4 {
     @ResponseBody
     public String m1(
             // 만약 세션에 보관된 값이 없다면 실행 오류가 발생한다!
-            @ModelAttribute("name") String name, 
+            @ModelAttribute(value="name") String name, 
             @ModelAttribute("age") int age,
             @ModelAttribute("working") boolean working) {
         
@@ -31,12 +32,23 @@ public class Exam08_4 {
     
     @GetMapping(value="m2", produces="text/plain;charset=UTF-8")
     @ResponseBody
-    public String m2(SessionStatus status) {
-        
-        // SessionStatus로 세션에 보관된 값 없애기
-        status.setComplete();
-        
+    public String m2(
+    	@ModelAttribute(value="name") String name, 
+    	@ModelAttribute("age") int age,
+    	@ModelAttribute("working") boolean working) {
+    	
         return String.format("m2(): SessionStatus로 세션에 보관된 값 없애기");
+    }
+    
+    
+    @GetMapping(value="m3", produces="text/plain;charset=UTF-8")
+    @ResponseBody
+    public String m2(SessionStatus status) {
+    	
+    	// SessionStatus로 세션에 보관된 값 없애기
+    	status.setComplete();
+    	
+    	return String.format("m3(): SessionStatus로 세션에 보관된 값 없애기");
     }
 }
 

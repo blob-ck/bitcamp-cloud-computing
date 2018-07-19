@@ -14,7 +14,7 @@
 	    <context:exclude-filter type="regex" expression="bitcamp.pms.test.*"/>
 	</context:component-scan>
 	
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven enable-matrix-variables="true"/>
 	
 	<!-- Spring - Mybatis 연동 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
