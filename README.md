@@ -28,7 +28,6 @@
 
 ## web-07 : Page Controller를 POJO로 변환
 - 프론트 컨트롤러가 도입되면 페이지 컨트롤러는 일반 자바 객체로 만들어도 된다. 
-- Front Controller(DispatcherServlet) - PageController(interface) - PageController(POJO class)
 
 ## web-08 : 애노테이션으로 요청 핸들러 다루기
 - 요청 핸들러(Request Handler) : 클라이언트 요청이 들어 왔을 때 호출되는 메서드이다. 즉 클라이언트 요청을 처리하는 메서드.
@@ -54,13 +53,21 @@
 ## web-13 : Spring WebMVC의 DispatcherServlet 사용하기
 - 기존에 직접 만든 DispatcherServlet 대신에 Spring WebMVC에서 제공하는 클래스를 사용한다.
 
-## web-14 : JSP 경로를 /WEB-INF/ 폴더 아래로 옮긴다.
+## web-14 : InternalResourceViewResolver 사용하기
+- JSP 경로를 /WEB-INF/ 폴더 아래로 옮긴다.
 - /WEB-INF 폴더 아래로 JSP를 옮기면 클라이언트에서 직접 요청할 수 없다. 
 
+## web-15 : 요청 핸들러의 파라미터와 리턴 값 다루기
+- 요청 핸들러의 파라미터 다루기
+- 요청 핸들러의 리턴 다루기
 
+## web-16 : 서비스 컴포넌트 도입
+- 페이지 컨트롤러에서 비즈니스 로직을 분리하여 별도의 클래스로 정의한다.
+- 이 클래스를 서비스 객체라 부른다.
+- 서비스 객체는 비즈니스 로직과 트랜잭션 처리를 담당한다.
 
-
-
+## web-17 : 서비스 컴포넌트에 트랜잭션 적용
+- 트랜잭션 관리자를 설정하여 서비스 메서드에 트랜잭션을 적용한다.
 
 
 
