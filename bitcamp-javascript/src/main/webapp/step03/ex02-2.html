@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 03</title>
+</head>
+
+<body>
+
+<script>
+"use strict"
+//익명 함수는 r-value(=을 기준으로 오른쪽에 있는 값) 이기 때문에, hoisting대상이 아니다.
+//hoisting대상은 l-value(=을 기준으로 왼쪽에 있는 값)
+
+//변수 선언과 함수 정의만 호이스팅 된다.
+// => 익명 함수는 = 연산자 오른쪽에 위치하기 때문에 호이스팅 되지 않는다.
+f1(); // => 실행 오류!  Uncaught TypeError: f1 is not a function
+
+//
+var f1 = function(){  
+    console.log("f1()")
+}; //익명함수를 사용할 경우는 ;를 붙여줘야 한다.
+
+</script>
+
+</body>
+</html>

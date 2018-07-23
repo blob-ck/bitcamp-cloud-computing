@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>변수 선언 - 변수 hoisting(끌어올리기)</h1>
+	<script>
+		"use strict"
+		//strict모드에서는 변수를 선언하지 않고 사용할 수 없다.
+		a = 100; //실행오류
+	</script>
+	<script>
+		"use strict"
+		//strict모드에서는 변수를 선언하지 않고 사용할 수 없다.
+		b = 100; // 그런데 사용 후에라도 변수를 선언하면 오류가 발생하지 않는다.
+		//자바스크립트는  script태그를 실행하기 전에 
+		//먼저 script태그 내에 서넌된 모든 변수 선언을 맨 위로 끌어올려 먼저 실행한다.
+		//즉, b = 100; 보다 var b;를 먼저 실행하므로 문제가 없다.
+		var b;
+		
+		//주의 !!!!!!
+		//변수 선언과 값 할당하는 문장이 함께 있을 경우,
+		//변수 선언만 끌어올려지고, 할당문은 그 자리에 그대로 놓인다.
+		//즉, var b = 100;하면 var b;만 호이스팅한다!
+		console.log(c);//undefined
+		c = 111;
+		console.log(c);//111
+		var c = 999;
+		console.log(c);//999
+		
+		
+	</script>
+</body>
+</html>

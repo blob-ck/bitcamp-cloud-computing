@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>배열 선언 - 단축문법 []</h1>
+	<script>
+    "use stirct"
+    
+    //자바스크립트 배열은 Array() 함수로 만든 객체이다.
+    // 따라서 배열에 필요한 메서드를 호출할 수 있다.
+    
+    //Array() 함수를 사용하여 배열 만들기
+    //var arr = new Array();
+    var arr = [];
+    
+    //배열에 값 넣기
+    arr[0] = 100;
+    arr[1] = 200;
+    arr[2] = 300;
+    arr[3] = 400;
+    arr[4] = 500;
+    
+    console.log("------------------------");
+    console.log("배열 길이 = " + arr.length);
+    for (var i = 0; i < arr.length; i++) {
+	    console.log("배열[" + i + "] = " + arr[i]);
+    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 02</title>
+</head>
+
+<body>
+	<h1>반복문 - 객체에 for..of</h1>
+	<script>
+	"use stirct"
+
+	var obj = new Object();
+	obj.name = "홍길동";
+	obj.kor = 100;
+	obj.eng = 100;
+	obj.math = 96;
+	obj.sum = obj.kor + obj.eng + obj.math;
+	obj.aver = obj.sum/3;
+	
+	//for...of 의 대상은 array, string, Map, Set, NodeList만 가능하다.
+	//일반객체를 대상으로 실행할 수는 없다. for...in만 가능
+	//반복문을 돌릴 대상이 객체인 경우 i의 값은 프로퍼티 값이다.
+/* 	for (var i of obj) {
+	    console.log(i, obj[i]);   //실행 오류 뜬다.
+	} */
+	
+	var myMap = new Map();
+	myMap.set("name", "홍길동");
+	myMap.set("kor", 100);
+	myMap.set("eng", 100);
+	myMap.set("math", 96);
+	myMap.set("sum", myMap.get("kor") + myMap.get("eng")  +myMap.get("math"));
+	myMap.set("avr", myMap.get("sum") / 3);
+	
+	for (var i of myMap) { 
+	    // map객체에 배열이 들어가있다.
+	    // key = i[0];   value = i[1];
+	   console.log(i[0], i[1]);
+	}
+	
+	//문자열일 경우 i는 각 문자 값이다.
+	for (var i of "string") { 
+	   console.log(i);
+	}
+
+    </script>
+</body>
+</html>

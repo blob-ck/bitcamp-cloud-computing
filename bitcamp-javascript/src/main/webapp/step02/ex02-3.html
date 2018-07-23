@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 02</title>
+</head>
+
+<body>
+	<h1>조건문 - if</h1>
+	<script>
+    var count = 1;
+    var sum = 0;
+    
+	for (var count = 1; count <= 10;  count++) {
+	    sum += count;
+	}
+    console.log("sum = " + sum);
+    
+    sum = 0;
+	for (; count <= 10;  count++) {
+	    sum += count;
+	}
+    console.log("sum not declared = " + sum);
+
+	sum = 0;
+	for (; count <= 10;) {
+	    sum += count;
+	    count++;
+	}
+    console.log("sum not ++ = " + sum);
+    
+	sum = 0;
+	for (;;) {
+	    sum += count;
+	    count++;
+	    if(count >10)
+	        break;
+	}
+    console.log("sum ;; if = " + sum);
+    </script>
+</body>
+</html>

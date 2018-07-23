@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>변수 선언 - 중복 선언</h1>
+	<script>
+		"use strict"
+		
+		//자바스크립트는 변수를 중복 선언해도 오류가 아니다.
+		//변수 이름은 window 객체에 값을 넣는  key이기 때문이다.
+		//서블릿에서 request.setAttribute("id", "뭐라뭐라")를 생각하면 될듯.
+		//자바의 맵 객체에 키 값으로 초기화 하는 것도 마찬가지다.
+		//HashMap map = new HashMap<>();
+		//map.put("a", 100);
+		//map.put("a", "Hello");
+		//자바스크립트에서는 그걸 var 키워드가 담당할 뿐!
+		
+		var a = 100; //window["a"] = 100;
+		console.log(a);
+		
+		var a = "Hello"; //window["a"] = "Hello";
+		console.log(a);
+		
+	</script>
+</body>
+</html>

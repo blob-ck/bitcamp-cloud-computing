@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 02</title>
+</head>
+
+<body>
+	<h1>조건문 - if</h1>
+	<script>
+    var p1 = "사람1 = ";
+        var age = 20;
+        if (age < 19)
+            console.log(p1+"민짜입니다.");
+        else
+            console.log(p1+"성인입니다")
+    </script>
+    
+	<script>
+	   var p2 = "사람2 = ";
+        var age = 66;
+        if (age < 19)
+            console.log(p2+"민짜입니다.");
+        else
+            if(age >= 19 && age <65)
+                console.log(p2+"성인입니다.")
+	        else
+	            console.log(p2+"노인입니다.");
+    </script>
+</body>
+</html>

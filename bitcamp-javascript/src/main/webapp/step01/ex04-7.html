@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>변수 선언 - 글로벌 변수와 로컬 변수의 충돌</h1>
+	<script>
+		"use strict"
+		
+		var a = "Global";
+		
+		function f()  {
+			
+			var a; // 글로벌 변수와 이름이 같아도 함수 안에서는 별도의 로컬 변수다.
+			a = "Local";
+			
+			// 자바스크립트의 로컬 변수는 오직 함수 안에 선언된 변수이다.
+			var b; //함수 안에서 선언한 변수는 로컬변수다.
+			b = 200;
+			{
+				var c = 300; //c는 b와 마찬가지로 f()의 로컬변수다. JS는 블록범위제한 지원 안하므로
+			}
+			
+			console.log("f(): ", a);
+			console.log("f(): ", b);
+			console.log("f(): ", c); //OK!
+		}
+		
+		f(); //Local
+		console.log(a); //Global
+		
+		//결론!
+		//로컬 변수와 이름이 같은 글로벌 변수를 가리키고 싶다면
+		//window.a로 쓰면 된다. 정확하게 window객체를 지정할 것!
+		
+		
+	</script>
+</body>
+</html>

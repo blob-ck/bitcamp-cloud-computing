@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 02</title>
+</head>
+
+<body>
+	<h1>반복문 - 객체에 for..in</h1>
+	<script>
+	"use stirct"
+
+	var obj = new Object();
+	obj.name = "홍길동";
+	obj.kor = 100;
+	obj.eng = 100;
+	obj.math = 96;
+	obj.sum = obj.kor + obj.eng + obj.math;
+	obj.aver = obj.sum/3;
+	
+	//반복문을 돌릴 대상이 객체인 경우 i의 값은 프로퍼티명이다.
+	// key = i , value = obj[i]
+	for (var i in obj) {
+	    console.log(i, obj[i]);
+	}
+
+    </script>
+</body>
+</html>

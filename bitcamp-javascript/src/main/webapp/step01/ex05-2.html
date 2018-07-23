@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>배열 선언 - 배열에 값 삽입하기</h1>
+	<script>
+    "use stirct"
+    
+    //자바스크립트의 배열 크기는 가변적이다.
+    // => 값을 넣는 만큼 자동으로 크기가 커진다.
+    //Array() 함수를 사용하여 배열 만들기
+    var arr = new Array();
+    
+    //배열에 값 넣기
+    arr[0] = 100;
+    arr[1] = 200;
+    arr[2] = 300;
+    
+    //배열 객체는 배열의 크기를 보관하고 있는  length라는 빌트인 변수가 있다.
+    for (var i = 0; i < arr.length; i++) {
+	    console.log("arr[" + i + "] = " + arr[i]);
+    }
+	</script>
+</body>
+</html>

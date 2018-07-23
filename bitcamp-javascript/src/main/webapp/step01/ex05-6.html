@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>배열 선언 - forEach 메서드</h1>
+	<script>
+    "use stirct"
+    
+    /*
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+    
+    arr.forEach(function callback(currentValue[, index[, array]]) {
+    //your iterator
+    }[, thisArg]);
+	
+	*/
+    
+    //자바스크립트 배열은 Array() 함수로 만든 객체이다.
+    // 따라서 배열에 필요한 메서드를 호출할 수 있다.
+    
+    //Array() 함수를 사용하여 배열 만들기
+    var arr = new Array();
+    
+    //배열에 값 넣기
+    arr[0] = 100;
+    arr[1] = 200;
+    arr[2] = 300;
+    arr[3] = 400;
+    arr[4] = 500;
+    
+    console.log("------------------------");
+    console.log("배열 길이 = " + arr.length);
+    for (var i = 0; i < arr.length; i++) {
+	    console.log("배열[" + i + "] = " + arr[i]);
+    }
+    
+    console.log("------------------------");
+    // forEach(배열 각 항목에  대해 호출될 함수)
+    // => 배열의 항목 수 만큼 반복하면서 파라미터로 넘겨받은 function(){}함수를 호출한다.
+    // => 두 번째로 넘겨받은 파라미터는 항목의 (인덱스,값)을 넘긴다.
+    arr.forEach(function(element) {
+	    console.log(element);
+    })
+    
+    
+    //실무에선 이렇게 더 많이 쓰인다.
+    function f1(value, index, arr){
+	    console.log(index, value);
+    }
+    
+    arr.forEach(f1);
+    
+	</script>
+</body>
+</html>

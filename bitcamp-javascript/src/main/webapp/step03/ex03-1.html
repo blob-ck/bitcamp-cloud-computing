@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 03</title>
+</head>
+
+<body>
+
+<script>
+"use strict"
+
+function f1() {  
+    console.log("f1()")
+}
+
+f1();
+
+var f2 = f1; //함수명은 함수를 가리키는 변수이다. 함수 실행결과가 아니라 함수객체 자체를 초기화한다.
+			//이 변수에는 함수 객체의 주소가 들어있다.
+			//따라서 다른 변수에게 그 함수의 주소를 전달할 수 있다.
+			//즉, 함수 실행결과가 아니라 함수객체 자체를 초기화한다.
+f2();// 실행할 때는 일반함수와 마찬가지로 ()붙이면 됨.
+</script>
+
+</body>
+</html>

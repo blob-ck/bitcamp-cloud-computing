@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>strict mode</h1>
+	<script type="text/javascript">
+		//자바스크립트는 변수를 선언하지 않고 바로 사용할 수 있다.
+		//var a;
+
+		a = 100; // a 변수는 number타입이 된다.
+		console.log(a);
+
+		a = "Hello"; // a 변수는 string 타입이 된다.
+		console.log(a);
+
+		//변수 선언없이 마구잡이로 변수를 사용하면 유지보수가 힘들어진다.
+		//이런 이유로 변수선언을 강요하기 위해 strict 모드가 제공된다.
+
+		"use strict" //그냥 한 줄의 문자열로 strict를 선언
+
+		b = 200; // 오류? ㄴㄴ 반드시 script태그의 첫 줄에 "use strict" 선언해야 한다.
+		console.log(typeof b);
+	</script>
+
+	<script type="text/javascript">
+		"use strict"
+		//자바스크립트는 변수를 선언하지 않고 바로 사용할 수 있다.
+		//var a;
+
+		a = 999999;
+		console.log(a);//이건 위쪽 script태그에서 strict를 사용하지 않고 선언없이 초기화해서 여기에서도 사용가능하다.
+		c = 100;
+		console.log(c);//이건 "use strict"를 사용한 태그에서 처음 나온 변수이므로 에러가 뜬다.
+		//변수 선언없이 마구잡이로 변수를 사용하면 유지보수가 힘들어진다.
+		//이런 이유로 변수선언을 강요하기 위해 use strict 모드가 제공된다.
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>strict mode와 script태그</h1>
+	<script type="text/javascript">
+		"use strict"
+		//var a;
+		a = 999999;
+		console.log("출력될까? = "+a);
+	</script>
+	
+	<script type="text/javascript">
+	    //"use strict" 는 선언된 태그 내부에서만 적용된다.
+		//var b;
+		b = 999999;
+		console.log("정상출력 b = "+b);
+	</script>
+
+</body>
+</html>

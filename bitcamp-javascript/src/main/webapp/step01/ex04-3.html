@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>변수 선언 - window 변수에 값 넣기</h1>
+	<script>
+		"use strict"
+		
+		window.a = 100;
+		window["b"] = 200;
+		window['c'] = 300;
+
+		console.log(a);
+		console.log(b);
+		console.log(c);
+		
+		// 점 . 을 사용할 때는 변수 이름에 공백이나 특수문자를 넣을 수 없다.
+		//window.first-name = "홍길동"; //오류 뜸
+		//window.first name = "홍길동"; //오류 뜸
+		//window.first^^name = "홍길동"; //오류 뜸
+		//window.1stName = "홍길동"; //일반 변수명으로 숫자를 먼저 쓸 수 없다. 오류 뜸
+		
+		//그런데 대괄호를 사용하면 모두 사용 가능하다.(공백, 특수문자, 숫자시작 등)
+		window["first-name"] =  "---호롤롤로";
+		window["first name"] =  "   호롤롤로";
+		window["first^^name"] =  "^^^호롤롤로";
+		window["1stName"] =  "111호롤롤로";
+		
+		console.log(window["first-name"]);
+		console.log(window["first name"]);
+		console.log(window["first^^name"]);
+		console.log(window["1stName"]);
+		
+		
+	</script>
+</body>
+</html>

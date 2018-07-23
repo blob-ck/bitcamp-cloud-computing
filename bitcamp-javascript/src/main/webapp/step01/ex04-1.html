@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>변수 선언 - 사용 범위</h1>
+	<script>
+		"use strict"
+		var a; // 한 번 변수를 선언하면 다음 script 태그에서도 사용할 수 있다.
+		
+		a = 1111111;
+		console.log("출력될까? = "+a); //출력됨
+	</script>
+	
+	<script>
+		"use strict"
+		
+		a = 2222222;
+		console.log("출력될까? = "+a); //출력됨
+	</script>
+	
+	
+</body>
+</html>

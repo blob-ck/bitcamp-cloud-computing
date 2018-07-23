@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>변수 선언 - 로컬 변수</h1>
+	<script>
+		"use strict"
+		// 자바스크립트의 로컬 변수는 오직 함수 안에 선언된 변수이다.
+		var a = 100;
+		
+		function f()  {
+			
+			var b = 200; //함수 안에서 선언한 변수는 로컬변수다.
+			
+			console.log("f(): ", a);
+			console.log("f(): ", b);
+			
+		}
+		
+		f();
+		console.log(a);
+		console.log(b); //로컬변수라서 사용할 수 없다.
+		
+		
+	</script>
+</body>
+</html>
