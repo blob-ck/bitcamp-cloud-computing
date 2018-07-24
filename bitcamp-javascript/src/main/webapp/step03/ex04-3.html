@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 03</title>
+</head>
+
+<body>
+
+<h1>클로저(closure) - 인스턴스 변수와 private 흉내내기</h1>
+
+<script>
+"use strict"
+
+function Score(name, kor, eng, math) {
+    //파라미터도 로컬변수다.
+    //바깥함수의 로컬변수는 클로저에서 따로 복제하여 둔다.
+    // 그리고 오직 클로저만이 접근할 수 있다.
+    // => 자바의 private 접근제한자처럼 사용할 수 있다.
+    
+    // 함수를 여러개 리턴해보자
+    // 어떻게? 객체에 담아 리턴하면 된다.
+    var obj = new Object();
+    
+    obj.setName = function(n) {name = n;};
+    obj.getName = function() {return name;};
+    
+    obj.setKor = function(value) {kor = value;};
+    obj.getKor = function() {return kor;};
+    
+    obj.setEng = function(value) {eng = value;};
+    obj.getEng = function() {return eng;};
+    
+    obj.setMath = function(value) {math  = value;};
+    obj.getMath = function() {return math;};
+    
+    obj.sum = function() {return kor + eng + math;};
+    obj.aver = function() {return this.sum()/3};  //여기서 this는  obj를 가리킨다.
+    
+    return obj;
+}
+
+//만들어진 시기가 같은 내부함수들끼리는 클로저 메모리를 공유한다.
+
+var s1 = Score("홍길동", 100, 100, 96);
+var s2 = Score("임꺽정", 95, 95, 96);
+
+console.log(s1.getName(), s1.sum(), s1.aver());
+console.log(s2.getName(), s2.sum(), s2.aver());
+
+</script>
+
+</body>
+</html>

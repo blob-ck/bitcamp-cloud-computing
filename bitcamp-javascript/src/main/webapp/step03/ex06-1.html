@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 03</title>
+</head>
+
+<body>
+<h1>arrow 함수 - 정의하기</h1>
+<script>
+"use strict"
+
+//일반 함수 정의
+function f1(a, b){
+    console.log(a, b);
+}
+
+
+//익명 함수 정의 - 보통 중괄호 뒤에 ; 붙여준다. 익명함수이므로 할당하는 것을 구분하기 위해서
+var f2 = function(a, b){
+    console.log(a, b);
+};
+
+
+
+//Arrow 함수 - 익명함수 편하게 정의하기
+var f3 = (a, b) => {
+    console.log(a, b);
+};
+
+
+//자바스크립트는 파라미터의 개수와 아규먼트이 개수가 일치하지 않아도 된다.
+f1(); //ok but undefined, undefined
+f2(100); //ok but 100, undefined
+f3(100, 200); // 100, 200
+
+</script>
+
+</body>
+</html>

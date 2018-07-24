@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 03</title>
+</head>
+
+<body>
+<h1>arrow 함수 - 정의하기</h1>
+<script>
+"use strict"
+
+//arrow
+var f1 = () => {console.log("hello1");};
+f1();
+
+var f2 = (a) => {console.log("hello2");};
+f2();
+
+//파라미터가 한개라면 소괄호 생략 가능
+var f3 = a => {console.log("hello3");};
+f3();
+
+//파라미터가 여러개인 경우 (소괄호 생략 불가)
+var f4 = (a, b, c) => {console.log(a, b, c);};
+f4(1, 2, 3);
+
+</script>
+
+</body>
+</html>

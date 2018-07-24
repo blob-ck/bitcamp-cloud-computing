@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>step01 ex04-9 이후 내용임.</h1>
+	<h1>변수 선언 - 변수 destructuring(분해)</h1>
+	<script>
+		"use strict"
+		var arr = ["홍길동", 100 ,100, 200];
+		
+		//배열의 각 항목의 값을 변수에 저장한다.
+		//일반적인 방식은
+		var name = arr[0];
+		var kor = arr[1];
+		var eng = arr[2];
+		var math = arr[3];
+		console.log(name, kor, eng, math);
+		
+		//배열의 값을 분해하여 변수에 저장할 수 있다.
+		//배열의 값을 분해하여 저장할 때는 []를 사용한다.
+		//destructuring ( 분해 )
+		var [name2, kor2, eng2, math2] = arr;
+		console.log(name2, kor2, eng2, math2);
+		
+		//배열의 값을 분해하여 일부 변수에 저장할 수 있다.
+		//destructuring ( 분해 )
+		var [name3, kor3] = arr;
+		console.log(name3, kor3);
+		
+	</script>
+</body>
+</html>

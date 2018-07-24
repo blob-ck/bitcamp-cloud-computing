@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 03</title>
+</head>
+
+<body>
+<h1>함수 파라미터 - default 파라미터</h1>
+<script>
+"use strict"
+
+//파라미터로 값이 넘어오지 않을 경우 기본값을 설정할 수 있다.
+//다만 기본값을 사용하게 될 경우 arguments에 저장되지 않는다. 단순히 기본값을 사용한 것이므로.
+function f1(a, b, c = 999, d){
+    console.log("=> " + a, b, c, d);
+    console.log("------------------------------------");
+    // arguments는 모든 아규먼트가 들어있다.
+    console.log("length = " + arguments.length);
+    for(var value of arguments) {
+        console.log("argument = " + value);
+    }
+    console.log("====================================");
+}
+
+
+//자바스크립트는 파라미터의 개수와 아규먼트이 개수가 일치하지 않아도 된다.
+f1(); //ok but undefined, undefined
+f1(100); //ok but 100, undefined
+f1(100, 200); // 100, 200
+f1(100, 200, 300);
+f1(100, 200, 300, 400);
+f1(100, 200, 300, 400, 500);
+
+
+
+</script>
+
+</body>
+</html>

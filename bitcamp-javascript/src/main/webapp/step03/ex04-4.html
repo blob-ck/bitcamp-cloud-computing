@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>클로저(closure) - 글로벌 변수와 closure</h1>
+
+<script>
+"use strict"
+
+var interest = 0.018; // 연이자율
+
+function bank() {
+    
+    //closure에서 바깥함수의 로컬변수가 아닌
+    //글로벌변수를 사용한다면?
+    // => 글로벌변수는 바깥 함수의 호출이 끝나더라도 사라지는 변수가 아니므로,
+    //    별도의 메모리에 복제하지 않는다.
+    //즉, 클로저의 장점이 사라진다.
+    //별도의 자기만의 변수를 가지는게 아닌, 글로벌변수에 종속적으로 변해버린다.
+    return function(money) {
+        console.log("만기 금액 : " , money + (money * interest));
+    }
+}
+
+var compute = bank();
+
+compute(1000000); // 1018000
+
+
+
+//글로벌 변수인 이자율 변경 후
+interest = 0.045;
+compute(1000000); // 1045000
+
+</script>
+</body>
+</html>
+
+
+
+
+
+

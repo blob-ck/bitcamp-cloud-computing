@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>기타 변수 - let 변수와 블록</h1>
+	<script>
+		"use strict"
+		
+		//----------------------------var--------------------------------
+		var a = 100;
+		{
+			//같은 변수를 선언하면 기존 변수를 덮어쓴다.
+		    var a = 200; // OK! a는 블록 {} 바깥의 변수와 동일하다.
+			console.log("a in block", a); // 200
+		}
+		console.log("a outer", a); // 200
+		    
+		
+		//----------------------------let--------------------------------
+		let b = 1000;
+		{
+			//이 블록에서만 사용가능한 새 변수를 선언한다.
+			//블록 {} 바깥의 b 와는 다르다.
+		    let b = 2000; // Error! Identifier 'b' has already been declared
+			console.log("b in block", b); // 2000
+		}
+		console.log("b outer", b); // 1000
+		
+		
+		// let 문법은 자바처럼 블록에 제한되는 로컬 변수를 만들 수 있다.
+		// 왜? 기존으니 var을 그렇게 만들면 안되었을까?
+		// => 기존의 모든 웹페이지의 var을 전부 바꿔야하는데 어쩔 수 없이 새로 만든거
+		
+	</script>
+</body>
+</html>

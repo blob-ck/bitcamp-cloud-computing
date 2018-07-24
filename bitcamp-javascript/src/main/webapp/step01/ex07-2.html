@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 01</title>
+</head>
+
+<body>
+
+	<h1>기타 변수 - let 상수</h1>
+	<script>
+		"use strict"
+		
+		//----------------------------var--------------------------------
+		var a = 100;
+		
+		//같은 변수를 선언하면 기존 변수를 덮어쓴다.
+	    var a = 200; // OK!
+		console.log(a); // 200
+		
+		//----------------------------let--------------------------------
+		let b = 100;
+		
+		//let으로 선언된 변수는 덮어쓸 수 없다. 느슨한 자바스크립트 문법을 보완하여 유지보수 능률 업!
+	    let b = 200; // Error! Identifier 'b' has already been declared
+		console.log(b);
+	</script>
+</body>
+</html>

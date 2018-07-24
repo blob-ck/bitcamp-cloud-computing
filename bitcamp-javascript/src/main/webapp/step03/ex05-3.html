@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 03</title>
+</head>
+
+<body>
+<h1>함수 파라미터 - Rest 파라미터 "...x"</h1>
+<script>
+"use strict"
+
+// rest 파라미터 "..."는 나머지 아규먼트 값을 갖고 있는 배열이다.
+// 주의!! 항상 맨 뒤의 파라미터로 와야한다.
+function f1(a, b, ...x){
+    console.log(a, b);
+    console.log("------------------------------------");
+    
+    // x 배열에는 a, b 를 제외한 나머지 아규먼트가 들어있다.
+    for(var value of x) {
+        console.log(value);
+    }
+    console.log("------------------------------------");
+    
+    // arguments는 모든 아규먼트가 들어있다.
+    console.log("length = " + arguments.length);
+    for(var value of arguments) {
+        console.log("argument = " + value);
+    }
+    console.log("====================================");
+}
+
+
+//자바스크립트는 파라미터의 개수와 아규먼트이 개수가 일치하지 않아도 된다.
+f1(); //ok but undefined, undefined
+f1(100); //ok but 100, undefined
+f1(100, 200); // 100, 200
+f1(100, 200, 300);
+f1(100, 200, 300, 400);
+f1(100, 200, 300, 400, 500);
+
+
+
+//Rest parameters and default parameters are supported
+/* 
+(param1, param2, ...rest) => { statements } 
+(param1 = defaultValue1, param2, …, paramN = defaultValueN) => { 
+statements } 
+ */
+
+</script>
+
+</body>
+</html>
