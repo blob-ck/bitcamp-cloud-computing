@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 05</title>
+</head>
+
+<body>
+<h1>window - location 현재 페이지 정보</h1>
+
+<!-- 현재 페이지를 새로고침 할 때 좋다. 입력된 값은 날려버림 -->
+<input type="text">
+<button onclick="location.reload()">현재페이지 다시 로딩</button>
+
+
+<script>
+"use strict"
+//window.location
+// => 현재 페이지의 정보를 다루는 객체
+console.log(location); //window 생략 가능
+console.log("href", location.href); // http://localhost:8080/bitcamp-javascript/step05/ex03-1.html
+console.log("origin", location.origin); // http://localhost:8080
+console.log("protocol", location.protocol); // http:
+console.log("host", location.host); // localhost:8080
+console.log("hostname", location.hostname); // localhost
+console.log("port", location.port); // 8080
+console.log("pathname", location.pathname); // /bitcamp-javascript/step05/ex03-1.html
+
+//href
+//origin            +          pathname
+//protocol   +   host    +     pathname
+//prptocol + hostname + port + pathname
+
+</script>
+
+</body>
+</html>

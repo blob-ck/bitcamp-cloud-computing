@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 05</title>
+</head>
+
+<body>
+<h1>window - 타이머</h1>
+<script>
+"use strict"
+
+// timeout
+// 시간 이후 함수를 호출하라
+//var 타이머아이디 = window.setTimeout(호출될 함수, 경과시간 밀리초);
+//window.setTimeout(function(){}, 2000);
+window.setTimeout(() => {
+   console.log('지정된 시간이 경과하면 딱 한 번만 호출된다.') 
+}, 2000);
+
+
+
+// interval
+// 과거 polling 기법에 쓰인 그런거
+// 주기적으로 계속 확인하는 거
+//var 타이머아이디 = window.setInterval(함수, 밀리초);
+var count = 0;
+var tid = window.setInterval(() => {
+    count++;
+    console.log('타이머를 강제로 멈추기 전까지 계속 호출한다.');
+    if(count == 3) 
+        window.clearInterval(tid);
+}, 3000);
+
+</script>
+
+</body>
+</html>

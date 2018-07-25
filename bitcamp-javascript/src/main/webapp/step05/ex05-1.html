@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 05</title>
+</head>
+
+<body>
+<h1>screen - 모니터 화면정보 </h1>
+
+<script>
+"use strict"
+
+console.log(window.screen);
+console.log(window.screen.width, screen.height);
+console.log(window.screen.availWidth, screen.availHeight); // 시작표시줄 등의 공간을 고려
+//시작표시줄이 아래 있으면
+//1920 1040
+
+//시작표시줄이 옆에 있으면
+//1858 1080
+
+
+//웹브라우저의 화면 크기는 
+console.log(window.innerWidth, window.innerHeight); //1017 898
+//현재 브라우저 창의 크기를 나타낸다.
+</script>
+
+</body>
+</html>

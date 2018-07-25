@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 06</title>
+</head>
+
+<body>
+<h1>DOM API - CSS querySelectorAll로 태그 찾기</h1>
+
+<div id="d1">
+	<h2 class="g1 g3">d1.제목1</h2>
+	<h2 class="g1">d1.제목2</h2>
+	<h2 class="g1 g2 g3">d1.제목3</h2>
+	<h2 class="g2">d1.제목4</h2>
+</div>
+
+<div id="d2">
+	<h2 class="g1 g3">d2.제목1</h2>
+	<h2 class="g1">d2.제목2</h2>
+	<h2 class="g1 g2 g3">d2.제목3</h2>
+	<h2 class="g2">d2.제목4</h2>
+</div>
+
+<h2 class="g1 g3">제목1</h2>
+<h2 class="g1">제목2</h2>
+<h2 class="g1 g2 g3">제목3</h2>
+<h2 class="g2">제목4</h2>
+
+<script>
+"use strict"
+
+// querySelector(selector)
+// => 리턴값은 태그 객체이다.
+// => 만약 조건에 해당하는 태그가 여러 개일 경우 첫번째 것만 리턴한다.
+// => CSS 셀렉터를 사용하므로 일관성이 있어 유지보수가 쉽다.
+// => 또한 복잡한 조건으로 검색할 수 있다.
+
+// => 리턴 값은 태그 객체를 담고 있는 HTMLCollection 객체다.
+// => 배열이 아닌 일반객체이므로, for...in 를 쓰면 안된다. for...of는 가능
+// => 만약 해당 태그르 찾지 못하면 HTMLCollection을 리턴한다.
+//      null 은 아니다.
+
+
+
+// querySelectorAll()
+// NodeList를 리턴한다.
+// NodeList는 배열은 아니지만 Collection 타입이기 때문에
+// for...in 은 쓰면 안된다.
+var el = document.querySelectorAll("div>.g1.g3");
+for (var v of el){
+	console.log(v);
+}
+
+</script>
+
+</body>
+</html>

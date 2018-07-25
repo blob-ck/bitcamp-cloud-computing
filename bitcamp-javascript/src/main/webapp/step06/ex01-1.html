@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 06</title>
+</head>
+
+<body>
+<h1>DOM API - id로 태그 찾기</h1>
+
+<h1 id="header1">제목1</h1>
+<h1 id="header2">제목2</h1>
+<h1 id="header3">제목3</h1>
+<h1 id="header4">제목4</h1>
+
+<script>
+"use strict"
+
+// 1) id로 태그 찾기
+// => 리턴값은 태그 객체이다.
+// => 만약 같은 값이 여러 개 있을 경우 첫번째 값만 리턴한다. 애초에 id는 유일해야한다.
+var e = document.getElementById("header3");
+
+
+//뭐지 똑같이 나오네
+//웹브라우저는 아이디가 저장된 태그에 대해서는 그 아이디로 window 객체에 보관한다.
+// => 그래서 다음과 같이 아이디만 써도 바로 태그 객체를 가리킬 수 있다.
+console.log(e);                 // <h1 id="header3">제목3</h1>
+console.log(header3);           // <h1 id="header3">제목3</h1>
+console.log(window.header3);    // <h1 id="header3">제목3</h1>
+</script>
+
+</body>
+</html>

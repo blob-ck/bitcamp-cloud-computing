@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 05</title>
+</head>
+
+<body>
+<h1>window - location 페이지 바꾸기</h1>
+
+<button onclick="changePage()">페이지 변경</button>
+<p>
+<a href="ex03-3.html?no=2&name=aaa&age=19">ex03-3페이지로 가기(AJAX로 data넘기기)</a>
+</p>
+
+<script>
+"use strict"
+
+// location.href 의 값을 변경하면 해당 URL을 요청한다.
+// 따라서 페이지가 바뀐다.
+function changePage() {
+    location.href="ex03-1.html";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 05</title>
+</head>
+
+<body>
+<h1>window - location URL에서 값 추출하기</h1>
+<h2>실무에서 html의 값을 AJAX로 서버에 보낼 때 이런식으로 많이 쓴다</h2>
+
+<p>
+<a href="ex03-3.html?no=2">ex03-3페이지로 가기(AJAX로 data넘기기)</a>
+</p>
+
+<script>
+"use strict"
+
+//var values = location.href.split("?");
+//console.log(values); 
+//["http://localhost:8080/bitcamp-javascript/step05/ex03-3.html", "no=2"]
+
+var values = location.href.split("?")[1];
+console.log(values); 
+//"no=2&name=aaa&age=19"
+
+var params = values.split("&");
+for (var param of params) {
+    var kv = param.split("=");    
+    console.log(kv[0], kv[1]);
+}
+
+</script>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자바스크립트 03</title>
+<title>자바스크립트 04</title>
 </head>
 
 <body>
@@ -11,6 +11,11 @@
 "use strict"
 
 function Score(name, kor, eng, math) {
+    
+    //주의!
+    // 모든 생성자는 측별하게 지정하지 않으면 상위 생성자로서 Object()생성자를 호출한다.
+    // 그래서 자바스크립트의 모든 객체는 Object() 생성자가 추가한 프로퍼티를 갖고 있다.
+    
     
     //생성자 
     // => 빈 객체를 초기화 시키는 함수이다.
@@ -37,6 +42,17 @@ var scores = [
 for (var s of scores) {
     console.log(s.name, s.sum(), s.aver());
 }
+
+ console.log("===========================================================");
+ 
+// Score() 생성자를 통해 초기화된 객체의 내용을 살펴보기
+// => Score() 생성자가 추가한 프로퍼티 뿐만 아니라
+// => Object() 생성자가 추가한 프로퍼티도 있을 것이다.
+
+console.log(scores[0]);
+
+
+
 
 </script>
 

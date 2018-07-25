@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 06</title>
+<style>
+div {
+    border: 1px solid red;
+    margin: 10px 20px 30px 40px; /* 12부터 시계방향 */
+}
+#d1 {
+    height: 200px;
+}
+#d2 {
+    height: 300px;
+}
+
+</style>
+</head>
+
+<body>
+<h1>DOM API - CSS querySelectorAll로 태그 찾기</h1>
+
+<div id="d1">
+</div>
+
+<div id="d2">
+</div>
+
+<h2 class="g1 g3">제목1</h2>
+<h2 class="g1">제목2</h2>
+<h2 class="g1 g2 g3">제목3</h2>
+<h2 class="g2">제목4</h2>
+
+<script>
+"use strict"
+//방법1
+var e1 = document.createElement("h1");
+var text = document.createTextNode("제목이여1");
+e1.appendChild(text);
+d2.appendChild(e1);
+
+//방법2
+var e2 = document.createElement("h1");
+e2.innerHTML = "제목이여2";
+d2.appendChild(e2);
+
+//방법3
+d2.innerHTML = "<h1>제목이여3</h1>"; //이렇게 하면 덮어씌우므로,
+d2.innerHTML = "<h1>제목이여3</h1>"; //이렇게 += 를 한다.
+
+</script>
+
+</body>
+</html>

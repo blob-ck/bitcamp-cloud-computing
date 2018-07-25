@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 06</title>
+</head>
+
+<body>
+<h1>DOM API - 태그명으로 태그(들) 찾기</h1>
+
+<h2 id="header1">제목1</h2>
+<h2 id="header2">제목2</h2>
+<h2 id="header3">제목3</h2>
+<h2 id="header4">제목4</h2>
+
+<script>
+"use strict"
+
+// => 리턴 값은 태그 객체를 담고 있는 HTMLCollection 객체다.
+// => 배열이 아닌 일반객체이므로, for...in 를 쓰면 안된다. for...of는 가능
+// => 만약 해당 태그르 찾지 못하면 HTMLCollection을 리턴한다.
+//      null 은 아니다.
+var el = document.getElementsByTagName("h2");
+console.log(el);
+console.log("-----------------------------");
+for (var i = 0; i < el.length; i++) {
+    console.log(el[i]);
+}
+console.log("-----------------------------");
+
+//HTMLCollection 은 일반객체이므로,
+// for...in을 사용하면 모든 프로퍼티를 출력한다.
+for (var i in el) {
+    console.log(i, el[i]);
+    //아래처럼 출력된다.
+		//0 <h2 id="header1">제목1</h2>
+		//1 <h2 id="header2">제목2</h2>
+		//2 <h2 id="header3">제목3</h2>
+		//3 <h2 id="header4">제목4</h2>
+		//length 4
+		//item ƒ item() { [native code] }
+		//namedItem ƒ namedItem() { [native code] }
+}
+console.log("-----------------------------");
+
+for (var i of el) {
+    console.log(i);
+}
+
+</script>
+
+</body>
+</html>
