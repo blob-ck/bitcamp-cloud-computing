@@ -10,7 +10,8 @@
 
 <!-- 실무에서는 3~4가지 방법이 있다. -->
 <!-- 필수 입력값을 입력받도록 설정하자 -->
-<form action="http://www.daum.net">
+<!-- <form id="form1" action="http://www.daum.net" onsubmit="return false;"> -->
+<form id="form1" action="http://www.daum.net" onsubmit="return checkValidate();">
 *이름:<input id="fiName" type="text" name="name"><br>
 *나이:<input id="fiAge" type="number" name="age"><br>
 전화:<input id="fiTel" type="text" name="tel"><br>
@@ -23,20 +24,16 @@
 <script>
 "use strict"
 
-// 방법1 -권장
-var e = document.querySelector("form input[type='submit']");
-console.log(e);
-e.onclick = function(event){
-    console.log(event); // MouseEvent
+// 방법2 - 비추
+// onsubmit의 코드 실행 리턴값이 true이면 입력 폼의  action을 실행하고,
+// false이면 실행하지 않는 특성을 이용한다.
+function checkValidate() {
     if(fiName.value.length == 0 || fiAge.value.length == 0) {
-        event.preventDefault();
         alert("필수 입력 항목을 입력하세요!!");
-        return;
+        return false;
     }
-    
-    e.submit();
+    return true;
 };
-
 </script>
 
 </body>

@@ -6,15 +6,15 @@
 </head>
 
 <body>
-<h1>태그의 기본 행위들 막기 - form의  submit 태그</h1>
+<h1>태그의 기본 행위들 막기 - form의  submit 이벤트 2</h1>
 
 <!-- 실무에서는 3~4가지 방법이 있다. -->
 <!-- 필수 입력값을 입력받도록 설정하자 -->
-<form action="http://www.daum.net">
+<form id="form1" action="http://www.daum.net">
 *이름:<input id="fiName" type="text" name="name"><br>
 *나이:<input id="fiAge" type="number" name="age"><br>
 전화:<input id="fiTel" type="text" name="tel"><br>
-<input type="submit" value="등록"><br>
+<button>등록</button>
 </form>
 
 <a id="a1"  href="http://www.daum.net">다음</a><br>
@@ -23,20 +23,20 @@
 <script>
 "use strict"
 
-// 방법1 -권장
-var e = document.querySelector("form input[type='submit']");
-console.log(e);
-e.onclick = function(event){
-    console.log(event); // MouseEvent
-    if(fiName.value.length == 0 || fiAge.value.length == 0) {
-        event.preventDefault();
-        alert("필수 입력 항목을 입력하세요!!");
-        return;
-    }
-    
-    e.submit();
-};
+// button 태그의 type 기본값이 submit이므로, 주의해야한다.
+// type을 지정하지 않으면 submit된다
 
+
+// 방법3 - 권장
+// onsubmit의 코드 실행 리턴값이 true이면 입력 폼의  action을 실행하고,
+// false이면 실행하지 않는 특성을 이용한다.
+form1.onsubmit = function() {
+    if(fiName.value.length == 0 || fiAge.value.length == 0) {
+        alert("필수 입력 항목을 입력하세요!!");
+        return false;
+    }
+    return true;
+};
 </script>
 
 </body>
