@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 07</title>
+</head>
+<body>
+<h1>이벤트 객체 - 클릭 이벤트 발생시키기</h1>
+
+<span id="txt1">이벤트 발생시키기</span>
+<button id="btn1">버튼1</button>
+
+<script>
+"use strict"
+
+// https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+//버튼1을 눌렀을 때 span을 누른것처럼 발생시키기
+txt1.onclick = function() {
+    console.log("txt1 눌렀음");
+    
+    // 1) 발생시킬 이벤트 객체를 준비한다.
+    var e = new MouseEvent("click");
+    
+    // 2) 이벤트를 발생시킬 대상 객체에 대해 dispatchEvent()를 호출한다.
+    btn1.dispatchEvent(e);
+};
+
+btn1.onclick = function() {
+    console.log("btn1 눌렀음");
+}
+
+</script>
+
+</body>
+</html>

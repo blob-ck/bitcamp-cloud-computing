@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 06</title>
+</head>
+<body>
+<h1>이벤트 객체 - 키 이벤트 정보 추출하기</h1>
+
+<textarea id="ta" rows="5" cols="50"></textarea>
+<span id="textCnt">0</span>/140<br>
+
+<script>
+"use strict"
+
+// 입력창에 문자수 제한을 두고 싶을 때 글자수 카운트 할 때 
+// => oninput 을 사용하도록 하자.
+
+//keydown , keyup 은 모든 키에 발생하고,
+//keypress 은 텍스트 키에 대해서만 발생한다 (방향키나 백스페이스 등은 반응 없음)
+//input 은 입력상자의 값이 변경되면 발생하므로, 텍스트 입력이나 삭제시에 발생한다.
+
+ta.onkeydown = function(event) {
+    console.log("onkeydown");
+    //onkeydown에서 글자수 카운트하는 이벤트를 사용하게 되면,
+    //키 값이 화면에 입력되기 전에 발생하므로 주의한다.
+    //textCnt.innerHTML = ta.value.length;
+};
+ta.onkeyup = function(event) {
+    console.log("onkeyup");
+    //textCnt.innerHTML = ta.value.length;
+};
+ta.onkeypress = function(event) {
+    console.log("onkeypress");
+    //onkeypress에서 글자수 카운트하는 이벤트를 사용하게 되면, 
+    //onkeydown와 마찬가지로
+    //키 값이 화면에 입력되기 전에 발생하므로 주의한다.
+    //textCnt.innerHTML = ta.value.length;
+};
+
+// => oninput 이벤트는 키 값이 화면에 출력된 후 발생한다.
+// => 입력상자의 값이 변경되었을 때 발생한다.
+ta.oninput = function(event) {
+    console.log("oninput");
+    //
+    textCnt.innerHTML = ta.value.length;
+};
+</script>
+
+</body>
+</html>

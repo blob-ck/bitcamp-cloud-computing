@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 06</title>
+<style>
+img {
+    height:10%;
+    width:10%;
+}
+</style>
+</head>
+
+<body>
+<h1>DOM API - 자식 태그 제거하기</h1>
+
+<div id="d1">
+    <img src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/AQ0067-201_AQ0067-201_primary.jpg?gallery">
+    <img src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/AQ0067-002_AQ0067-002_primary.jpg?gallery">
+    <img src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/AQ0067-003_AQ0067-003_primary.jpg?gallery">
+    <img src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/AQ0067-006_AQ0067-006_primary.jpg?gallery">
+    <img src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/AQ0067-007_AQ0067-007_primary.jpg?gallery">
+    <img src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/AQ0067-011_AQ0067-011_primary.jpg?gallery">
+    <img src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/AQ0067-102_AQ0067-102_primary.jpg?gallery">
+    <img src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/AQ0067-300_AQ0067-300_primary.jpg?gallery">
+</div>
+
+<script>
+"use strict"
+
+//2초마다 remove
+var tid = setInterval(() => {
+	var e = document.querySelector("#d1 > img:first-child");
+	if(e == null){
+	    clearInterval(tid);
+    	return;
+	}
+	// d1 태그의 첫 자식 태그를 제거한다
+	d1.removeChild(e);
+}, 2000);
+
+</script>
+
+</body>
+</html>

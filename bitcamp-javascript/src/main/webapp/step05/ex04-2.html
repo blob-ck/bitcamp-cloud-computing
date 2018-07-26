@@ -25,6 +25,7 @@ var pos = navigator.geolocation.getCurrentPosition((position) => {
     //111111 이 먼저 출력되고 222222가 출력되는걸 보면, 
     //비동기방식인 것을 알 수 있다.
     console.log("2222222");
+    //비동기로 undefined 뜨게 밑에서 실행하지 말고 바로 여기서 결과를 받아오게 한다
 	console.log(position.coords.latitude, position.coords.longitude);
     //my = position;
 });

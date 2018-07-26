@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 06</title>
+<style>
+img {
+    height:10%;
+    width:10%;
+}
+</style>
+</head>
+
+<body>
+<h1>DOM API 이벤트 처리 - 이벤트 리스너와 this</h1>
+
+<button id="btn1">방법1</button><br>
+<button id="btn2">방법2</button><br>
+<button id="btn3">방법3</button><br>
+<button id="btn4">방법4</button><br>
+
+<script>
+"use strict"
+
+btn1.onclick = function() {
+    console.log(this); // id="btn1" 인 태그
+};
+
+
+
+// Arrow함수에서의 this는 무조건 window객체를 가리킨다
+// => 따라서 this를 사용하지 않는다면 arrow함수로 리스너를 만들어도 된다.
+// => 그러나 this를 사용해야 한다면 arrow함수로 리스너를 만들지 마라.
+btn2.onclick = ()=> {
+    console.log(this); // window
+};
+
+
+</script>
+
+</body>
+</html>
