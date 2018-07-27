@@ -40,6 +40,11 @@ dependencies {
     // 지금은 테스트용으로 사용해야하므로
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    
+    
+    //JSTL 은 톰캣서버에 기본 내장되어 있지 않으므로, 빌드(개발시)에도 필요하고 배포할 때도 필요하다
+    // JSTL 2011버전
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
 
 
     // This dependency is found on compile classpath of this component and consumers.

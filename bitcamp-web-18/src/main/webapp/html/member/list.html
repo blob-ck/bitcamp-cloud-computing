@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 목록</title>
+</head>
+<body>
+<h1>멤버 목록</h1>
+<p><a href='form'>새회원</a></p>
+<table id="eListTable" border='1'>
+	<thead>
+		<tr>
+		    <th>아이디</th><th>이메일</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<div>
+    <button id="ePrevBtn">이전</button>
+    <span id="ePageNo"></span>
+    <button id="eNextBtn">다음</button>
+</div>
+
+<script src="../js/common.js"></script>
+<script>
+"use strict"
+    
+var {page, size} = parseQuery(location.href);
+var data = null;
+var tbody = document.querySelector("#eListTable > tbody");
+
+if(page != undefined && size != undefined) {
+    loadList(page, size);
+}else {
+	loadList(1, 3);
+}
+
+
+ePrevBtn.onclick = function() {
+    loadList(data.page - 1, data.size);
+};
+
+eNextBtn.onclick = function() {
+    loadList(data.page + 1, data.size);
+};
+
+
+
+function loadList(page, size) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert("서버에서 오류 발생");
+            return;
+        }
+                
+        data = JSON.parse(xhr.responseText);
+        tbody.innerHTML = '';
+        for (var item of data.list) {
+            var tr = document.createElement("tr");
+            /* tr.innerHTML = "<td><a href='view/"+item.id+"'>"+item.id+"</a></td>" + 
+                           "<td>"+item.email+"</td>"; */
+            //과거 ""와 + 를 써서 복잡하게 했던 방식을 
+            // back tick `  ` 으로 멀티라인에 사용 가능하도록 지원한다.=================================
+            // => 최신이라 주의할 것
+            tr.innerHTML = 
+            /* `<td><a id='${item.id}' href='#' onclick='clickViewLink(event, "${item.id}")'>${item.id}</a></td>  */
+            `<td><a id='${item.id}' href='#' data-id='${item.id}' onclick='clickViewLink(event)'>${item.id}</a></td> 
+            <td>${item.email}</td>`;
+            tbody.appendChild(tr);
+        }
+        ePageNo.innerHTML = data.page;
+        if(data.page <= 1) 
+            ePrevBtn.setAttribute('disabled', '');
+        else
+            ePrevBtn.removeAttribute('disabled');
+        if(data.page >= data.totalPage) 
+            eNextBtn.setAttribute('disabled', '');
+        else 
+            eNextBtn.removeAttribute('disabled');
+        
+    };
+
+    
+    // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
+    xhr.open("GET", `../../json/member/list?page=${page}&size=${size}`
+            , true);
+    xhr.send();
+}
+
+
+
+function clickViewLink(event, id) {
+    
+    //function에서 this 대신 event.currentTarget 을 쓴다.
+    //현재 이 이벤트가 발생한 태그 - event.currentTarget   -> 자바스크립트 내장
+    var id = event.currentTarget.getAttribute('data-id');
+    location.href = `view.html?id=${id}&page=${data.page}&size=${data.size}`
+    //event.preventDefault();
+    console.log(id);
+}
+
+</script>
+
+</body>
+</html>

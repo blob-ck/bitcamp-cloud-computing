@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 02</title>
+</head>
+
+<body>
+<h1>JS연산자  == 와 ===</h1>
+<script>
+	"use stirct"
+    var a ="20"; // string
+	var b = 20; // number
+	if(a == b){
+	    console.log("'20' == 20");
+	}else {
+	    console.log("'20' != 20");
+	}
+	
+    var c ="false"; // string
+	var d = false; // boolean
+	if(c == d){
+	    console.log("'false' == false");
+	}else {
+	    console.log("'false' != false");
+	}
+	
+	
+	
+	
+	var a = "100";
+	var b = 100;
+	// == 는 암시적 형변환을 수행하므로 주의해야한다.
+	if(a == b){ // 암시적 형변환에 의해 stirng => number 바뀌었기 때문에 같다고 뜬다.
+	    console.log("== 연산 결과 : '100' == 100");
+	}else {
+	    console.log("== 연산 결과 : '100' != 100");
+	}
+	
+	
+	// === 연산자는 암시적 형변환을 수행하지 않는다.
+	if(a === b){ // 암시적 형변환에 의해 stirng => number 바뀌었기 때문에 같다고 뜬다.
+	    console.log("=== 연산 결과 : '100' == 100");
+	}else {
+	    console.log("=== 연산 결과 : '100' != 100");
+	}
+	
+	
+
+</script>
+</body>
+</html>

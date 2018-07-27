@@ -5,18 +5,18 @@
 <title>자바스크립트 08</title>
 <style>
 #resultDiv {
-    height:10%;
+    height:200px;
     border:10px solid red;
+    font-size: 100px;
 }
 </style>
 </head>
 
 <body>
-<h1>AJAX 동기 요청 - 계산기 구현</h1>
+<h1>AJAX 동기 요청 - 동기 방식의 문제점</h1>
 
 <input id="iA" type="number">
 <select id="iOp">
-<!--<option>+</option>-->
     <option value="%2B">+</option>
     <option>-</option>
     <option>*</option>
@@ -42,7 +42,7 @@ btn1.onclick = function() {
     // 2. 서버에 연결
     //      (HTTP메서드, URL, async여부)
     xhr.open("GET", 
-            'ex01-2.jsp?a=' + iA.value +
+            'ex01-3.jsp?a=' + iA.value +
                     '&op=' + iOp.value + 
                     '&b=' + iB.value 
             , false);
@@ -50,6 +50,10 @@ btn1.onclick = function() {
     // 3. 서버에 요청 정보를 보낸다
     // => 동기 요청인 경우 서버에서 응답이 올 때까지 리턴하지 않는다.
     xhr.send();
+	    // ======== 서버에 요청한 후 서버에서 응답을 완료할 때까지 send() 는 리턴하지 않는다. ======== 
+	    // ======== 따라서 화면은 사용자의 행위에 아무런 반응을 하지 못하는 벽돌 상태가 된다. ======== 
+    
+    
     
     // 4. 서버로부터 받은 응답 데이터를 추출한다.
     console.log(xhr.responseText);

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 보기</title>
+</head>
+<body>
+<h1>멤버 보기</h1>
+<form action='../update' method='post'>
+<table border='1'>
+<tr><th>아이디</th><td>
+    <input type='text' id='eId' readonly></td></tr>
+<tr><th>이메일</th>
+    <td><input type='email' id='eEmail'></td></tr>
+<tr><th>암호</th>
+    <td><input type='password' id='ePassword'></td></tr>
+</table>
+<p>
+<button id="eListBtn" type="button">button 목록</button>
+<button id="eUpdateBtn" type="button">변경</button>
+<button id="eDeleteBtn" type="button">삭제</button>
+</p>
+</form>
+
+<script src="../js/common.js"></script>
+<script>
+"use strict"
+
+var data = null;
+
+//desturcturing
+var {id, page, size} = parseQuery(location.href);
+
+//var paramMap = parseQuery(location.href);
+
+/* var paramMap = {};
+
+//queryString
+var qs = location.href.split('?');
+if (qs.length > 1) {
+    var params = qs[1].split('&');
+    for(var param of params) {
+        var kv = param.split('=');
+        paramMap[kv[0]] = kv[1];
+    }
+}
+ */
+console.log(id); 
+console.log(page); 
+console.log(size); 
+
+if(!id){
+    alert('아이디를 지정하지 않았습니다');
+    location.href = "list.html";
+} else {
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert("서버에서 오류 발생");
+            return;
+        }
+                
+        data = JSON.parse(xhr.responseText);
+        if (data.member == null) {
+            alert('아이디가 무효합니다.');
+            location.href = "list.html";
+            return;
+        }
+        eId.value = data.member.id;
+        eEmail.value = data.member.email;
+    };
+
+    
+    // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
+    xhr.open('GET', 
+            `../../json/member/view/${id}`, 
+            true);
+    xhr.send();
+}
+
+eListBtn.onclick = function() {
+    location.href = `list.html?page=${page}&size=${size}`;
+}
+
+</script>
+    
+</body>
+</html>

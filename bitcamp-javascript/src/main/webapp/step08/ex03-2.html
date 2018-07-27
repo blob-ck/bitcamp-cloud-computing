@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 08</title>
+<style>
+#resultDiv {
+    height:200px;
+    border:10px solid red;
+    font-size: 100px;
+}
+</style>
+</head>
+
+<body>
+<h1>AJAX 비동기 요청 - POST 요청</h1>
+
+<form enctype="application/x-www-form-urlencoded" action=""></form>
+<button id="btn1">버튼</button><br>
+<div id="resultDiv"></div>
+
+<script>
+"use strict"
+
+// POST 요청의 핵심은 요청 헤더 다음에 값을 보내는 것이다.
+// => 여기에 덧붙여서  서버에 보내는 데이터가 어떤 타입인지 헤더 값으로 알려줘야 한다.
+btn1.onclick = function() {
+    
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert("서버에서 오류 발생");
+            return;
+        }
+	            
+        console.log(xhr.responseText);
+	    resultDiv.innerHTML = xhr.responseText;
+    };
+    
+    //POST 요청
+    xhr.open("POST", 'ex01-2.jsp', true);
+    
+    // POST 요청을 할 때는 반드시 보내는 데이터의 타입을 지정해야 한다.
+    // 개발자 도구의 Request Header 중 
+    // Content-Type: application/x-www-form-urlencoded
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    //보낼 값은 send()의 argument로 보내야 한다
+    xhr.send("a=100&b=200&op=%2B");
+}
+
+</script>
+
+</body>
+</html>
