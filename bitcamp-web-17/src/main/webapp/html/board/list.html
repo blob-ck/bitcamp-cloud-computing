@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>게시물 목록</title>
+</head>
+<body>
+<h1>게시물 목록</h1>
+<p><a href='view.html'>새 글</a></p>
+<table border='1'>
+<tr>
+    <th>번호</th><th>제목</th><th>등록일</th>
+</tr>
+<tr>
+    <td>1</td><td><a href='view?no=1'>test01</a></td><td>2018-07-04</td>
+</tr>
+<tr>
+    <td>3</td><td><a href='view?no=3'>test 002</a></td><td>2018-07-29</td>
+</tr>
+<tr>
+    <td>4</td><td><a href='view?no=4'>hahah</a></td><td>2018-07-29</td>
+</tr>
+<tr>
+    <td>5</td><td><a href='view?no=5'>algo</a></td><td>2018-07-29</td>
+</tr>
+</table>
+
+<script src="../js/common.js"></script>
+<script>
+'use strict'
+var {page, size} = parseQuery(location.href);
+if(page != undefined && size != undefined) {
+    loadList();
+}
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

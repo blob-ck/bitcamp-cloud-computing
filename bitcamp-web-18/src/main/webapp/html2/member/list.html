@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 목록</title>
+</head>
+<body>
+<h1>멤버 목록</h1>
+<p><a href='view.html'>새회원</a></p>
+<table id="eListTable" border='1'>
+	<thead>
+		<tr>
+		    <th>아이디</th><th>이메일</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<div>
+    <button id="ePrevBtn">이전</button>
+    <span id="ePageNo"></span>
+    <button id="eNextBtn">다음</button>
+</div>
+
+<script src="../js/bit.js"></script>
+<script>
+"use strict"
+    
+var {page, size} = $.parseQuery(location.href);
+let data = null;
+//var tbody = document.querySelector("#eListTable > tbody");
+let tbody = $("#eListTable > tbody");
+console.log(tbody);
+
+if(page != undefined && size != undefined) {
+    loadList(page, size);
+}else {
+	loadList(1, 3);
+}
+
+
+//ePrevBtn.onclick = function() {
+$(ePrevBtn).click(function() {
+    loadList(data.page - 1, data.size);
+});
+
+$(eNextBtn).click(function() {
+    loadList(data.page + 1, data.size);
+});
+
+
+
+function loadList(page, size) {
+    
+    //loadList 호출한 순간 별도의 Thread를 만들어 아래 함수를 실행하고 바로 리턴한 후 다른 작업을 수행한다
+    //그런 이유로 비동기로 태그를 추가하게 되면 바로 타겟잡아지지 않는다.
+    //태그를 만든 뒤 리스너를 등록하고 호출해야하는데
+    //결과로 태그를 받아오기도 전에 리스너를 등록하니 찾지를 못한다.
+    $.getJSON(
+            '../../json/member/list',
+            {
+                page: page,
+                size: size
+            },
+            function() {console.log('로딩 성공!')})
+            .done(
+			function(result) {
+			    data = result;
+			    console.log(data);
+			    tbody.html('');
+			    for (var item of data.list) {
+			        $("<tr>")
+			          .html(`<td><a href='#' data-id='${item.id}' 
+			            class='viewLink'>${item.id}</a></td>
+			            <td>${item.email}</td>`)
+			          .appendTo(tbody);
+			    }
+			    
+			    $(ePageNo).html(data.page);
+			    if (data.page <= 1)
+			        $(ePrevBtn).attr('disabled', '');
+			    else 
+			        $(ePrevBtn).removeAttr('disabled');
+			    
+			    if (data.page >= data.totalPage)
+			        $(eNextBtn).attr('disabled', '');
+			    else
+			        $(eNextBtn).removeAttr('disabled');
+			    
+			    //비동기로 태그 추가한 것은 리스너를 등록할 시점에 주의해야한다.
+			    //태그를 만든 뒤에 리스너를 추가해야 하므로 여기에 등록한다.
+			    //그.런.데 너무 복잡해진다.
+			    //on(event, selector, function(){})을 활용하면
+			    //부모태그에 리스너를 등록하므로 아래 참조
+				/* $('.viewLink').click(function(event) {
+				    
+				    event.preventDefault();
+				    var id = $(event.currentTarget).attr('data-id');
+				    //var encId = encodeURI(encodeURIComponent(id));
+				    location.href = `view.html?id=${id}&page=${data.page}&size=${data.size}`
+				}); */
+			});
+    
+}
+
+
+//이 방식은 실행 시점에 존재하는 태그에 대해서만 이벤트 핸들러를 등록하여 사용할 수 있다.
+// => 하여 이미 존재하는 부모태그 에 핸들러를 등록하여 사용할 수 있다.
+/* $('.viewLink').click(function(event) {
+    
+    event.preventDefault();
+    var id = $(event.currentTarget).attr('data-id');
+    //var encId = encodeURI(encodeURIComponent(id));
+    location.href = `view.html?id=${id}&page=${data.page}&size=${data.size}`
+}); */
+
+//실행 시점에 존재하지 않는 태그라도 이벤트 핸들러를 등록하는 방법은
+// => 앞으로 생성될 태그의 부모태그에 핸들러(=리스너)를 등록하는 것이다.
+//$(document.body).on('click', function(){console.log('하앍')});
+
+//그런데,! 버블링 원리를 이용하기 때문에 tbody의 자식태그 어디서든 이벤트가 발생한다.
+//tbody.on('click', function(){console.log('  ======>')});
+
+
+//버블링을 막으면서 원하는 태그에 타겟을 잡는다.
+//즉, 존재하는 부모태그에 핸들러를 등록하되
+//타겟을 명시해서 잡는다.
+tbody.on('click', 'a.viewLink', function(){
+    event.preventDefault();
+    var id = $(event.target).attr('data-id');
+    location.href = `view.html?id=${id}&page=${data.page}&size=${data.size}`
+});
+
+
+
+function clickViewLink(event, id) {
+    
+    //function에서 this 대신 event.currentTarget 을 쓴다.
+    //현재 이 이벤트가 발생한 태그 - event.currentTarget   -> 자바스크립트 내장
+    
+    //jQuery 는 보통 get set 구분을 인자로 한다. 없으면 get 있으면 set
+    event.preventDefault();
+    var id = $(event.currentTarget).attr('data-id');
+    location.href = `view.html?id=${id}&page=${data.page}&size=${data.size}`
+    console.log(id);
+}
+
+</script>
+
+</body>
+</html>

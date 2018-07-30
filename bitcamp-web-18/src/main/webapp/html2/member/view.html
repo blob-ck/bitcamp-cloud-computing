@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>멤버 보기</h1>
-<form>
+<form action='../update' method='post'>
 <table border='1'>
 <tr><th>아이디</th><td>
     <input type='text' id='eId' readonly></td></tr>
@@ -23,14 +23,14 @@
 </p>
 </form>
 
-<script src="../js/common.js"></script>
+<script src="../js/bit.js"></script>
 <script>
 "use strict"
 
 var data = null;
 
 //desturcturing
-var {id, page, size} = parseQuery(location.href);
+var {id, page, size} = $.parseQuery(location.href);
 
 //if(!id){
 if(id == undefined){
@@ -111,16 +111,13 @@ eAddBtn.onclick = function() {
 
     
     // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
-    xhr.open('POST', 
-            '../../json/member/add', 
-            //'test.jsp',
-            true);
     //서버로 보내기 전에 uri 인코딩을 헤더에 text/html;utf-8 으로 설정해준다.
     //한글데이터를 보내려면 open()과 send() 사이에 이걸 씀
     //xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
-    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.open('POST', '../../json/member/add', true);
+    xhr.setRequestHeader('Content-Type', 
+            'application/x-www-form-urlencoded');
     xhr.send(`id=${eId.value}&email=${eEmail.value}&password=${ePassword.value}`);
-    
 };
 
 
@@ -143,7 +140,7 @@ eUpdateBtn.onclick = function() {
         let data = JSON.parse(xhr.responseText);
         console.log(data);
         if(data.status == 'success') {
-            location.href = `list.html?page=${data.page}&size=${data.size}`;
+            location.href = `list.html?page=${page}&size=${size}`;
         }else {
             alert('변경 오류입니다.');
 	        console.log(data.error);
@@ -184,7 +181,7 @@ eDeleteBtn.onclick = function() {
         if(data.status == 'success') {
             location.href = 'list.html';
         }else {
-            alert('삭세 오류입니다.');
+            alert('삭제 오류입니다.');
             console.log(data.error);
         }
     };

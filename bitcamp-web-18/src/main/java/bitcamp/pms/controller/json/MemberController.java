@@ -1,5 +1,6 @@
 package bitcamp.pms.controller.json;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,31 +59,42 @@ public class MemberController {
 	}
 
 	@PostMapping("add")
-	public String add(Member member) throws Exception {
-		
+	public Object add(Member member) throws Exception {
+	    
+	    HashMap<String, Object> result = new HashMap<String, Object>();
 		memberService.insert(member);
-		
-		return "redirect:list";
+		result.put("status", "success");
+		return result;
 	}
 	
 	
 	//delete ===========================================================================================================
 	@RequestMapping("delete")
-	public String delete(String id) throws Exception {
-		memberService.delete(id);
-		return "redirect:list";
+	public Object delete(String id) throws Exception {
+	    
+	    HashMap<String, Object> result = new HashMap<String, Object>();
+	    if (memberService.delete(id) == 0) {
+	        result.put("status", "fail");
+	        result.put("error", "해당 아이디가 없습니다.");
+	    } else {
+	        result.put("status", "success");
+	    }
+	    return result;
 	}
 	
 	
 	//update ===========================================================================================================
 	@RequestMapping("update")
-	public String update(Member member) throws Exception {
+	public Object update(Member member) throws Exception {
 		
+	    HashMap<String, Object> result = new HashMap<String, Object>();
 		if (memberService.update(member) == 0) {
-			return "member/updatefail";
+			result.put("status", "fail");
+			result.put("error", "해당 아이디가 없습니다.");
 		} else {
-			return "redirect:list";
+			result.put("status", "success");
 		}
+		return result;
 	}
 	
 	

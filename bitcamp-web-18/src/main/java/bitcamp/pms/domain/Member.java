@@ -9,8 +9,9 @@ public class Member {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public Member setId(String id) {
 		this.id = id;
+		return this;
 	}
 	public String getEmail() {
 		return email;
@@ -25,9 +26,9 @@ public class Member {
 		this.password = password;
 	}
 	
-	
-	
-	
-	
+    @Override
+    public String toString() {
+        return "Member [id=" + id + ", email=" + email + ", password=" + password + "]";
+    }
 
 }

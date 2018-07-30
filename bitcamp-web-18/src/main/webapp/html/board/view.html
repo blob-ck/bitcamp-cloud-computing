@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>게시물 보기</title>
+</head>
+<body>
+<h1>게시물 보기</h1>
+<form>
+<table border='1'>
+<tr><th>번호</th><td>
+    <input type='text' id='eNo' readonly></td></tr>
+<tr><th>제목</th>
+    <td><input type='text' id='eTitle'></td></tr>
+<tr><th>내용</th>
+    <td><textarea id='eContent' rows='10' cols='60'></textarea></td></tr>
+<tr><th>등록일</th><td id="eCreatedDate"></td></tr>
+</table>
+<p>
+<p>
+<button id="eListBtn" type="button">목록</button>
+<button id="eUpdateBtn" type="button" class="viewform">변경</button>
+<button id="eDeleteBtn" type="button" class="viewform">삭제</button>
+<button id="eAddBtn" type="button" class="newform">등록</button>
+</p>
+</form>
+
+
+<script src="../js/common.js"></script>
+<script>
+'use strict'
+var data = null;
+
+//desturcturing
+var {no, page, size} = parseQuery(location.href);
+
+if(no == undefined){
+    
+    //입력 폼에서
+    var el = document.querySelectorAll('.viewform');
+    for (var e of el) {
+        e.style.display = 'none';
+    }
+    
+    eNo.removeAttribute('readonly');
+    
+} else {
+    
+    var el = document.querySelectorAll('.newform');
+    for (var e of el) {
+        e.style.display = 'none';
+    }
+    
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert("서버에서 오류 발생");
+            return;
+        }
+
+        data = JSON.parse(xhr.responseText);
+        console.log(data);
+        if (data.board == null) {
+            alert('유효한 글이 아니다.');
+            location.href = 'list.html';
+            return;
+        }
+        eNo.value = data.board.no;
+        eTitle.value = data.board.title;
+        eContent.value = data.board.content;
+        eCreatedDate.innerHTML = data.board.createdDate;
+    };
+
+    
+    // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
+    xhr.open('GET', 
+            `../../json/board/${no}`, 
+            true);
+    //서버로 보내기 전에 uri 인코딩을 헤더에 설정해준다.
+    //한글데이터를 보내려면 open()과 send() 사이에 이걸 씀
+    xhr.setRequestHeader('Content-Type','text/html;charset=utf-8');
+    xhr.send();
+}
+
+eListBtn.onclick = function() {
+    
+    if(page) {
+        location.href = `list.html?page=${page}&size=${size}`;
+    }else {
+        location.href = 'list.html';
+    }
+}
+
+</script>
+
+
+</body>
+</html>

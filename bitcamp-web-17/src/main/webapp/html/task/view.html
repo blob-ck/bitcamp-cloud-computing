@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>작업 보기</title>
+</head>
+<body>
+<h1>작업 보기</h1>
+<form action='update' method='post'>
+<input type='hidden' name='no' value='7'>
+<table border='1'>
+<tr>
+    <th>팀명</th><td><input type='text' name='teamName' value='team2' readOnly></td>
+</tr>
+<tr>
+    <th>작업명</th><td><input type='text' name='title' value='작업222222222'></td>
+</tr>
+<tr>
+    <th>시작일</th><td><input type='date' name='startDate' value='2018-07-01'></td></tr>
+<tr>
+    <th>종료일</th><td><input type='date' name='endDate' value='2018-07-19'></td></tr>
+<tr>
+    <th>작업자</th>
+    <td>
+        <select name='memberId'>
+            <option >user01</option>
+            <option selected>user03</option>
+        </select>
+    </td>
+</tr>
+<tr>
+    <th>작업상태</th><td><select name='state'>
+        <option value='0' >작업대기</option>
+        <option value='1' >작업중</option>
+        <option value='9' selected>작업완료</option>
+    </select></td>
+</tr>
+</table>
+<button>변경</button> 
+<a href='delete?no=7&teamName=team2'>삭제</a>
+</form>
+</body>
+</html>
