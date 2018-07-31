@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 목록</title>
+</head>
+<body>
+<h1>멤버 목록</h1>
+<p><a href='view.html'>새회원</a></p>
+<table id="eListTable" border='1'>
+	<thead>
+		<tr>
+		    <th>아이디</th><th>이메일</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<div>
+    <button id="ePrevBtn">이전</button>
+    <span id="ePageNo"></span>
+    <button id="eNextBtn">다음</button>
+</div>
+
+<script src="../js/bit.js"></script>
+<script>
+"use strict"
+
+var xx = null
+if(xx) console.log(xx);
+    
+var {page, size} = $.parseQuery(location.href);
+let data = null;
+//var tbody = document.querySelector("#eListTable > tbody");
+let tbody = $("#eListTable > tbody");
+
+if(page != undefined && size != undefined) {
+    loadList(page, size);
+}else {
+	loadList(1, 3);
+}
+
+
+ePrevBtn.onclick = function() {
+    loadList(data.page - 1, data.size);
+};
+
+eNextBtn.onclick = function() {
+    loadList(data.page + 1, data.size);
+};
+
+
+
+function loadList(page, size) {
+    $.getJSON(
+            //`../../json/member/list?page=${page}&size=${size}`,
+            '../../json/member/list',
+            {
+                page: page,
+                size: size
+            },
+			function(result) {
+			    data = result;
+			    tbody.html('');
+			    for (var item of data.list) {
+			        $("<tr>")
+			          .html(`<td><a href='#' data-id='${item.id}' 
+			            onclick='clickViewLink(event)'>${item.id}</a></td>
+			            <td>${item.email}</td>`)
+			          .appendTo(tbody);
+			    }
+			    
+			    ePageNo.innerHTML = data.page;
+			    if (data.page <= 1)
+			        $(ePrevBtn).attr('disabled', '');
+			    else 
+			        $(ePrevBtn).removeAttr('disabled');
+			    
+			    if (data.page >= data.totalPage)
+			        $(eNextBtn).attr('disabled', '');
+			    else
+			        $(eNextBtn).removeAttr('disabled');
+			});
+}
+
+
+
+function clickViewLink(event, id) {
+    
+    //function에서 this 대신 event.currentTarget 을 쓴다.
+    //현재 이 이벤트가 발생한 태그 - event.currentTarget   -> 자바스크립트 내장
+    
+    //jQuery 는 보통 get set 구분을 인자로 한다. 없으면 get 있으면 set
+    var id = $(event.currentTarget).attr('data-id');
+    location.href = `view.html?id=${id}&page=${data.page}&size=${data.size}`
+    //event.preventDefault();
+    console.log(id);
+}
+
+</script>
+
+</body>
+</html>

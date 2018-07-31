@@ -2,68 +2,63 @@
 <html>
 <head>
 <meta charset='UTF-8'>
-<title id="eTitle">멤버 보기</title>
+<title>멤버 보기</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="../css/common.css">
 </head>
 <body>
-<h1 id="eH1">멤버 보기</h1>
-<form action='../update' method='post'>
-<table border='1'>
-<tr><th>아이디</th><td>
-    <input type='text' id='eId' readonly></td></tr>
-<tr><th>이메일</th>
-    <td><input type='email' id='eEmail'></td></tr>
-<tr><th>암호</th>
-    <td><input type='password' id='ePassword'></td></tr>
-</table>
-<p>
-<button id="eListBtn" type="button">button 목록</button>
-<button id="eUpdateBtn" type="button" class="viewform">변경</button>
-<button id="eDeleteBtn" type="button" class="viewform">삭제</button>
-<button id="eAddBtn" type="button" class="newform">등록</button>
-</p>
+<div class="container">
+<h1>멤버 보기</h1>
+<form>
+<div class="form-group row">
+	<label for="eId" class="col-sm-3 col-form-label">아이디</label>
+	<div class="col-sm-5">
+	   <input type="text" class="form-control" id="eId" placeholder="id" readonly>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="eEmail" class="col-sm-3 col-form-label">이메일</label>
+	<div class="col-sm-9">
+	   <input type="text" class="form-control" id="eEmail" placeholder="Email">
+	</div>
+</div>
+<div class="form-group row">
+	<label for="ePassword" class="col-sm-3 col-form-label">암호</label>
+	<div class="col-sm-4">
+	   <input type="password" class="form-control" id="ePassword" placeholder="password">
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col-sm-10">
+		<button id="eListBtn" type="button" class="btn btn-outline-secondary btn-sm">목록</button>
+		<button id="eUpdateBtn" type="button" class="viewform btn btn-warning btn-sm">변경</button>
+		<button id="eDeleteBtn" type="button" class="viewform btn btn-danger btn-sm">삭제</button>
+		<button id="eAddBtn" type="button" class="newform btn btn-success btn-sm">등록</button>
+	</div>
+</div>
 </form>
-
-<script src="../js/bit.min.js"></script>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="../js/jquery.bit.js"></script>
 <script>
 "use strict"
 
 var data = null;
 
-//desturcturing
 var {id, page, size} = $.parseQuery(location.href);
 
 if(id == undefined){
-    
-    //입력 폼에서
-    //var el = document.querySelectorAll('.viewform');
-    /* for (var e of el) {
-        e.style.display = 'none';
-    } */
     $('.viewform').css('display', 'none');
-    
-    //eId.removeAttribute('readonly');
     $(eId).removeAttr('readonly');
-    
-    //var title = document.querySelector('title');
-    //var h1 = document.querySelector('h1');
-    eTitle.innerHTML = '멤버 등록';
-    eH1.innerHTML = '멤버 등록';
+    //title.innerHTML = '멤버 등록';
     
 } else {
-    
-    //상세보기 폼에서
-    /* var el = document.querySelectorAll('.newform');
-    for (var e of el) {
-        e.style.display = 'none';
-    } */
     $('.newform').css('display', 'none');
     
-    //(url, data, function)
     $.getJSON(`../../json/member/view/${id}`,
-            //{}, url에 id가 같이 넘어가므로  data는 필요없는 상황
             function(result){
-                
-		        //data = JSON.parse(xhr.responseText);
 		        data = result;
 		        console.log('id = ' ,data.member.id);
 		        console.log('id = ' ,data.member.id);
@@ -72,15 +67,10 @@ if(id == undefined){
 		            location.href = 'list.html';
 		            return;
 		        }
-		        
-		        //아래는 오리지널 태그 프로퍼티이므로 jQuery에서 또 만들어준다.
-		        //eId.value = data.member.id;
-		        //eEmail.value = data.member.email;
 		        $(eId).val(data.member.id);
 		        $(eEmail).val(data.member.email);
 		        console.log($(eId).val());
 		        console.log($(eEmail).val());
-                
             });
 }
 
@@ -103,7 +93,6 @@ $(eAddBtn).click(function() {
                 password: $(ePassword).val()
             },
             function(data) {
-                alert.log(data);
                 if(data.status == 'success') {
                     location.href = 'list.html';
                 }else {
@@ -125,9 +114,6 @@ $(eUpdateBtn).click(function() {
 				password: $(ePassword).val()
 			},
 			function(data) {
-				    
-				//로컬변수로 사용하기 위해 let 사용
-				//let data = JSON.parse(xhr.responseText);
 				console.log(data);
 				if(data.status == 'success') {
 				    location.href = `list.html?page=${page}&size=${size}`;
@@ -155,6 +141,5 @@ $(eDeleteBtn).click(function() {
 });
 
 </script>
-    
 </body>
 </html>

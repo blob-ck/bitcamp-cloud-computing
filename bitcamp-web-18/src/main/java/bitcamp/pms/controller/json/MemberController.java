@@ -1,6 +1,5 @@
 package bitcamp.pms.controller.json;
 
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,8 +61,12 @@ public class MemberController {
 	public Object add(Member member) throws Exception {
 	    
 	    HashMap<String, Object> result = new HashMap<String, Object>();
-		memberService.insert(member);
-		result.put("status", "success");
+		if (memberService.insert(member) == 0) {
+		    result.put("status", "fail");
+		    result.put("error", "이미 존재하는 아이디입니다.");
+		} else {
+		    result.put("status", "success");
+		}
 		return result;
 	}
 	
