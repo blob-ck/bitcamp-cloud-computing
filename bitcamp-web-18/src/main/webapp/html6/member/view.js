@@ -14,8 +14,6 @@ if(id == undefined){
     $.getJSON(serverApiAddr + `/json/member/view/${id}`,
             function(result){
                 data = result;
-                console.log('id = ' ,data.member.id);
-                console.log('id = ' ,data.member.id);
                 if (data.member == null) {
                     alert('아이디가 무효합니다.');
                     location.href = 'list.html';
@@ -23,8 +21,6 @@ if(id == undefined){
                 }
                 $(eId).val(data.member.id);
                 $(eEmail).val(data.member.email);
-                console.log($(eId).val());
-                console.log($(eEmail).val());
             });
 }
 
@@ -52,6 +48,7 @@ $(eAddBtn).click(function() {
                 }else {
                     alert('이미 존재하는 아이디입니다.');
                     console.log(data.error);
+                    location.href = '#';
                 }
             },
             'json');

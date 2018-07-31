@@ -23,14 +23,15 @@
 </p>
 </form>
 
-<script src="../js/common.js"></script>
+<script src="../js/bit1.js"></script>
 <script>
 "use strict"
 
 var data = null;
 
 //desturcturing
-var {id, page, size} = parseQuery(location.href);
+// test parseQuery ok
+var {id, page, size} = $.parseQuery(location.href);
 
 //if(!id){
 if(id == undefined){
@@ -64,7 +65,7 @@ if(id == undefined){
         data = JSON.parse(xhr.responseText);
         if (data.member == null) {
             alert('아이디가 무효합니다.');
-            location.href = 'list.html';
+            location.href = 'list1.html';
             return;
         }
         eId.value = data.member.id;
@@ -82,16 +83,22 @@ if(id == undefined){
     xhr.send();
 }
 
-eListBtn.onclick = function() {
+// test on ok
+//eListBtn.onclick = function() {
+// test click ok
+$(eListBtn).click(function() {
     
     if(page) {
-	    location.href = `list.html?page=${page}&size=${size}`;
+	    location.href = `list1.html?page=${page}&size=${size}`;
     }else {
-        location.href = 'list.html';
+        location.href = 'list1.html';
     }
-}
+});
 
-eAddBtn.onclick = function() {
+// test on ok
+//eAddBtn.onclick = function() {
+// test click ok
+$(eAddBtn).click(function() {
     
     var xhr = new XMLHttpRequest();
 
@@ -104,11 +111,16 @@ eAddBtn.onclick = function() {
         }
 
         //로컬변수로 사용하기 위해 let 사용
-
-        location.href = 'list.html';
-
+        let data = JSON.parse(xhr.responseText);
+        console.log(data);
+        if(data.status == 'success') {
+	        location.href = 'list1.html';
+        }else {
+            alert('등록 오류입니다.');
+            eId.value = '';
+	        console.log(data.error);
+        }
     };
-
     
     // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
     xhr.open('POST', 
@@ -118,15 +130,18 @@ eAddBtn.onclick = function() {
     //서버로 보내기 전에 uri 인코딩을 헤더에 text/html;utf-8 으로 설정해준다.
     //한글데이터를 보내려면 open()과 send() 사이에 이걸 씀
     //xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
-    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;text/html;charset=UTF-8');
     xhr.send(`id=${eId.value}&email=${eEmail.value}&password=${ePassword.value}`);
     
-};
+});
 
 
 
 
-eUpdateBtn.onclick = function() {
+// test on ok
+//eUpdateBtn.onclick = function() {
+// test click ok
+$(eUpdateBtn).click(function() {
     console.log('okok');
     
     var xhr = new XMLHttpRequest();
@@ -143,7 +158,7 @@ eUpdateBtn.onclick = function() {
         let data = JSON.parse(xhr.responseText);
         console.log(data);
         if(data.status == 'success') {
-            location.href = `list.html?page=${page}&size=${size}`;
+            location.href = `list1.html?page=${page}&size=${size}`;
         }else {
             alert('변경 오류입니다.');
 	        console.log(data.error);
@@ -159,14 +174,18 @@ eUpdateBtn.onclick = function() {
     //서버로 보내기 전에 uri 인코딩을 헤더에 text/html;utf-8 으로 설정해준다.
     //한글데이터를 보내려면 open()과 send() 사이에 이걸 씀
     //xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
-    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;text/html;charset=UTF-8');
     xhr.send(`id=${eId.value}&email=${eEmail.value}&password=${ePassword.value}`);
     
-};
+});
 
 
 
-eDeleteBtn.onclick = function() {
+//eDeleteBtn.onclick = function() {
+// test on ok
+//$(eDeleteBtn).on('click', function() {
+// test click ok
+$(eDeleteBtn).click(function() {
     
     var xhr = new XMLHttpRequest();
 
@@ -182,9 +201,9 @@ eDeleteBtn.onclick = function() {
         let data = JSON.parse(xhr.responseText);
         console.log(data);
         if(data.status == 'success') {
-            location.href = 'list.html';
+            location.href = 'list1.html';
         }else {
-            alert('삭세 오류입니다.');
+            alert('삭제 오류입니다.');
             console.log(data.error);
         }
     };
@@ -200,7 +219,7 @@ eDeleteBtn.onclick = function() {
     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xhr.send();
     
-};
+});
 
 </script>
     

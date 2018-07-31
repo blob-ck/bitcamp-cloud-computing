@@ -15,7 +15,7 @@ let bit = function(value) {
     var el = [];
 
     //오리지널 태그 객체도 jQuery를 사용할 수 있게 첨가해준다.
-    //제이쿼리 객체 = 오리지널 객체 + 제이쿼리 프로퍼티ㄴ
+    //제이쿼리 객체 = 오리지널 객체 + 제이쿼리 프로퍼티
     if (value instanceof HTMLElement) {
         el[0] = value;
         
@@ -24,7 +24,8 @@ let bit = function(value) {
     } else if (value.startsWith('<')) {
         el[0]  = document.createElement(value.substr(1, value.length - 2));
         
-    // "<태그명>"으로 인자가 넘어오지 않았다면 쿼리셀렉터를 사용해 기존 방식으로 태그 생성
+    // "<태그명>"으로 인자가 넘어오지 않았다면 쿼리셀렉터를 사용해 기존 태그 가져오기
+    // 이 때 value는 자바스크립트의 DOM객체다
     } else {
         var list = document.querySelectorAll(value);
         //selector로 찾은 태그들을 빈 배열로 옮긴다.
@@ -215,7 +216,7 @@ bit.ajax = function(url, settings) {
         let data = xhr.responseText;
         if (settings.success) {
             if (settings.dataType == 'json') {
-                data = JSON.parse(xhr.responseText);
+                data = JSON.parse(data);
             }
             
             settings.success(data);
