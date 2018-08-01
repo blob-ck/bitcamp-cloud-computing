@@ -131,20 +131,6 @@ tbody.on('click', 'a.viewLink', function(){
     location.href = `view.html?id=${id}&page=${data.page}&size=${data.size}`
 });
 
-
-
-function clickViewLink(event, id) {
-    
-    //function에서 this 대신 event.currentTarget 을 쓴다.
-    //현재 이 이벤트가 발생한 태그 - event.currentTarget   -> 자바스크립트 내장
-    
-    //jQuery 는 보통 get set 구분을 인자로 한다. 없으면 get 있으면 set
-    event.preventDefault();
-    var id = $(event.currentTarget).attr('data-id');
-    location.href = `view.html?id=${id}&page=${data.page}&size=${data.size}`
-    console.log(id);
-}
-
 </script>
 
 </body>

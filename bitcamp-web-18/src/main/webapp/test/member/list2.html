@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 목록</title>
+</head>
+<body>
+<h1>멤버 목록</h1>
+<p><a href='view2.html'>새회원</a></p>
+<table id="eListTable" border='1'>
+	<thead>
+		<tr>
+		    <th>아이디</th><th>이메일</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<div>
+    <button id="ePrevBtn">이전</button>
+    <span id="ePageNo"></span>
+    <button id="eNextBtn">다음</button>
+</div>
+
+<script src="../js/bit2.js"></script>
+<script>
+"use strict"
+
+// test parseQuery ok
+var {page, size} = $.parseQuery(location.href);
+let data = null;
+let tbody = $("#eListTable > tbody");
+console.log(tbody);
+if(page != undefined && size != undefined) {
+    loadList(page, size);
+}else {
+	loadList(1, 3);
+}
+
+//test bit -> ok
+//console.log(bit);
+//console.log(bit(ePrevBtn));
+//console.log(bit('<div>'));
+//console.log(bit('#ePageNo'));
+
+
+
+
+
+ePrevBtn.onclick = function() {
+    loadList(data.page - 1, data.size);
+};
+
+eNextBtn.onclick = function() {
+    loadList(data.page + 1, data.size);
+};
+
+
+
+function loadList(page, size) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert("서버에서 오류 발생");
+            return;
+        }
+                
+        data = JSON.parse(xhr.responseText);
+        console.log(data);
+        tbody.html('');
+        for (var item of data.list) {
+            $("<tr>")
+              .html(`<td><a href='#' data-id='${item.id}' 
+                class='viewLink'>${item.id}</a></td>
+                <td>${item.email}</td>`)
+              .appendTo(tbody);
+        }
+        console.log($('tr'));
+        $(ePageNo).html(data.page);
+        //test e.html
+        //$(ePageNo).html('zzzz'); ok
+        if(data.page <= 1) 
+            //test attr ok
+            $(ePrevBtn).attr('disabled', '');
+            //ePrevBtn.setAttribute('disabled', '');
+        else
+            //test removeAttr ok
+            $(ePrevBtn).removeAttr('disabled');
+            //ePrevBtn.removeAttribute('disabled');
+        if(data.page >= data.totalPage) 
+            //test attr ok
+            $(eNextBtn).attr('disabled', '');
+            //eNextBtn.setAttribute('disabled', '');
+        else 
+            //test removeAttr ok
+            $(eNextBtn).removeAttr('disabled');
+            //eNextBtn.removeAttribute('disabled');
+        
+        
+        //test append ok
+        /* var tr = document.createElement('tr');
+        $(tr).html('kkkkk');
+        $("#eListTable > tbody").append(tr);
+        $(tbody).append(tr); */
+        
+        //test appendTo ok
+        /* var tr = document.createElement('tr');
+        $(tr).html('kkkkk');
+        $(tr).appendTo(tbody); */
+    };
+
+    
+    // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
+    xhr.open("GET", `../../json/member/list?page=${page}&size=${size}`
+            , true);
+    xhr.send();
+}
+
+// 1.
+//비동기로 추가한 태그는 리스너를 등록하는 시점 이후이므로 찾지 못한다.
+/* $('.viewLink').click(function(event) {
+    event.preventDefault();
+    var id = $(event.currentTarget).attr('data-id');
+    location.href = `view2.html?id=${id}&page=${data.page}&size=${data.size}`
+}); */
+
+// 2.
+//$(document.body).on('click', function(){console.log('하앍')});
+
+// 3.
+//tbody.on('click', function(){console.log('  ======>')});
+
+
+// 4.
+tbody.on('click', 'a.viewLink', function(){
+   event.preventDefault();
+   var id = $(event.target).attr('data-id');
+   location.href = `view2.html?id=${id}&page=${data.page}&size=${data.size}`;
+});
+
+
+/* function clickViewLink(event, id) {
+    //function에서 this 대신 event.currentTarget 을 쓴다.
+    //현재 이 이벤트가 발생한 태그 - event.currentTarget   -> 자바스크립트 내장
+    event.preventDefault();
+    var id = event.currentTarget.getAttribute('data-id');
+    location.href = `view2.html?id=${id}&page=${data.page}&size=${data.size}`
+    console.log(id);
+} */
+
+</script>
+
+</body>
+</html>

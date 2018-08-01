@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 보기</title>
+</head>
+<body>
+<h1>멤버 보기</h1>
+<form>
+<table border='1'>
+<tr><th>아이디</th><td>
+    <input type='text' id='eId' readonly></td></tr>
+<tr><th>이메일</th>
+    <td><input type='email' id='eEmail'></td></tr>
+<tr><th>암호</th>
+    <td><input type='password' id='ePassword'></td></tr>
+</table>
+<p>
+<button id="eListBtn" type="button">button 목록</button>
+<button id="eUpdateBtn" type="button" class="viewform">변경</button>
+<button id="eDeleteBtn" type="button" class="viewform">삭제</button>
+<button id="eAddBtn" type="button" class="newform">등록</button>
+</p>
+</form>
+
+<script src="../js/bit1.js"></script>
+<script>
+"use strict"
+
+var data = null;
+
+//desturcturing
+// test parseQuery ok
+var {id, page, size} = $.parseQuery(location.href);
+
+//if(!id){
+if(id == undefined){
+    
+    //입력 폼에서
+    var el = document.querySelectorAll('.viewform');
+    for (var e of el) {
+        e.style.display = 'none';
+    }
+    
+    eId.removeAttribute('readonly');
+    
+} else {
+    
+    //상세보기 폼에서
+    var el = document.querySelectorAll('.newform');
+    for (var e of el) {
+        e.style.display = 'none';
+    }
+    
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert("서버에서 오류 발생");
+            return;
+        }
+
+        data = JSON.parse(xhr.responseText);
+        if (data.member == null) {
+            alert('아이디가 무효합니다.');
+            location.href = 'list1.html';
+            return;
+        }
+        eId.value = data.member.id;
+        eEmail.value = data.member.email;
+    };
+
+    
+    // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
+    xhr.open('GET', 
+            `../../json/member/view/${id}`, 
+            true);
+    //서버로 보내기 전에 uri 인코딩을 헤더에 설정해준다.
+    //한글데이터를 보내려면 open()과 send() 사이에 이걸 씀
+    xhr.setRequestHeader('Content-Type','text/html;charset=utf-8');
+    xhr.send();
+}
+
+// test on ok
+//eListBtn.onclick = function() {
+// test click ok
+$(eListBtn).click(function() {
+    
+    if(page) {
+	    location.href = `list1.html?page=${page}&size=${size}`;
+    }else {
+        location.href = 'list1.html';
+    }
+});
+
+// test on ok
+//eAddBtn.onclick = function() {
+// test click ok
+$(eAddBtn).click(function() {
+    
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert('서버에서 오류 발생');
+            return;
+        }
+
+        //로컬변수로 사용하기 위해 let 사용
+        let data = JSON.parse(xhr.responseText);
+        console.log(data);
+        if(data.status == 'success') {
+	        location.href = 'list1.html';
+        }else {
+            alert('등록 오류입니다.');
+            eId.value = '';
+	        console.log(data.error);
+        }
+    };
+    
+    // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
+    xhr.open('POST', 
+            '../../json/member/add', 
+            //'test.jsp',
+            true);
+    //서버로 보내기 전에 uri 인코딩을 헤더에 text/html;utf-8 으로 설정해준다.
+    //한글데이터를 보내려면 open()과 send() 사이에 이걸 씀
+    //xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;text/html;charset=UTF-8');
+    xhr.send(`id=${eId.value}&email=${eEmail.value}&password=${ePassword.value}`);
+    
+});
+
+
+
+
+// test on ok
+//eUpdateBtn.onclick = function() {
+// test click ok
+$(eUpdateBtn).click(function() {
+    console.log('okok');
+    
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert('서버에서 오류 발생');
+            return;
+        }
+
+        //로컬변수로 사용하기 위해 let 사용
+        let data = JSON.parse(xhr.responseText);
+        console.log(data);
+        if(data.status == 'success') {
+            location.href = `list1.html?page=${page}&size=${size}`;
+        }else {
+            alert('변경 오류입니다.');
+	        console.log(data.error);
+        }
+    };
+
+    
+    // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
+    xhr.open('POST', 
+            '../../json/member/update', 
+            //'test.jsp',
+            true);
+    //서버로 보내기 전에 uri 인코딩을 헤더에 text/html;utf-8 으로 설정해준다.
+    //한글데이터를 보내려면 open()과 send() 사이에 이걸 씀
+    //xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;text/html;charset=UTF-8');
+    xhr.send(`id=${eId.value}&email=${eEmail.value}&password=${ePassword.value}`);
+    
+});
+
+
+
+//eDeleteBtn.onclick = function() {
+// test on ok
+//$(eDeleteBtn).on('click', function() {
+// test click ok
+$(eDeleteBtn).click(function() {
+    
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200) {
+            alert('서버에서 오류 발생');
+            return;
+        }
+
+        //로컬변수로 사용하기 위해 let 사용
+        let data = JSON.parse(xhr.responseText);
+        console.log(data);
+        if(data.status == 'success') {
+            location.href = 'list1.html';
+        }else {
+            alert('삭제 오류입니다.');
+            console.log(data.error);
+        }
+    };
+
+    
+    // ` ` back tick 이거 사용할 때  URL에 공백도 같이 넣어버리므로 주의할 것!!!!!!!!!!!!
+    xhr.open('GET', 
+            `../../json/member/delete?id=${eId.value}`, 
+            //'test.jsp',
+            true);
+    //서버로 보내기 전에 uri 인코딩을 헤더에 text/html;utf-8 으로 설정해준다.
+    //한글데이터를 보내려면 open()과 send() 사이에 이걸 씀
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send();
+    
+});
+
+</script>
+    
+</body>
+</html>

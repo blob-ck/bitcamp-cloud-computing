@@ -2,10 +2,11 @@
 <html>
 <head>
 <meta charset='UTF-8'>
-<title id="eTitle">멤버 보기</title>
+<title>멤버 보기</title>
 </head>
 <body>
-<h1 id="eH1">멤버 보기</h1>
+<h1 class="newform">멤버 등록</h1>
+<h1 class="viewform">멤버 보기</h1>
 <form action='../update' method='post'>
 <table border='1'>
 <tr><th>아이디</th><td>
@@ -23,7 +24,7 @@
 </p>
 </form>
 
-<script src="../js/bit.min.js"></script>
+<script src="../js/bit.js"></script>
 <script>
 "use strict"
 
@@ -43,11 +44,6 @@ if(id == undefined){
     
     //eId.removeAttribute('readonly');
     $(eId).removeAttr('readonly');
-    
-    //var title = document.querySelector('title');
-    //var h1 = document.querySelector('h1');
-    eTitle.innerHTML = '멤버 등록';
-    eH1.innerHTML = '멤버 등록';
     
 } else {
     
@@ -103,11 +99,11 @@ $(eAddBtn).click(function() {
                 password: $(ePassword).val()
             },
             function(data) {
-                alert.log(data);
                 if(data.status == 'success') {
                     location.href = 'list.html';
                 }else {
                     alert('이미 존재하는 아이디입니다.');
+                    $(eId).val('');
                     console.log(data.error);
                 }
             },

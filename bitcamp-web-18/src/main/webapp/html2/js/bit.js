@@ -15,7 +15,7 @@ let bit = function(value) {
     var el = [];
 
     //오리지널 태그 객체도 jQuery를 사용할 수 있게 첨가해준다.
-    //제이쿼리 객체 = 오리지널 객체 + 제이쿼리 프로퍼티
+    //제이쿼리 객체 = 오리지널 객체 + 제이쿼리 프로퍼티ㄴ
     if (value instanceof HTMLElement) {
         el[0] = value;
         
@@ -262,7 +262,7 @@ bit.ajax = function(url, settings) {
 };
 
 
-//bit.getJSON = function(url, data, func) {
+//bit.getJSON = function(url, data, s) {
 bit.getJSON = function(url, p2, p3) {
     let data = {};
     var success = null;

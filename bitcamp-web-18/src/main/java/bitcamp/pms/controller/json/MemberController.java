@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import bitcamp.pms.domain.Member;
 import bitcamp.pms.service.MemberService;
 
+//요청자 및 응답의 범위를 제한할 수 있다.
+//@CrossOrigin()
 @RestController
 @RequestMapping("/member")
 public class MemberController {
@@ -60,14 +62,19 @@ public class MemberController {
 	@PostMapping("add")
 	public Object add(Member member) throws Exception {
 	    
-	    HashMap<String, Object> result = new HashMap<String, Object>();
-		if (memberService.insert(member) == 0) {
-		    result.put("status", "fail");
-		    result.put("error", "이미 존재하는 아이디입니다.");
-		} else {
-		    result.put("status", "success");
-		}
-		return result;
+	    HashMap<String, Object> data = new HashMap<String, Object>();
+	    try {
+	        int r = memberService.insert(member);
+	        System.out.println(r);
+            data.put("status", "success");
+	        return data;
+        } catch (Exception e) {
+            data.put("status", "fail");
+            data.put("error", "이미 존재하는 아이디입니다.");
+            //e.printStackTrace();
+            System.out.println("이미 존재하는 아이디입니다.");
+            return data;
+        }
 	}
 	
 	
