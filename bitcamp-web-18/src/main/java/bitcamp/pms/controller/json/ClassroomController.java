@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import bitcamp.pms.domain.Classroom;
 import bitcamp.pms.service.ClassroomService;
 
-@Controller
+@RestController
 @RequestMapping("/classroom")
 public class ClassroomController {
     
@@ -43,12 +44,13 @@ public class ClassroomController {
     }
     
     @RequestMapping("list{page}")
-    public void list(
+    public Object list(
             @MatrixVariable(defaultValue="1") int pageNo,
             @MatrixVariable(defaultValue="3") int pageSize,
             Map<String,Object> map) throws Exception {        
         
-        map.put("list", classroomService.list(pageNo, pageSize));
+    	//map.put("list", classroomService.list(pageNo, pageSize));
+    	return classroomService.list(pageNo, pageSize);
     }
     
     @RequestMapping("update")
