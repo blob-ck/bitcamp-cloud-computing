@@ -7,22 +7,85 @@
 <body>
 <h1>강의 목록</h1>
 <p><a href='form.html'>새 강의</a></p>
-<table border='1'>
-<tr>
-    <th>번호</th><th>강의명</th><th>기간</th><th>강의실</th>
-</tr>
-<tr>
-    <td>1</td>
-    <td><a href='view?no=1'>컴퓨터과학 기초</a></td>
-    <td>2018-07-05~2018-07-31</td>
-    <td>스타벅스</td>
-</tr>
-<tr>
-    <td>2</td>
-    <td><a href='view?no=2'>경제학개론</a></td>
-    <td>2018-07-18~2018-07-28</td>
-    <td>잔디밭001</td>
-</tr>
+<table id="eListTable" border='1'>
+<thead>
+	<tr>
+	    <th>번호</th><th>강의명</th><th>기간</th><th>강의실</th>
+    </tr>
+</thead>
+<tbody>
+
+</tbody>
 </table>
+
+<script src="../js/common.js"></script>
+<script>
+'use strict'
+
+var data = null;
+var tbody = document.querySelector("#eListTable > tbody");
+
+var {page, size} = parseQuery(location.href);
+
+if(page != undefined && size != undefined) {
+    loadList(page, size);
+} else {
+    loadList(1, 3);
+}
+
+function loadList(page, size) {
+		
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState < 4) return;
+		if(xhr.status !== 200) {
+			alert('서버에서 오류 발생!');
+			return;
+		}
+		
+		data = JSON.parse(xhr.responseText);
+		tbody.innerHTML = '';
+		for (var item of data) {
+			var tr = document.createElement("tr");
+			tr.innerHTML = 
+				   `<tr>
+				        <td>2</td>
+				        <td><a href='#' data-id='{item.no}'
+				        onclick='clickViewLink(event)'>${item.title}</a></td>
+				        <td>${item.startDate}~${item.endDate}</td>
+				        <td>${item.room}</td>
+			        </tr>`;
+			tbody.appendChild(tr);
+		}
+	/* 	<tr>
+		    <td>2</td>
+		    <td><a href='view?no=2'>경제학개론</a></td>
+		    <td>2018-07-18~2018-07-28</td>
+		    <td>잔디밭001</td>
+		</tr> */
+		
+		console.log(data);
+		
+	};
+	
+	xhr.open('GET',
+			`../../json/classroom/list`,
+			//'test.jsp',
+			true);
+	xhr.send();
+};
+
+
+
+function clickViewLink(event, no) {
+    
+    //function에서 this 대신 event.currentTarget 을 쓴다.
+    //현재 이 이벤트가 발생한 태그 - event.currentTarget   -> 자바스크립트 내장
+    event.preventDefault();
+    no = event.currentTarget.getAttribute('data-id');
+    location.href = `view.html?no=${no}`
+}
+
+</script>
 </body>
 </html>
