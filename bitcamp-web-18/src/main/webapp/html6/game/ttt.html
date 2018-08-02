@@ -3,7 +3,6 @@
 <head>
 <meta charset='UTF-8'>
 <title>멤버 목록</title>
-<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 <style>
 table{
 }
@@ -38,35 +37,56 @@ td {
 	</tr> -->
 </table>
 </div>
-<tr class="dummy1" style="display:none;"></tr>
-<td class="dummy2" style="display:none;"></td>
+<!-- <tr class="dummy1" style="display:none;"></tr>
+<td class="dummy2" style="display:none;"></td> -->
 
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../js/jquery.bit.js"></script>
-<script src="../js/common.js"></script>
+<script src="/js/common.js"></script>
 <script>
 'use strict'
 var currentPlayer = 'person';
-var gameOver = false;
-var boxSize = 3;//prompt('한 변의 길이를 정하시오'); // 3*3, 4*4, ... = gameOver 조건 = 이중반복문 중 바깥 length
-//makeBox(boxSize);
+var gameOver = false; // 게임 종료 여부
+var boxSize = prompt('한 변의 길이를 정하시오'); // 3*3, 4*4, ... = gameOver 조건 = 이중반복문 중 바깥 length
+makeBox(boxSize);
+var checkString = '';
 var boxSquare = boxSize * boxSize; //총 입력 칸 수
 var boxCheckArr = new Array();
 for (var i = 0; i < boxSize; i++) {
 	boxCheckArr[i] = new Array();
 	for (var j = 0; j < boxSize; j++) {
-		boxCheckArr[i][j] = null;
+		boxCheckArr[i][j] = '';
 	}
 }
 
 $('#eTable').on('click', 'tr > td.box', function(){
-	if(currentPlayer == 'person') {
+	if(currentPlayer == 'person' && !gameOver) {
 		fillBox(this);
 	}
 });
 
+
+//게임 승패 여부 체크
+function checkOver() {
+    for (var i = 0; i < boxSize; i++) {
+        if (i % boxSize == 0) {
+            checkString = '';
+        }
+        for (var j = 0; j < boxSize; j++) {
+            checkString += boxCheckArr[i][j];
+            if (checkString == 'XXX' || checkString == 'OOO') {
+                gameOver = true;
+                return;
+            }
+        }
+        console.log(checkString);
+    }
+}
+
+
+//박스체크
 function fillBox(box) {
 	if($(box).text()) {
 		console.log('이미 체크한 박스다.');
@@ -74,11 +94,10 @@ function fillBox(box) {
 	}
 	if(currentPlayer == 'person') {
 		$(box).text('X');
-		// td sibling 중 현재 td의 인덱스를 반환한다. 0,1,2 중 하나.
-		var tdIndex = $(box).index();
-		// td의 부모인 row의 sibling 중 현재 td의 부모row를 반환한다. 0,1,2 중 하나.
-		var rowIndex = $(box).parent().index();
+		var tdIndex = $(box).index(); // td sibling 중 현재 td의 인덱스를 반환한다. 0,1,2 중 하나.
+		var rowIndex = $(box).parent().index();// td의 부모인 row의 sibling 중 현재 td의 부모row를 반환한다. 0,1,2 중 하나.
 		boxCheckArr[rowIndex][tdIndex] = 'X';
+		checkOver();
 		console.log(boxCheckArr);
 		$(box).removeClass('open');
 		currentPlayer = 'computer';
@@ -93,24 +112,23 @@ function fillBox(box) {
 			var tdIndex = $($open[random]).text('O').removeClass('open').index();
 			var rowIndex = $($open[random]).parent().index();
 			boxCheckArr[rowIndex][tdIndex] = 'O';
+			checkOver();
 			currentPlayer = 'person';
 		}, 1000);
 	}
 }
 
-/* function makeBox(size) {
-	var $table = $('#eTable');
-	var $mTr = $('.dummy1').clone(true);
-	console.log($mTr);
-	var $mTd = $('.dummy2').clone(true);
-	
-		$mTr.append($mTd.removeClass('dummy2').addClass('box open').show())
-		$table.append($mTr.removeClass('dummy1').addClass('row').show());
+function makeBox(size) {
 	for (var j = 0; j < size; j++) {
+		//var $mTr = $('<tr/>').attr('class', 'row');
+		var $mTr = $('<tr class="row"/>');
+		$('#eTable').append($mTr);	
+		for (var i = 0; i < size; i++) {
+		    var $mTd = $('<td class="box open"/>');
+    	    $mTr.append($mTd);	
+		}
 	}
-	for (var i = 0; i < size; i++) {
-	}
-}  */
+}
 </script>
 
 </body>
