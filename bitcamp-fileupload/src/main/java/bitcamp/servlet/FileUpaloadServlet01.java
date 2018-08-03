@@ -17,6 +17,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+//파일업로드 방법1 - Apache common 방법1
 @WebServlet("/fileupload01")
 public class FileUpaloadServlet01 extends HttpServlet {
 
@@ -86,9 +87,13 @@ public class FileUpaloadServlet01 extends HttpServlet {
         out.println("<html><head><title>파일 업로드</title></head><body>");
         out.printf("name = %s<br>\n", paramMap.get("name"));
         out.printf("age = %s<br>\n", paramMap.get("age"));
-        out.printf("photo = <a href='files/%s'/>%s</a>\n", paramMap.get("photo"), paramMap.get("photo"));
-        //out.printf("<img src=/files/%s>", paramMap.get("photo"));
-        out.printf("<img src=/files/%s>", paramMap.get("photo"));
+        out.printf("photo = <a href='files/%s'/>%s</a><br>\n", paramMap.get("photo"), paramMap.get("photo"));
+        out.printf("<img src=/files/%s><br>", paramMap.get("photo"));
+        out.printf("<img id='img1' src=/files/%s><br>", paramMap.get("photo"));
         out.println("</body></html>");
+        
+        out.printf("<script>"+
+        "setTimeout(() => {document.getElementById('img1').src = 'files/%s';}, 5000);"+
+        "</script>", paramMap.get("photo"));
     }
 }

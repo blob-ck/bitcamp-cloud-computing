@@ -31,7 +31,9 @@
              Servlet 3.0+ 서블릿 컨테이너에서 기본으로 제공하는 
              멀티파트 처리기를 사용하고 싶다면 다음 태그를 추가해야 한다. -->
         <multipart-config>
-            <max-file-size>5000000</max-file-size>
+<!--             <max-file-size>2097152</max-file-size>
+            <max-request-size>20971520</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold> -->
         </multipart-config>
     </servlet>
     <servlet-mapping>
@@ -39,6 +41,20 @@
         <url-pattern>/mvc/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>fileupload05</servlet-name>
+        <servlet-class>bitcamp.servlet.FileUpaloadServlet05</servlet-class>
+        <multipart-config>
+            <max-file-size>2097152</max-file-size>
+            <max-request-size>20971520</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>fileupload05</servlet-name>
+        <url-pattern>/fileupload05/*</url-pattern>
+    </servlet-mapping>
+    
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.xhtml</welcome-file>
