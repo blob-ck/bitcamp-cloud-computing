@@ -54,6 +54,7 @@ function checkOver(cp) {
             }
 			if (checkRow == boxSize || checkCol == boxSize || checkCrossLR == boxSize || checkCrossRL == boxSize) {
 				$('#winner').attr('style', 'display:show').text('승자는 '+cp);
+				alert('승자는 '+cp);
 				gameOver = true;
 				return cp;
 			}
@@ -68,7 +69,8 @@ function checkOver(cp) {
 	countCheck++;
 	console.log('현재 체크된 박스 수 = ', countCheck);
 	if (countCheck == (boxSize * boxSize)) {
-		$('#winner').attr('style', 'display:show').text('비겼네');
+		$('#winner').attr('style', 'display:show').text('비김');
+		alert('비김!');
 		gameOver = true;
 		isDraw = true;
 	}

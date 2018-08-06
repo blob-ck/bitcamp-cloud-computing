@@ -36,6 +36,12 @@ dependencies {
     // Date 형식을 변환할 때 milliSecond로 바꾼다. -> gson과는 다르게 특정 국가 언어에 종속되지 않는 장점이 있다
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
     
+    //Thumbnailator 썸네일 이미지 생성 라이브러리
+    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    // https://github.com/coobird/thumbnailator
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+    
+    
     compile 'com.google.guava:guava:23.0'
     testCompile 'junit:junit:4.12'
 }

@@ -1,13 +1,7 @@
 package bitcamp.servlet;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -18,10 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 //파일업로드 방법2 - Servlet 방법1 - Annotation
 // Servlet 3.0 부터 multipart data를 처리하는 API를 제공한다.
 // 일반데이터는 쓰던데로 파라미터에서 꺼내면 되고, 데이터만 Part를 통해 write하면 편하다.
@@ -29,6 +19,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 // 처리 정보를 Annotation 또는 DD파일(web.xml; Deployment Descriptor 파일) 에 설정해야 한다.
 
 // => 방법1 Annotation 으로 설정
+@SuppressWarnings("serial")
 @MultipartConfig(
         // 1MB 초과 파일의 경우 임시폴더에 저장한다. 설정하지 않으면 기본 저장폴더에 바로 저장한다.
         fileSizeThreshold= 1024 * 1024,
@@ -43,12 +34,6 @@ public class FileUpaloadServlet04 extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        
-        InputStream fileContent = null;
-        OutputStream fileOut = null;
 
         try {
             String name = req.getParameter("name");
