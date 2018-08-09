@@ -17,13 +17,61 @@ var pool = mysql.createPool({
         password: "1111"
     });
     
+var express = {
+        requestMap: {},
+        add(urlpath, handler) {
+            this.requestMap[urlpath] = handler;
+        },
+        getHandler(urlpath) {
+            return this.requestMap[urlpath];
+        },
+        
+        listen(port, callback) {
+            var mapper = this;
+            const server = http.createServer((req, res) => {
+                
+                var urlInfo = url.parse(req.url, true);
+                res.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'});
+                
+                if (urlInfo.pathname === '/favicon.ico') {
+                    res.end();
+                    return;
+                }
+                
+                var handler = mapper.getHandler(urlInfo.pathname);
+                
+                if (handler) {
+                    try{
+                        handler(urlInfo, req, res);
+                    }catch(err) {
+                        res.end('실행 중 오류 발생!');
+                    }
+                } else {
+                    res.end('해당 URL을 찾을 수 없습니다.');
+                    return;
+                }
+            });
+            
+            server.listen(8000, callback);
+        }
+};
 
-    //url.pathname 으로 불러올 함수 구분하고,
-    //필요한 파라미터는 함수 종속
-function selectList(pool, query, params){
+
+
+
+express.add('/member/list' ,(urlInfo, req, res) => {
+    var pageNo = 1;
+    var pageSize = 3;
+    if (urlInfo.query.pageNo) {
+        pageNo = parseInt(urlInfo.query.pageNo);
+    }
+    if (urlInfo.query.pageSize) {
+        pageSize = parseInt(urlInfo.query.pageSize);
+    }
+    var startIndex = (pageNo - 1) * pageSize;
     pool.query(
-        query,
-        params,
+        'select * from pms2_member limit ?, ?',
+        [startIndex, pageSize],
         function(err, results){
             if (err) {
                 res.end('DB 조회 중 예외 발생!');
@@ -36,112 +84,43 @@ function selectList(pool, query, params){
             res.write(`</body>`);
         res.end();
     });
-}
-    
-
-
-
-
-const server = http.createServer((req, res) => {
-    
-    var urlInfo = url.parse(req.url, true);
-    res.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'});
-    
-    if (urlInfo.pathname === '/favicon.ico') {
-        res.end();
-        return;
-    }
-    
-    var path = urlInfo.pathname;
-
-    switch(path) {
-        case '/member/list':
-
-            var pageNo = 1;
-            var pageSize = 3;
-            if (urlInfo.query.pageNo) {
-                pageNo = parseInt(urlInfo.query.pageNo);
-            }
-            if (urlInfo.query.pageSize) {
-                pageSize = parseInt(urlInfo.query.pageSize);
-            }
-            var startIndex = (pageNo - 1) * pageSize;
-            pool.query(
-                'select * from pms2_member limit ?, ?',
-                [startIndex, pageSize],
-                function(err, results){
-                    if (err) {
-                        res.end('DB 조회 중 예외 발생!');
-                        return;
-                    } 
-                    res.write(`<body style="background-color: black; font-size: 50px; color: red">`);
-                    for (var row of results) {
-                            res.write(`<div>${row.mid} ${row.email}</div>\n`);
-                    }
-                    res.write(`</body>`);
-                res.end();
-            });
-            break;
-
-        case '/member/add':
-
-            var id = urlInfo.query.id;
-            var email = urlInfo.query.email;
-            var password = urlInfo.query.password;
-            pool.query(
-                `insert into pms2_member(mid, email, pwd)
-                values(?, ?, password(?))`,
-                [id, email, password],
-                function(err, results){
-                    if (err) {
-                        res.end('DB insert 중 예외 발생!');
-                        return;
-                    }
-                res.end('정상 입력되었습니다!');
-            });
-            break;
-
-        case '/member/update':
-
-            var id = urlInfo.query.id;
-            var email = urlInfo.query.email;
-            var password = urlInfo.query.password;
-            pool.query(
-                `update pms2_member set email=?, pwd=password(?)
-                where mid=?`,
-                [email, password, id],
-                function(err, results){
-                    if (err) {
-                        res.end('DB update 중 예외 발생!');
-                        return;
-                    } 
-                res.end('정상 변경되었습니다!');
-            });
-            break;
-
-        case '/member/delete':
-
-            var id = urlInfo.query.id;
-            pool.query(
-                `delete from pms2_member
-                where mid=?`,
-                [id],
-                function(err, results){
-                    if (err) {
-                        res.end('DB 삭제 중 예외 발생!');
-                        return;
-                    } 
-                res.end('정상 삭제하였습니다!');
-            });
-            break;
-
-        default:
-
-            res.end('해당 url 이 존재하지 않습니다.');
-            break;
-    }
 });
-
-server.listen(8000,() => {
-    console.log('리슨~ 서버 시작됨~')
+express.add('/member/add' ,(urlInfo, req, res) {
+    pool.query(
+        `insert into pms2_member(mid, email, pwd)
+        values(?, ?, password(?))`,
+        [urlInfo.query.id, urlInfo.query.email, urlInfo.query.password],
+        function(err, results){
+            if (err) {
+                res.end('DB insert 중 예외 발생!');
+                return;
+            }
+        res.end('정상 입력되었습니다!');
+    });
+});
+express.add('/member/update' ,(urlInfo, req, res) {
+    pool.query(
+        `update pms2_member set email=?, pwd=password(?)
+        where mid=?`,
+        [urlInfo.query.email, urlInfo.query.password, urlInfo.query.id],
+        function(err, results){
+            if (err) {
+                res.end('DB update 중 예외 발생!');
+                return;
+            } 
+        res.end('정상 변경되었습니다!');
+    });
+});
+express.add('/member/remove' ,(urlInfo, req, res) {
+    pool.query(
+        `delete from pms2_member
+        where mid=?`,
+        [urlInfo.query.id],
+        function(err, results){
+            if (err) {
+                res.end('DB 삭제 중 예외 발생!');
+                return;
+            } 
+        res.end('정상 삭제하였습니다!');
+    });
 });

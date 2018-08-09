@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<meta http-equiv="Content-Security-Policy"
+	content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+<title>GAME ttt</title>
+<style>
+body{
+    text-align: center;
+}
+table{
+    text-align: center;
+}
+
+td{
+    border:3px solid black;
+    width:100px;
+    height:100px;
+    text-align: center;
+    font-size: 50px;
+}
+</style>
+</head>
+
+<body>
+<h1>tic tac toe 게임</h1>
+<table id="gTable">
+	<tr id="row1">
+		<td class="col1" data-id="0">x</td>
+		<td class="col2" data-id="1">x</td>
+		<td class="col3" data-id="2">x</td>
+	</tr>
+	<tr id="row2">
+		<td class="col1" data-id="3"></td>
+		<td class="col2" data-id="4"></td>
+		<td class="col3" data-id="5"></td>
+	</tr>
+	<tr id="row3">
+		<td class="col1" data-id="6"></td>
+		<td class="col2" data-id="7">x</td>
+		<td class="col3" data-id="8"></td>
+	</tr>
+</table>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+'use strict'
+
+var arr = [0,1,2,3,4,5,6,7,8];
+
+/* splice(arr, 2);
+splice(arr, 8);
+splice(arr, 1); */
+
+function splice(arr, val) {
+    for (var i = arr.length; i--;) {
+        if (arr[i] === val) {
+            arr.splice(i, 1);
+            break;
+		}
+	}
+    console.log(arr);
+}
+
+//Listener 등록/삭제
+
+$('#gTable').on('click', 'td', function(){
+    var that = $(this);
+    if (that.text()) {
+        console.log('넌 이미 찍혀있다.');
+        return;
+    }
+    that.text('x');
+    
+    var targetNo = that.attr('data-id');
+    splice(arr, targetNo);
+    
+    //console.log(Math.floor(Math.random()*arr.length));
+    var randomIndex = Math.floor(Math.random() * arr.length);
+    
+    //setTimeout()
+    
+        
+    
+});
+
+
+</script>
+</body>
+
+</html>

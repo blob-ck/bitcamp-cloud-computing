@@ -1,5 +1,4 @@
 // module 정의 4
-//
 
 module.exports = function() {
     

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 목록</title>
+<style>
+table{
+}
+td {
+	border: 2px solid black;
+	width:200px;
+	height:200px;
+	font-size: 120px;
+	text-align: center;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Tic Tac Toe</h1>
+<table id="eTable">
+<!-- 	<tr class="row">
+		<td class="box open"></td>
+		<td class="box open"></td>
+		<td class="box open"></td>
+	</tr>
+	<tr class="row">
+		<td class="box open"></td>
+		<td class="box open"></td>
+		<td class="box open"></td>
+	</tr>
+	<tr class="row">
+		<td class="box open"></td>
+		<td class="box open"></td>
+		<td class="box open"></td>
+	</tr> -->
+</table>
+</div>
+<!-- <tr class="dummy1" style="display:none;"></tr>
+<td class="dummy2" style="display:none;"></td> -->
+
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../js/jquery.bit.js"></script>
+<script src="/js/common.js"></script>
+<script>
+'use strict'
+var currentPlayer = 'person';
+var gameOver = false; // 게임 종료 여부
+var boxSize = prompt('한 변의 길이를 정하시오'); // 3*3, 4*4, ... = gameOver 조건 = 이중반복문 중 바깥 length
+makeBox(boxSize);
+var checkString = '';
+var boxSquare = boxSize * boxSize; //총 입력 칸 수
+var boxCheckArr = new Array();
+for (var i = 0; i < boxSize; i++) {
+	boxCheckArr[i] = new Array();
+	for (var j = 0; j < boxSize; j++) {
+		boxCheckArr[i][j] = '';
+	}
+}
+
+$('#eTable').on('click', 'tr > td.box', function(){
+	if(currentPlayer == 'person' && !gameOver) {
+		fillBox(this);
+	}
+});
+
+
+//게임 승패 여부 체크
+function checkOver() {
+    for (var i = 0; i < boxSize; i++) {
+        if (i % boxSize == 0) {
+            checkString = '';
+        }
+        for (var j = 0; j < boxSize; j++) {
+            checkString += boxCheckArr[i][j];
+            if (checkString == 'XXX' || checkString == 'OOO') {
+                gameOver = true;
+                return;
+            }
+        }
+        console.log(checkString);
+    }
+}
+
+
+//박스체크
+function fillBox(box) {
+	if($(box).text()) {
+		console.log('이미 체크한 박스다.');
+		return;
+	}
+	if(currentPlayer == 'person') {
+		$(box).text('X');
+		var tdIndex = $(box).index(); // td sibling 중 현재 td의 인덱스를 반환한다. 0,1,2 중 하나.
+		var rowIndex = $(box).parent().index();// td의 부모인 row의 sibling 중 현재 td의 부모row를 반환한다. 0,1,2 중 하나.
+		boxCheckArr[rowIndex][tdIndex] = 'X';
+		checkOver();
+		console.log(boxCheckArr);
+		$(box).removeClass('open');
+		currentPlayer = 'computer';
+		
+		setTimeout(function() {
+			var $open = $('.open'); //모든 open클래스 수 = 9개 = boxSquare
+			var random = Math.floor(Math.random() * $open.length);
+			if ($open.length <=0) {
+				console.log('모든 칸이 찍혔음');
+				return;
+			}
+			var tdIndex = $($open[random]).text('O').removeClass('open').index();
+			var rowIndex = $($open[random]).parent().index();
+			boxCheckArr[rowIndex][tdIndex] = 'O';
+			checkOver();
+			currentPlayer = 'person';
+		}, 1000);
+	}
+}
+
+function makeBox(size) {
+	for (var j = 0; j < size; j++) {
+		//var $mTr = $('<tr/>').attr('class', 'row');
+		var $mTr = $('<tr class="row"/>');
+		$('#eTable').append($mTr);	
+		for (var i = 0; i < size; i++) {
+		    var $mTd = $('<td class="box open"/>');
+    	    $mTr.append($mTd);	
+		}
+	}
+}
+</script>
+
+</body>
+</html>
