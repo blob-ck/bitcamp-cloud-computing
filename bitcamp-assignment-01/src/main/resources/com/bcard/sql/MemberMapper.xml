@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bcard.dao.MemberDao">
+
+<resultMap type="Member" id="MemberMap">
+    <result column="email" property="email"/>
+    <result column="pwd" property="password"/>
+    <result column="cell" property="cell"/>
+    <result column="tel" property="tel"/>
+    <result column="fax" property="fax"/>
+    <result column="memo" property="memo"/>
+    <result column="rem" property="rem"/>
+</resultMap>
+
+<insert id="register" parameterType="Member">
+INSERT INTO bc_member (`email`, `name`, `pwd`)
+VALUES(#{email}, #{name}, password(#{password}));
+
+</insert>
+
+<select id="login" parameterType="Member" resultMap="MemberMap">
+select * from bc_member where email=#{email} and pwd=password(#{password})
+</select>
+
+<select id="list" parameterType="String" resultMap="MemberMap">
+select * from bc_card where rem=#{email}
+</select>
+</mapper>

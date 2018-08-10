@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+</head>
+<body>
+    <div class="container">
+        <div><h1>로그인</h1></div>
+        <div>
+            <form id="login-form">
+                <p><label>이메일 <input type="email" id="eEmail" name="email"></label></p>
+                <p><label>암호 <input type="password" id="ePassword" name="password"></label></p>
+                <button id="login-btn" type="button">로그인</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <p>개인명함관리</p> 
+        <p>ⓒ2018비트캠프</p>
+    </div>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="../js/jquery.bit.js"></script>
+<script src="../js/common.js"></script>
+<script>
+//var serverApiAddr = "http://localhost:8080/bitcamp-assignment-01"
+$('#login-btn').click(function(){
+    console.log($(eEmail).val());
+    $.post(serverApiAddr + '/app/member/login',
+            {
+                email: $(eEmail).val(),
+                password: $(ePassword).val()
+            },
+            function(data) {
+                if(data.status == 'success') {
+                    alert('된다');
+                    location.href = `list.html?email=${data.email}`;
+                }else {
+                    alert('존재하지 않는 이메일입니다.');
+                    console.log(data.error);
+                    location.href = '#';
+                }
+            },
+            'json');
+});
+</script>
+</body>
+</html>
