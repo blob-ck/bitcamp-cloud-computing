@@ -26,7 +26,7 @@ con.query(
         `delete from pms2_member
          where mid=?`, // ? 를 in-parameter 라 부른다
          [mid],        // in-parameter 의 개수만큼 배열에 값을 담으면 된다.
-        , function(err, results){
+        function(err, results){
     if (err) throw err;
     console.log("삭제 성공!");
 });
