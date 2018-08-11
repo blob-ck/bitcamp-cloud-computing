@@ -32,10 +32,10 @@ $('#register-btn').click(function(){
             },
             function(data) {
                 if(data.status == 'success') {
-                    alert('된다');
+                    alert('가입 완료! 로그인 페이지로 이동합니다.');
                     location.href = 'login.html';
                 }else {
-                    alert('아몰라~');
+                    alert('넌 안돼~ 이메일 중복이다~');
                     console.log(data.error);
                     location.href = '#';
                 }

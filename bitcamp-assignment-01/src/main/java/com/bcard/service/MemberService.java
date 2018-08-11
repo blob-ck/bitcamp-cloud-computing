@@ -25,4 +25,16 @@ public class MemberService {
         memberDao.register(member);
     }
 
+    public Member view(String name) {
+        return memberDao.view(name);
+    }
+
+    public void cardAdd(Member member) {
+        memberDao.cardAdd(member);
+    }
+
+    public void cardUpdate(Member member) {
+        memberDao.cardUpdate(member);
+    }
+
 }

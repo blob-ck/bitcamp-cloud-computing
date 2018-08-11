@@ -35,10 +35,10 @@ $('#login-btn').click(function(){
             },
             function(data) {
                 if(data.status == 'success') {
-                    alert('된다');
+                    //alert('된다');
                     location.href = `list.html?email=${data.email}`;
                 }else {
-                    alert('존재하지 않는 이메일입니다.');
+                    alert('존재하지 않는 이메일이거나 암호가 일치하지 않습니다.');
                     console.log(data.error);
                     location.href = '#';
                 }

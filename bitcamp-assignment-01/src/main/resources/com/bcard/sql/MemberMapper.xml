@@ -14,17 +14,42 @@
     <result column="rem" property="rem"/>
 </resultMap>
 
+<!-- 명함 편집 -->
+<update id="cardUpdate">
+UPDATE bc_card SET 
+    cell = #{cell},
+    tel = #{tel},
+    fax = #{fax},
+    email = #{email},
+    memo = #{memo} 
+WHERE name = #{name}
+</update>
+
+<!-- 명함 추가 -->
+<insert id="cardAdd" parameterType="Member">
+insert into bc_card(name, cell, tel, fax, email, memo, rem)
+values(#{name}, #{cell}, #{tel}, #{fax}, #{email}, #{memo}, #{rem})
+</insert>
+
+<!-- 명함 보기 -->
+<select id="view" parameterType="string" resultMap="MemberMap">
+select * from bc_card where name=#{name}
+</select>
+
+<!-- 명함 리스트 -->
+<select id="list" parameterType="String" resultMap="MemberMap">
+select * from bc_card where rem=#{email} order by name
+</select>
+
+<!-- 멤버 가입 -->
 <insert id="register" parameterType="Member">
 INSERT INTO bc_member (`email`, `name`, `pwd`)
 VALUES(#{email}, #{name}, password(#{password}));
-
 </insert>
 
+<!-- 멤버 로그인 -->
 <select id="login" parameterType="Member" resultMap="MemberMap">
 select * from bc_member where email=#{email} and pwd=password(#{password})
 </select>
 
-<select id="list" parameterType="String" resultMap="MemberMap">
-select * from bc_card where rem=#{email}
-</select>
 </mapper>

@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <title>개인 명함 관리</title>
 <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<style type="text/css">
+.viewLink{
+    cursor: pointer;
+}
+.hideBtn {
+    display: none;
+}
+</style>
 </head>
 <body>
     <div class="container">
@@ -22,32 +30,48 @@
                 </div>
             </div>
             <div class="col-md-9 member-view">
-                <div class="row"><div class="col-md-10"></div><button class="col-md-2" type="button">편집</button></div>
-                <div class="member-form">
-                    <div class="row">
-                        <div class="col-md-3"></div><input class="col-md-9" type="text" name="name" placeholder="이름">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">휴대 전화 </div><input class="col-md-9" type="text" name="cell">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">일반 전화 </div><input class="col-md-9" type="text" name="tel">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">팩스</div><input class="col-md-9" type="text" name="fax">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">이메일</div><input class="col-md-9" type="email" name="email">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">메모</div><textarea class="col-md-9" name="memo" id="" cols="30" rows="10"></textarea>
-                    </div>
+                <div class="row"><div class="col-md-10"></div><button class="col-md-2 cardFD" id="cardUpdateForm" type="button">편집</button></div>
+                <div class="card-form">
+                    <form id="cardForm">
+                        <div class="row">
+                            <div class="col-md-3"></div><input id="eName" class="col-md-9 cardInput" type="text" name="name" placeholder="이름" required="required" readonly>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">휴대 전화 </div><input id="eCell" class="col-md-9 cardInput" type="text" name="cell" readonly>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">일반 전화 </div><input id="eTel" class="col-md-9 cardInput" type="text" name="tel" readonly>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">팩스</div><input id="eFax" class="col-md-9 cardInput" type="text" name="fax" readonly>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">이메일</div><input id="eEmail" class="col-md-9 cardInput" type="email" name="email" required="required" readonly>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">메모</div><textarea id="eMemo" class="col-md-9 cardInput" name="memo" id="" cols="30" rows="10" readonly></textarea>
+                        </div>
+		                <div class="row cardCRUD">
+		                    <!-- 첫화면 기본 버튼 -->
+		                    <button type="button" class="cardFD" id="cardInsertForm">추가</button>
+		                    <button type="button" class="cardFD" id="cardDelete">삭제</button>
+		                    
+		                    <!-- 추가 버튼 클릭시 show -->
+		                    <button type="button" class="cardIC hideBtn" id="cardInsert">확인</button>
+		                    <button type="button" class="cardIC hideBtn" id="cardInsertCancel">취소</button>
+		                    
+		                    <!-- 편집 버튼 클릭시 show -->
+		                    <button type="button" class="cardUC hideBtn" id="cardUpdate">변경</button>
+		                    <button type="button" class="cardUC hideBtn" id="cardUpdateCancel">취소</button>
+		                </div>
+                    </form>
                 </div>
+                
             </div>
         </div>
         <div class="row bottom">
-            <a>회원탈퇴</a>
-            <p>ⓒ2018비트캠프</p>
+            <a class="col-md-10">회원탈퇴</a>
+            <p class="col-md-2">ⓒ2018비트캠프</p>
         </div>
     </div>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
@@ -57,40 +81,183 @@
 <script src="../js/common.js"></script>
 <script>
 'use strict'
-var serverApiAddr = 'http://localhost:8080/bitcamp-assignment-01';
-
-function parseQuery(url) {
-    var paramMap = {};
-    var qs = url.split('?');
-    if (qs.length > 1) {
-        var params = qs[1].split('&');
-        for(var param of params) {
-            var kv = param.split('=');
-            paramMap[kv[0]] = kv[1];
-        }
-    }
-    return paramMap;
-}
-
-var {email} = parseQuery(location.href);
-
+var {email} = $.parseQuery(location.href);
 listLoad(email);
 
-function listLoad(email){
-    console.log(serverApiAddr);
-    $.post(serverApiAddr + '/app/member/list',
-            {email: email},
-            function(data) {
-			    console.log(serverApiAddr);
+//편집 취소버튼
+$('#cardUpdateCancel').click(() => {
+    $('.cardInput').attr('readonly');
+    $('.cardFD').removeClass('hideBtn');
+    $('.cardIC').addClass('hideBtn');
+    $('.cardUC').addClass('hideBtn');
+    clickCard($('#eName').val());
+});
+
+
+//명함 정보 편집 폼 보여주기
+$('#cardUpdateForm').click(() => {
+    $('.cardInput').removeAttr('readonly');
+    $('#eName').attr('readonly', true);
+    $('.cardFD').addClass('hideBtn');
+    $('.cardIC').addClass('hideBtn');
+    $('.cardUC').removeClass('hideBtn');
+});
+
+//명함정보 편집 확인
+$('#cardUpdate').click(() => {
+    cardEdit();
+});
+
+//명함 정보 편집
+function cardEdit() {
+    if(!$('#eName').val()) {
+        alert('이름은 필수항목입니다.');
+        return;
+    }
+    if(!$('#eEmail').val()) {
+        alert('이메일은 필수항목입니다.');
+        return;
+    }
+    $.post(
+            serverApiAddr + '/app/member/cardUpdate', 
+            {
+                name: $('#eName').val(),
+                cell: $('#eCell').val(),
+                tel: $('#eTel').val(),
+                fax: $('#eFax').val(),
+                email: $('#eEmail').val(),
+                memo: $('#eMemo').val()
+            },
+            (data) => {
+                if (data.status == 'success') {
+                    listLoad(email)
+                    $('.cardInput').attr('readonly', true);
+                    $('.cardFD').removeClass('hideBtn');
+                    $('.cardIC').addClass('hideBtn');
+                    $('.cardUC').addClass('hideBtn');
+                    firstCard();
+                } else {
+                    alert('오류가 발생했습니다.');
+                }
+            }, 
+            'json');
+}
+
+//입력 취소시 다시 처음명함보기
+$('#cardInsertCancel').click(() => {
+    $('.cardInput').attr('readonly', true);
+    $('.cardFD').removeClass('hideBtn');
+    $('.cardIC').addClass('hideBtn');
+    firstCard();
+});
+
+//명함 insert 클릭
+$('#cardInsert').click(() => {
+    addCard();
+});
+
+//명함 insert
+function addCard(){
+    
+    if(!$('#eName').val()) {
+        alert('이름은 필수항목입니다.');
+        return;
+    }
+    if(!$('#eEmail').val()) {
+        alert('이메일은 필수항목입니다.');
+        return;
+    }
+    
+      $.post(
+            serverApiAddr + '/app/member/cardAdd', 
+            {
+                name: $('#eName').val(),
+                cell: $('#eCell').val(),
+                tel: $('#eTel').val(),
+                fax: $('#eFax').val(),
+                email: $('#eEmail').val(),
+                memo: $('#eMemo').val(),
+                rem: email
+            },
+            (data) => {
+                if (data.status == 'success') {
+                    listLoad(email)
+                    firstCard();
+                } else {
+                    alert('오류가 발생했습니다.');
+                    //중복처리 아몰랑
+                }
+            }, 
+            'json');
+}
+
+
+//추가 버튼 클릭시 명함 입력화면으로 전환
+$('#cardInsertForm').click(()=> {
+    cardForm.reset(); // jquery가 아닌 순수js
+    //$('cardInput').attr('readonly', true); readonly 추가할 땐 이렇게
+    $('.cardInput').removeAttr('readonly');
+    $('.cardFD').addClass('hideBtn');
+    $('.cardIC').removeClass('hideBtn');
+});
+
+//첫번째 명함 보기 - listLoad() success 이후에 실행하고, 편집 후에도 실행하므로 함수로 빼낸다
+function firstCard() {
+    var nm = $('#member-list a:nth-child(1)').attr('data-nm');
+    clickCard(nm);
+};
+
+$('#member-list').on('click', 'a', (e) => {
+    $('.cardIC').addClass('hideBtn');
+    $('.cardUC').addClass('hideBtn');
+    $('.cardFD').removeClass('hideBtn');
+    var tar = $(e.target).attr('data-nm');
+    //명함 클릭하면 => clickCard() => loadCard() 순서
+    clickCard(tar);
+});
+
+function loadCard(member) {
+    $('#eName').val(member.name);
+    $('#eCell').val(member.cell);
+    $('#eTel').val(member.tel);
+    $('#eFax').val(member.fax);
+    $('#eEmail').val(member.email);
+    $('#eMemo').val(member.memo);
+};
+
+function clickCard(name) {
+    $.post(
+            serverApiAddr + '/app/member/view', 
+            {name: name}, 
+            (data) => {
                 if(data.status == 'success') {
-                    console.log('listLoad() response OK!');
+                    console.log('viewLoad() response OK!');
+                    loadCard(data.member);
+                }else {
+                    alert('잘못된 이름입니다.');
+                }
+            },
+            'json');
+};
+
+//명함 목록 불러오기
+//여기서 우선 세션에 접근해서 로그인된 상태인지 점검한후 명함목록 가져오면 될듯
+function listLoad(email){
+    $.post(
+            serverApiAddr + '/app/member/list',
+            {email: email},
+            (data) => {
+                if(data.status == 'success') {
+                    //console.log('listLoad() response OK!');
                     var target = $('#member-list');
+                    target.html('');
                     for (var item of data.list) {
                         $("<li>")
-                          .html(`<a href='#' data-id='${item.name}' 
+                          .html(`<a data-nm='${item.name}' 
                             class='viewLink'>${item.name}</a>`)
                           .appendTo(target);
                     }
+                    firstCard();
                 }else {
                     alert('아직 등록한 명함이 없습니다.');
                     //console.log(data.error);
@@ -99,6 +266,7 @@ function listLoad(email){
             },
             'json');
 };
+
 </script>
 </body>
 </html>

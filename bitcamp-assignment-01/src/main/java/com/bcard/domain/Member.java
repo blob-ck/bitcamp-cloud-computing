@@ -11,6 +11,7 @@ public class Member {
     protected String fax;
     protected String memo;
     protected String rem;
+    
     public String getName() {
         return name;
     }
@@ -60,6 +61,10 @@ public class Member {
     public void setRem(String rem) {
         this.rem = rem;
     }
-
     
+    @Override
+    public String toString() {
+        return "Member [name=" + name + ", email=" + email + ", password=" + password + ", cell=" + cell + ", tel="
+                + tel + ", fax=" + fax + ", memo=" + memo + ", rem=" + rem + "]";
+    }
 }
