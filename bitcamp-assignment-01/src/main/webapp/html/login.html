@@ -5,40 +5,76 @@
 <title>로그인</title>
 <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 <style>
+
+.wrap {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+    align-items: center;
+	justify-content: center;
+}
+
+.title{
+    font-size: 100px;
+    padding: 20px;
+}
+.main-content {
+    flex: 1;
+    padding-bottom: 50%;
+}
+
+.footer {
+    flex: 2;
+}
+
 .row {
+    padding: 10px 0px 0px 10px;
+    margin: 0;
+}
+.group {
     text-align: center;
-    padding: 10px;
+    height:100%;
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bc_card_footer {
+    text-align: left;
+}
+.license {
+    text-align: right;
 }
 </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row"><h1>로그인</h1></div>
-        <div class="row">
-            <div class="col-sm-3"></div>
-            <form id="login-form" class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-3">
-                        이메일
-                    </div>
-                    <input class="col-sm-9" type="email" id="eEmail" name="email">
-                </div>
-                <div class="row">
-                    <div class="col-sm-3">
-                        암호
-                    </div>
-                    <input class="col-sm-9" type="password" id="ePassword" name="password">
-                </div>
-                <div class="row">
-                    <button id="login-btn" type="button">로그인</button>
-                </div>
-            </form>
-            <div class="col-sm-3"></div>
-        </div>
-    </div>
-    <div class="footer">
-        <p>개인명함관리</p> 
-        <p>ⓒ2018비트캠프</p>
+    <div class="wrap">
+        <div class="title">BCM</div>
+	    <div class="container">
+		    <div class="main-content">
+		        <div class="row group">
+		            <!-- <div class="col-md-3"></div> -->
+		            <form id="login-form" class="col-md-6 form-group">
+		                <div class="row">
+		                    <label for="eEmail" class="col-sm-4 col-form-label">Email</label>
+		                    <input class="col-md-8 form-control" type="email" id="eEmail" name="email">
+		                </div>
+		                <div class="row">
+		                    <label for="ePassword" class="col-sm-4 col-form-label">Password</label>
+		                    <input class="col-md-8 form-control" type="password" id="ePassword" name="password">
+		                </div>
+		                <div class="row group">
+			                <button class="col-md-12 btn btn-primary" id="login-btn" type="button">Log In</button>
+		                </div>
+		            </form>
+		            <!-- <div class="col-md-3"></div> -->
+		        </div>
+		    </div>
+		    <div class="footer row">
+		        <div class="bc_card_footer col-md-8">개인명함관리</div> 
+		        <div class="license col-md-4">ⓒ2018비트캠프</div>
+		    </div>
+	    </div>
     </div>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

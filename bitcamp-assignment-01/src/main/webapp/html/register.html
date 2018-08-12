@@ -3,24 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<style>
+.register-btn {
+    padding-top: 10px;
+}
+
+.col-form-label {
+    text-align: right;
+    width: 10%;
+}
+.wrap {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.reg-title {
+    padding: 10% 0% 5% 0%;
+    flex: 1;
+}
+.reg-form {
+    flex: 1;
+
+}
+.reg-footer {
+    flex: 1;
+}
+.reg-input {
+    width: 20%;
+    margin-right: 10%;
+}
+#register-btn {
+    width: 20%;
+}
+
+</style>
 </head>
-<body>
-    <div class="container">
-        <div><h1>회원가입</h1></div>
-        <div>
-            <form action="">
+<body class="wrap">
+    <div>
+        <div class="reg-title"><h1>회원가입</h1></div>
+        <div class="reg-form">
+            <!-- <form class="form-group">
                 <p><label>이메일 <input type="email" id="eEmail" name="email"></label></p>
                 <p><label>이름 <input type="text" id="eName" name="name"></label></p>
                 <p><label>암호 <input type="password" id="ePassword" name="password"></label></p>
                 <button id="register-btn" type="button">가입하기</button>
+            </form> -->
+            <form id="login-form" class="form-group">
+                <div class="">
+                    <label for="eEmail" class="col-form-label">Email</label>
+                    <input class="reg-input" type="email" id="eEmail" name="email">
+                </div>
+                <div class="">
+                    <label for="eName" class="col-form-label">Name</label>
+                    <input class="reg-input" type="text" id="eName" name="name">
+                </div>
+                <div class="">
+                    <label for="ePassword" class="col-form-label">Password</label>
+                    <input class="reg-input" type="password" id="ePassword" name="password">
+                </div>
+                <div class="register-btn">
+                    <button class="btn btn-primary" id="register-btn" type="button">회원가입</button>
+                </div>
             </form>
         </div>
+	    <div class="reg-footer">
+	        <p>개인명함관리</p> 
+	        <p>ⓒ2018비트캠프</p>
+	    </div>
     </div>
-    <div class="footer">
-        <p>개인명함관리</p> 
-        <p>ⓒ2018비트캠프</p>
-    </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
 <script>
 var serverApiAddr = "http://localhost:8080/bitcamp-assignment-01"
 $('#register-btn').click(function(){

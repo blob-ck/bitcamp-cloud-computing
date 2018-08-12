@@ -5,6 +5,11 @@
 <title>개인 명함 관리</title>
 <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 <style type="text/css">
+
+.card-search {
+    padding-bottom: 10px;
+}
+
 .viewLink{
     cursor: pointer;
 }
@@ -15,7 +20,7 @@
     padding: 10px;
 }
 .cardProp {
-    text-align: center;
+    text-align: right;
 }
 .cardBtn {
     margin: 0px 10px 0px 10px;
@@ -38,60 +43,75 @@
 }
 </style>
 </head>
-<body>
+<body class="wrapBody">
     <div class="container">
         <div class="row top">
 	        <div class="col-md-10">
 	            <h1>개인 명함 관리</h1>
 	        </div>
             <div class="col-md-2">
-                <button id="logout">로그아웃</button>
+                <button id="logout" class="btn btn-primary">로그아웃</button>
             </div>
         </div>
         <div class="row middle">
             <div class="col-md-3 left-menu">
                 <div class="card-search">
-                    <input id="cardSearch" type="text" placeholder="검색">
+                    <input id="cardSearch" class="form-control" type="text" placeholder="검색">
                 </div>
                 <div class="card-list">
-                    <ul id="card-list">
+                    <ul id="card-list" class="list-group">
                     </ul>
                 </div>
             </div>
             <div class="col-md-9 card-view">
-                <div id="cardUpdateDiv"><div id="cardUpdateSpace">&nbsp;</div><button class="cardFD" id="cardUpdateForm" type="button">편집</button></div>
+                <div id="cardUpdateDiv">
+	                <div id="cardUpdateSpace">&nbsp;</div>
+	                <button class="cardFD btn btn-dark" id="cardUpdateForm" type="button">편집</button>
+                </div>
                 <div class="card-form">
-                    <form id="cardForm">
+                    <form id="cardForm" class="form-group">
                         <div class="row cardRow">
-                            <div class="col-md-3 cardProp">&nbsp;</div><input id="eName" class="col-md-9 cardInput" type="text" name="name" placeholder="이름" required="required" readonly>
+                            <!-- <div class="col-md-3 cardProp">&nbsp;</div> -->
+                            <label for="eName" class="col-md-3 cardProp col-form-label">&nbsp;</label>
+                            <input id="eName" class="col-md-9 cardInput form-control" type="text" name="name" placeholder="이름" required="required" readonly>
                         </div>
                         <div class="row cardRow">
-                            <div class="col-md-3 cardProp">휴대 전화 </div><input id="eCell" class="col-md-9 cardInput" type="text" name="cell" readonly>
+                            <!-- <div class="col-md-3 cardProp">휴대전화 </div> -->
+                            <label for="eCell" class="col-md-3 cardProp col-form-label">휴대전화</label>
+                            <input id="eCell" class="col-md-9 cardInput form-control" type="text" name="cell" readonly>
                         </div>
                         <div class="row cardRow">
-                            <div class="col-md-3 cardProp">일반 전화 </div><input id="eTel" class="col-md-9 cardInput" type="text" name="tel" readonly>
+                            <!-- <div class="col-md-3 cardProp">일반전화 </div> -->
+                            <label for="eTel" class="col-md-3 cardProp col-form-label">일반전화</label>
+                            <input id="eTel" class="col-md-9 cardInput form-control" type="text" name="tel" readonly>
                         </div>
                         <div class="row cardRow">
-                            <div class="col-md-3 cardProp">팩스</div><input id="eFax" class="col-md-9 cardInput" type="text" name="fax" readonly>
+                            <!-- <div class="col-md-3 cardProp">팩스</div> -->
+                            <label for="eFax" class="col-md-3 cardProp col-form-label">Fax</label>
+                            <input id="eFax" class="col-md-9 cardInput form-control" type="text" name="fax" readonly>
                         </div>
                         <div class="row cardRow">
-                            <div class="col-md-3 cardProp">이메일</div><input id="eEmail" class="col-md-9 cardInput" type="email" name="email" required="required" readonly>
+                            <!-- <div class="col-md-3 cardProp">EMAIL</div> -->
+                            <label for="eEmail" class="col-md-3 cardProp col-form-label">Email</label>
+                            <input id="eEmail" class="col-md-9 cardInput form-control" type="email" name="email" required="required" readonly>
                         </div>
                         <div class="row cardRow">
-                            <div class="col-md-3 cardProp">메모</div><textarea id="eMemo" class="col-md-9 cardInput" name="memo" id="" cols="30" rows="10" readonly></textarea>
+                            <!-- <div class="col-md-3 cardProp">메모</div> -->
+                            <label for="eMemo" class="col-md-3 cardProp col-form-label">Memo</label>
+                            <textarea id="eMemo" class="col-md-9 cardInput form-control" name="memo" id="" cols="30" rows="10" readonly></textarea>
                         </div>
 		                <div class="row cardRow cardCRUD">
 		                    <!-- 첫화면 기본 버튼 -->
-		                    <button type="button" class="cardFD cardBtn" id="cardInsertForm">추가</button>
-		                    <button type="button" class="cardFD cardBtn" id="cardDelete">삭제</button>
+		                    <button type="button" class="cardFD cardBtn btn btn-primary" id="cardInsertForm">추가</button>
+		                    <button type="button" class="cardFD cardBtn btn btn-danger" id="cardDelete">삭제</button>
 		                    
 		                    <!-- 추가 버튼 클릭시 show -->
-		                    <button type="button" class="cardIC cardBtn hideBtn" id="cardInsert">확인</button>
-		                    <button type="button" class="cardIC cardBtn hideBtn" id="cardInsertCancel">취소</button>
+		                    <button type="button" class="cardIC cardBtn btn btn-primary hideBtn" id="cardInsert">확인</button>
+		                    <button type="button" class="cardIC cardBtn btn btn-warning hideBtn" id="cardInsertCancel">취소</button>
 		                    
 		                    <!-- 편집 버튼 클릭시 show -->
-		                    <button type="button" class="cardUC cardBtn hideBtn" id="cardUpdate">변경</button>
-		                    <button type="button" class="cardUC cardBtn hideBtn" id="cardUpdateCancel">취소</button>
+		                    <button type="button" class="cardUC cardBtn btn btn-primary hideBtn" id="cardUpdate">변경</button>
+		                    <button type="button" class="cardUC cardBtn btn btn-warning hideBtn" id="cardUpdateCancel">취소</button>
 		                </div>
                     </form>
                 </div>
@@ -166,9 +186,9 @@ function cardSearch(word, rem) {
                     target.html('');
                     for (var item of data.list) {
                         $("<li>")
-                          .html(`<a data-nm='${item.name}' 
-                            class='viewLink'>${item.name}</a>`)
-                          .appendTo(target);
+                            .attr('class', 'list-group-item viewLink')
+                            .html(`<a data-nm='${item.name}'>${item.name}</a>`)
+                            .appendTo(target);
                     }
                     firstCard();
                 } else {
@@ -203,7 +223,7 @@ $('#cardDelete').click(() => {
 
 //편집 취소버튼
 $('#cardUpdateCancel').click(() => {
-    $('.cardInput').attr('readonly');
+    $('.cardInput').attr('readonly', true);
     $('.cardFD').removeClass('hideBtn');
     $('.cardIC').addClass('hideBtn');
     $('.cardUC').addClass('hideBtn');
@@ -309,6 +329,7 @@ $('#cardInsertForm').click(()=> {
     $('.cardInput').removeAttr('readonly');
     $('.cardFD').addClass('hideBtn');
     $('.cardIC').removeClass('hideBtn');
+    $('#card-list li').removeClass('active');
 });
 
 //첫번째 명함 보기 - listLoad() success 이후에 실행하고, 편집 후에도 실행하므로 함수로 빼낸다
@@ -319,25 +340,20 @@ function firstCard() {
     $('.cardUC').addClass('hideBtn');
     var nm = $('#card-list a:nth-child(1)').attr('data-nm');
     clickCard(nm);
+    $('#card-list li').removeClass('active');
+    $('#card-list li:nth-child(1)').addClass('active');
 };
 
 $('#card-list').on('click', 'a', (e) => {
     $('.cardIC').addClass('hideBtn');
     $('.cardUC').addClass('hideBtn');
     $('.cardFD').removeClass('hideBtn');
+    $('#card-list li').removeClass('active');
+    $(e.target).parent().addClass('active');
     var tar = $(e.target).attr('data-nm');
     //명함 클릭하면 => clickCard() => loadCard() 순서
     clickCard(tar);
 });
-
-function loadCard(card) {
-    $('#eName').val(card.name);
-    $('#eCell').val(card.cell);
-    $('#eTel').val(card.tel);
-    $('#eFax').val(card.fax);
-    $('#eEmail').val(card.email);
-    $('#eMemo').val(card.memo);
-};
 
 function clickCard(name) {
     $.post(
@@ -345,8 +361,12 @@ function clickCard(name) {
             {name: name}, 
             (data) => {
                 if(data.status == 'success') {
-                    console.log('viewLoad() response OK!');
-                    loadCard(data.member);
+				    $('#eName').val(data.member.name);
+				    $('#eCell').val(data.member.cell);
+				    $('#eTel').val(data.member.tel);
+				    $('#eFax').val(data.member.fax);
+				    $('#eEmail').val(data.member.email);
+				    $('#eMemo').val(data.member.memo);
                 }else {
                     console.log('잘못된 이름입니다.');
                 }
@@ -362,14 +382,13 @@ function listLoad(email){
             {email: email},
             (data) => {
                 if(data.status == 'success') {
-                    //console.log('listLoad() response OK!');
                     var target = $('#card-list');
                     target.html('');
                     for (var item of data.list) {
                         $("<li>")
-                          .html(`<a data-nm='${item.name}' 
-                            class='viewLink'>${item.name}</a>`)
-                          .appendTo(target);
+	                        .attr('class', 'list-group-item viewLink')
+	                        .html(`<a data-nm='${item.name}'>${item.name}</a>`)
+	                        .appendTo(target);
                     }
                     firstCard();
                 }else {
