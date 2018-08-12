@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<style>
+.row {
+    text-align: center;
+    padding: 10px;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="row"><h1>로그인</h1></div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <form id="login-form" class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-3">
+                        이메일
+                    </div>
+                    <input class="col-sm-9" type="email" id="eEmail" name="email">
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        암호
+                    </div>
+                    <input class="col-sm-9" type="password" id="ePassword" name="password">
+                </div>
+                <div class="row">
+                    <button id="login-btn" type="button">로그인</button>
+                </div>
+            </form>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>개인명함관리</p> 
+        <p>ⓒ2018비트캠프</p>
+    </div>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="../js/jquery.bit.js"></script>
+<script src="../js/common.js"></script>
+<script>
+//var serverApiAddr = "http://localhost:8080/bitcamp-assignment-01"
+$('#login-btn').click(function(){
+    console.log($(eEmail).val());
+    $.post(serverApiAddr + '/app/member/login',
+            {
+                email: $(eEmail).val(),
+                password: $(ePassword).val()
+            },
+            function(data) {
+                if(data.status == 'success') {
+                    //alert('된다');
+                    location.href = `list.html?email=${data.email}`;
+                }else {
+                    alert('존재하지 않는 이메일이거나 암호가 일치하지 않습니다.');
+                    console.log(data.error);
+                    location.href = '#';
+                }
+            },
+            'json');
+});
+</script>
+</body>
+</html>

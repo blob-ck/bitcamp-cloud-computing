@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<meta http-equiv="Content-Security-Policy"
+	content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+<title>GAME ttt</title>
+<style>
+body{
+    text-align: center;
+}
+table{
+    text-align: center;
+}
+
+td{
+    border:3px solid black;
+    width:100px;
+    height:100px;
+    text-align: center;
+    font-size: 50px;
+}
+
+.person {
+    color: red;
+    background-color: black;
+}
+.computer {
+    color: blue;
+    background-color: yellow;
+}
+</style>
+</head>
+
+<body>
+<h1>tic tac toe 게임</h1>
+<table id="aa" class="gTable">
+	<tr class="row1">
+		<td class="col1 open"></td>
+		<td class="col2 open"></td>
+		<td class="col3 open"></td>
+	</tr>
+	<tr class="row2">
+		<td class="col1 open"></td>
+		<td class="col2 open"></td>
+		<td class="col3 open"></td>
+	</tr>
+	<tr class="row3">
+		<td class="col1 open"></td>
+		<td class="col2 open"></td>
+		<td class="col3 open"></td>
+	</tr>
+</table>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+'use strict'
+var xx = window.prompt("한 변 크기 몇으로 할래?"); // 행의 갯수 = 이중반복문 바깥 length = 승리조건
+var xxSize = xx * xx; // 총 칸 수
+var currentPlayer = 'person';
+var checkVic = [];
+
+$('.open').click(function(){
+    if(currentPlayer == 'person') {
+        myEvent(this);
+    } 
+});
+
+function myEvent(target) {
+	var $that = $(target);
+	if(!$that.hasClass('open')) {
+	    return;
+	}
+	
+	$that.removeClass('open');
+	
+	if(currentPlayer == 'computer') {
+		$that.addClass('computer');
+		$that.text('o');
+	}else {
+		$that.addClass('person');
+		$that.text('x');
+	}
+	
+	if(currentPlayer == 'person') {
+	    currentPlayer = 'computer';
+	    setTimeout(function() {
+	        var $open = $('.open');
+	        var randomIndex = Math.floor(Math.random() * $open.length);
+	        myEvent($open[randomIndex]);
+	    }, 1000);
+	} else {
+		    currentPlayer = 'person';
+	}
+/* 	console.log(randomIndex);
+	console.log($open[randomIndex]);
+	console.log($($open[randomIndex])); */
+	
+/* 	$($open[randomIndex]).text('o');
+	$($open[randomIndex]).removeClass('open'); */
+}
+
+</script>
+</body>
+
+</html>

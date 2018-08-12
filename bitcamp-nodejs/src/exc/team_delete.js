@@ -16,16 +16,16 @@ con.connect(function(err) {
     console.log("연결했음!~!!");
 });
 
-var mid = 'user002';
+var bno = 1;
 
 // ====> 해결책
 // ====> in-parameter 방법을 사용한다.
 // in-parameter 방식에서는 사용자가 입력한 값으로 SQL을 만드는 것이 아니기 때문에
 // SQL 조작이 불가능하다.
 con.query(
-        `delete from pms2_member
-         where mid=?`, // ? 를 in-parameter 라 부른다
-         [mid],        // in-parameter 의 개수만큼 배열에 값을 담으면 된다.
+        `delete from pms2_team
+         where bno=?`, // ? 를 in-parameter 라 부른다
+         [bno],        // in-parameter 의 개수만큼 배열에 값을 담으면 된다.
          function(err, results){
     if (err) throw err;
     console.log("삭제 성공!");

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+</head>
+<body>
+    <div class="container">
+        <div><h1>회원가입</h1></div>
+        <div>
+            <form action="">
+                <p><label>이메일 <input type="email" id="eEmail" name="email"></label></p>
+                <p><label>이름 <input type="text" id="eName" name="name"></label></p>
+                <p><label>암호 <input type="password" id="ePassword" name="password"></label></p>
+                <button id="register-btn" type="button">가입하기</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <p>개인명함관리</p> 
+        <p>ⓒ2018비트캠프</p>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+var serverApiAddr = "http://localhost:8080/bitcamp-assignment-01"
+$('#register-btn').click(function(){
+    $.post(serverApiAddr + '/app/member/register',
+            {
+                email: $(eEmail).val(),
+                name: $(eName).val(),
+                password: $(ePassword).val()
+            },
+            function(data) {
+                if(data.status == 'success') {
+                    alert('가입 완료! 로그인 페이지로 이동합니다.');
+                    location.href = 'login.html';
+                }else {
+                    alert('넌 안돼~ 이메일 중복이다~');
+                    console.log(data.error);
+                    location.href = '#';
+                }
+            },
+            'json');
+});
+</script>
+</body>
+</html>

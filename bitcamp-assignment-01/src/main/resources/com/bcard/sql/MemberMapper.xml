@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bcard.dao.MemberDao">
+
+<resultMap type="Member" id="MemberMap">
+    <result column="email" property="email"/>
+    <result column="pwd" property="password"/>
+    <result column="cell" property="cell"/>
+    <result column="tel" property="tel"/>
+    <result column="fax" property="fax"/>
+    <result column="memo" property="memo"/>
+    <result column="rem" property="rem"/>
+</resultMap>
+
+<!-- 회원 탈퇴 -->
+<delete id="memberResign">
+DELETE FROM bc_member 
+WHERE name = #{name} AND pwd = #{password}
+</delete>
+
+<!-- 명함 검색 -->
+<select id="cardSearch" parameterType="Member" resultMap="MemberMap">
+SELECT * FROM bc_card 
+WHERE rem = #{rem} AND name LIKE CONCAT('%', #{name}, '%')
+ORDER BY name
+</select>
+
+<!-- 명함 삭제 -->
+<delete id="cardDelete" parameterType="Member">
+DELETE FROM bc_card 
+WHERE name = #{name} AND rem = #{rem}
+</delete>
+
+<!-- 명함 편집 -->
+<update id="cardUpdate" parameterType="Member">
+UPDATE bc_card SET 
+    cell = #{cell},
+    tel = #{tel},
+    fax = #{fax},
+    email = #{email},
+    memo = #{memo} 
+WHERE name = #{name}
+</update>
+
+<!-- 명함 추가 -->
+<insert id="cardAdd" parameterType="Member">
+INSERT INTO bc_card(name, cell, tel, fax, email, memo, rem)
+VALUES(#{name}, #{cell}, #{tel}, #{fax}, #{email}, #{memo}, #{rem})
+</insert>
+
+<!-- 명함 보기 -->
+<select id="view" parameterType="string" resultMap="MemberMap">
+SELECT * FROM bc_card WHERE name = #{name}
+</select>
+
+<!-- 명함 리스트 -->
+<select id="list" parameterType="String" resultMap="MemberMap">
+SELECT * FROM bc_card WHERE rem = #{email} ORDER BY name
+</select>
+
+<!-- 멤버 가입 -->
+<insert id="register" parameterType="Member">
+INSERT INTO bc_member (`email`, `name`, `pwd`)
+VALUES(#{email}, #{name}, password(#{password}));
+</insert>
+
+<!-- 멤버 로그인 -->
+<select id="login" parameterType="Member" resultMap="MemberMap">
+SELECT * FROM bc_member WHERE email = #{email} AND pwd = password(#{password})
+</select>
+
+</mapper>
