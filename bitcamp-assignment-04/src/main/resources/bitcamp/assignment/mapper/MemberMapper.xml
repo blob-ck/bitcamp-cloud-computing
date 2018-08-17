@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.assignment.repository.MemberRepository">
+<!-- 
+<resultMap type="Member" id="MemberMap">
+    <result column="email" property="email"/>
+    <result column="name" property="name"/>
+    <result column="pwd" property="password"/>
+</resultMap>
+ -->
+
+<select id="findByEmailAndPassword" parameterType="map" resultType="member">
+    SELECT EMAIL, NAME
+    FROM P2_MEMB
+    WHERE EMAIL=#{email} AND PWD=PASSWORD(#{password})
+</select>
+
+<insert id="insert" parameterType="Member">
+    INSERT INTO P2_MEMB(EMAIL, NAME, PWD) 
+    VALUES(#{email}, #{name}, PASSWORD(#{password}))
+</insert>
+
+</mapper>
