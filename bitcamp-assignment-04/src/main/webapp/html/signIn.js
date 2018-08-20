@@ -13,12 +13,14 @@ $('#loginBtn').click(() => {
             }, 
             (result) => {
                 if (result.status === 'success') {
-                    location.href = 'main.html?';
+                    location.href = 'businesscard/index.html?';
+                } else {
+                    alert('로그인 실패!');
                 }
             }, 
             'json')
             .fail((e) => {
-                alert('로그인 중 오류 발생!');
+                alert('서버 요청 중 오류 발생!');
                 console.log(e);
             });
 });

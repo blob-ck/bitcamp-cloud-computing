@@ -3,16 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bitcamp.assignment.repository.MemberRepository">
-<!-- 
-<resultMap type="Member" id="MemberMap">
-    <result column="email" property="email"/>
-    <result column="name" property="name"/>
-    <result column="pwd" property="password"/>
+ 
+<!-- id를 지정해주면 객체를 중복으로 만들지 않으므로 메모리 절약가능 -->
+<resultMap type="member" id="memberMap">
+    <id column="MNO" property="no"/>
+    <result column="EMAIL" property="email"/>
+    <result column="NAME" property="name"/>
+    <result column="PWD" property="password"/>
 </resultMap>
- -->
 
-<select id="findByEmailAndPassword" parameterType="map" resultType="member">
-    SELECT EMAIL, NAME
+
+<select id="findByEmailAndPassword" parameterType="map" resultMap="memberMap">
+    SELECT MNO, EMAIL, NAME
     FROM P2_MEMB
     WHERE EMAIL=#{email} AND PWD=PASSWORD(#{password})
 </select>

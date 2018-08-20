@@ -8,15 +8,22 @@ public class Member implements Serializable {
     //객체 직렬화(바이트배열로 변환하는 과정)에서 버전을 명시함으로써 역직렬화 할 때 오류를 최소화하기 위함.
     private static final long serialVersionUID = 1L;
     
+    protected int no;
     protected String name;
     protected String email;
     protected String password;
     
     @Override
     public String toString() {
-        return "Member [name=" + name + ", email=" + email + ", password=" + password + "]";
+        return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + "]";
     }
     
+    public int getNo() {
+        return no;
+    }
+    public void setNo(int no) {
+        this.no = no;
+    }
     public String getName() {
         return name;
     }
