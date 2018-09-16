@@ -26,6 +26,7 @@ function require2(moduleName) {
     if (!global.moduleMap[moduleName]) {
         //해당 모듈이 없다면 그 모듈의 이름으로 exports 값을 보관한다.
         // => 다음은 exports 값을 보관했다고 가정하는것이다.
+        // ==> 여기서 예를 들자면 m1.js 파일 내부에서 module.exports.value = parseInt(Math.random()*100) 한 것과 같다.
         global.moduleMap[moduleName] = {
                 value: parseInt(Math.random() * 100)
         };

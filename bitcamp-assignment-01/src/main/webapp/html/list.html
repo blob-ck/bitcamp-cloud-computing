@@ -12,6 +12,7 @@
 
 .viewLink{
     cursor: pointer;
+    text-align: center;
 }
 .hideBtn {
     display: none;
@@ -38,9 +39,12 @@
 }
 #cardUpdateForm {
   order: 2;
-  width: 10%;
+  width: 15%;
   padding: 1%;
 }
+
+.list
+
 </style>
 </head>
 <body class="wrapBody">
@@ -72,33 +76,33 @@
                     <form id="cardForm" class="form-group">
                         <div class="row cardRow">
                             <!-- <div class="col-md-3 cardProp">&nbsp;</div> -->
-                            <label for="eName" class="col-md-3 cardProp col-form-label">&nbsp;</label>
-                            <input id="eName" class="col-md-9 cardInput form-control" type="text" name="name" placeholder="이름" required="required" readonly>
+                            <label for="eName" class="col-md-3 col-4 cardProp col-form-label">&nbsp;</label>
+                            <input id="eName" class="col-md-9 col-8 cardInput form-control" type="text" name="name" placeholder="이름" required="required" readonly>
                         </div>
                         <div class="row cardRow">
                             <!-- <div class="col-md-3 cardProp">휴대전화 </div> -->
-                            <label for="eCell" class="col-md-3 cardProp col-form-label">휴대전화</label>
-                            <input id="eCell" class="col-md-9 cardInput form-control" type="text" name="cell" readonly>
+                            <label for="eCell" class="col-md-3 col-4 cardProp col-form-label">휴대전화</label>
+                            <input id="eCell" class="col-md-9 col-8 cardInput form-control" type="text" name="cell" readonly>
                         </div>
                         <div class="row cardRow">
                             <!-- <div class="col-md-3 cardProp">일반전화 </div> -->
-                            <label for="eTel" class="col-md-3 cardProp col-form-label">일반전화</label>
-                            <input id="eTel" class="col-md-9 cardInput form-control" type="text" name="tel" readonly>
+                            <label for="eTel" class="col-md-3 col-4 cardProp col-form-label">일반전화</label>
+                            <input id="eTel" class="col-md-9 col-8 cardInput form-control" type="text" name="tel" readonly>
                         </div>
                         <div class="row cardRow">
                             <!-- <div class="col-md-3 cardProp">팩스</div> -->
-                            <label for="eFax" class="col-md-3 cardProp col-form-label">Fax</label>
-                            <input id="eFax" class="col-md-9 cardInput form-control" type="text" name="fax" readonly>
+                            <label for="eFax" class="col-md-3 col-4 cardProp col-form-label">Fax</label>
+                            <input id="eFax" class="col-md-9 col-8 cardInput form-control" type="text" name="fax" readonly>
                         </div>
                         <div class="row cardRow">
                             <!-- <div class="col-md-3 cardProp">EMAIL</div> -->
-                            <label for="eEmail" class="col-md-3 cardProp col-form-label">Email</label>
-                            <input id="eEmail" class="col-md-9 cardInput form-control" type="email" name="email" required="required" readonly>
+                            <label for="eEmail" class="col-md-3 col-4 cardProp col-form-label">Email</label>
+                            <input id="eEmail" class="col-md-9 col-8 cardInput form-control" type="email" name="email" required="required" readonly>
                         </div>
                         <div class="row cardRow">
                             <!-- <div class="col-md-3 cardProp">메모</div> -->
-                            <label for="eMemo" class="col-md-3 cardProp col-form-label">Memo</label>
-                            <textarea id="eMemo" class="col-md-9 cardInput form-control" name="memo" id="" cols="30" rows="10" readonly></textarea>
+                            <label for="eMemo" class="col-md-3 col-4 cardProp col-form-label">Memo</label>
+                            <textarea id="eMemo" class="col-md-9 col-8 cardInput form-control" name="memo" id="" cols="30" rows="10" readonly></textarea>
                         </div>
 		                <div class="row cardRow cardCRUD">
 		                    <!-- 첫화면 기본 버튼 -->

@@ -2,7 +2,7 @@
 // 1. 경로를 알아내는 객체
 
 // node가 실행하는 소스파일의 디렉토리 알아내기
-// https://nodejs.org/api/globals.html => __dirname
+// https://nodejs.org/api/globals.html => __dirname   <== 언더바 2개다.
 console.log('node 소스파일 실행 경로는 => ', __dirname);
 
 // 디렉토리 및 파일 이름까지 포함

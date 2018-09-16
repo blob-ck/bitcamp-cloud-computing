@@ -85,7 +85,7 @@ express.add('/member/list' ,(urlInfo, req, res) => {
         res.end();
     });
 });
-express.add('/member/add' ,(urlInfo, req, res) {
+express.add('/member/add' ,(urlInfo, req, res) => {
     pool.query(
         `insert into pms2_member(mid, email, pwd)
         values(?, ?, password(?))`,
@@ -98,7 +98,7 @@ express.add('/member/add' ,(urlInfo, req, res) {
         res.end('정상 입력되었습니다!');
     });
 });
-express.add('/member/update' ,(urlInfo, req, res) {
+express.add('/member/update' ,(urlInfo, req, res) => {
     pool.query(
         `update pms2_member set email=?, pwd=password(?)
         where mid=?`,
@@ -111,7 +111,7 @@ express.add('/member/update' ,(urlInfo, req, res) {
         res.end('정상 변경되었습니다!');
     });
 });
-express.add('/member/remove' ,(urlInfo, req, res) {
+express.add('/member/remove' ,(urlInfo, req, res) => {
     pool.query(
         `delete from pms2_member
         where mid=?`,

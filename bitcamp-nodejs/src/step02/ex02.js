@@ -6,7 +6,7 @@ const mysql = require('mysql');
 
 console.log(mysql);
 /*
-{ createConnection: [Function: createConnection],
+{   createConnection: [Function: createConnection],
     createPool: [Function: createPool],
     createPoolCluster: [Function: createPoolCluster],
     createQuery: [Function: createQuery],

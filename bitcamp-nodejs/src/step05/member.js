@@ -40,7 +40,6 @@ router.get('/list', (req, res) => {
         // res.end();
         console.log(results);
         res.render('list', {list : results});
-
     });
 });
 

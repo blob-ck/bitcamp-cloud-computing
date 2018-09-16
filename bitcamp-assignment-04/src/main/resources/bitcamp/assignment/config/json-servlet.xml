@@ -12,6 +12,20 @@
 
     <context:component-scan base-package="bitcamp.assignment.web.json">
     </context:component-scan>
+    
+    <!-- 인터셉터 꼽기 -->
+    <mvc:interceptors>
+        <!-- 모든 요청에 대해 인터셉터를 적용한다. -->
+        <!-- <bean class="bitcamp.assignment.web.json"/> -->
+        
+        <!-- 특정 URL에 대해서만 인터셉터 적용하기 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/auth/signIn"/>
+            <mvc:exclude-mapping path="/member/signUp"/>
+            <bean class="bitcamp.assignment.web.json.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 	
     <!-- MVC 관련 애노테이션을 처리할 객체들을 자동 등록한다. 
          matrix variable 기능을 사용하고 싶으면 다음과 같이 활성화시켜라!
