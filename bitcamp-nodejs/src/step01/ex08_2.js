@@ -8,12 +8,12 @@ var obj2 = require('./ex08_m');
 
 obj1.plus(100);
 obj1.minus(7);
-console.log(obj1.getResult());
+console.log(obj1.getResult()); //93
 
 obj2.plus(100);
 obj2.multiple(7);
-console.log(obj2.getResult());
-console.log(obj1.getResult());
+console.log(obj2.getResult()); //1351
+console.log(obj1.getResult()); //1351
 
 // 결론!
 // => require() 가 리턴하는 객체의 함수는 같은 module 변수를 사용한다.

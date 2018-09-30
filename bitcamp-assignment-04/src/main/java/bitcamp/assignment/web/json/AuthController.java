@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ public class AuthController {
 
     @Autowired MemberService memberService;
     
-    @PostMapping("signIn")
+    @GetMapping("signIn")
     public Object signIn(String email, String password, boolean saveEmail, HttpSession session) {
         HashMap<String, Object> result = new HashMap<>();
         try {

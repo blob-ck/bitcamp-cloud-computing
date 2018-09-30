@@ -1,11 +1,15 @@
 <article>
 <input id="fSearchWord" type="text">
 </article>
+
 <article>
-<ul>
-<li>허헝1</li>
-<li>허헝2</li>
-<li>허헝3</li>
-<li>허헝4</li>
-</ul>
+<ul id="name-list" class="list-group list-group-flush"></ul>
 </article>
+
+<!-- bitcamp-web-18 member/list.html 참조 handlebars template -->
+<script id="li-template" type="text/x-handlebars-template">
+{{#each list}}
+<li class="list-group-item list-group-item-action" data-no="{{no}}">{{name}}</li>
+{{/each}}
+</script>
+<script src="list.js"></script>
