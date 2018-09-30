@@ -4,6 +4,12 @@
 // => 리턴값 destructuring
 var {plus, minus} = require('./ex03_m.js');
 
+console.log(require('./ex03_m.js'));
+//{ plus: [Function: plus],
+// minus: [Function: minus],
+// multiple: [Function: multiple],
+// divide: [Function: divide] }
+
 console.log(plus(10, 20));
 console.log(minus(10, 20));
 

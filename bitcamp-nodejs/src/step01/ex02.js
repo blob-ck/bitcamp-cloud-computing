@@ -14,6 +14,8 @@ const server = http.createServer((req, res) => {
 
 //HTTP서버를 시작한다.
 // => 서버가 시작되었을 때 호출될 메서드를 등록한다.
+// http://localhost:8000 을 브라우저에서 입력하면 된다.
+// 서버 종료는 Ctrl+C, 일시 중지는 Ctrl+Z
 server.listen(8000, () => {
     console.log('서버 실행중');
 });

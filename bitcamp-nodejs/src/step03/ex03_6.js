@@ -37,7 +37,8 @@ const server = http.createServer((req, res) => {
     var data = '';
     req.on('data', (chunk) => {
         data += chunk; // 이렇게 해야 데이터를 계속해서 덧붙여 전체 데이터를 받아간다.
-        //console.log(`Received ${chunk.length} bytes of data.`);
+        // console.log(`Received ${chunk.length} bytes of data.`);
+        // console.log(data);
     });
 
     //데이터를 모두 읽었을 때 응답을 완료해야 한다.

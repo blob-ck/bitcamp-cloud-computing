@@ -15,7 +15,7 @@ function divide(a, b) {
     return a / b;
 }
 
-// module 객체에 exports 객체가 내장되어있다.
+// module 객체에 exports 객체가 내장되어있다.  ===>  Gradle 의 exp와 유사하네
 // exports 객체에 함수를 담아놓으면
 // module을 사용하는 쪽에서 require()를 호출하면 이 exports 객체를 리턴한다.
 module.exports.plus = plus;

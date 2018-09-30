@@ -14,6 +14,7 @@ const url =require('url');
 const server = http.createServer((req, res) => {
     
     
+    res.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'});
     var urlInfo = url.parse(req.url, true);
     
     if (urlInfo.pathname === '/favicon.ico') {
@@ -28,7 +29,6 @@ const server = http.createServer((req, res) => {
         return;
     }
     
-    res.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'});
 
     console.log(urlInfo.query);
     var result;
